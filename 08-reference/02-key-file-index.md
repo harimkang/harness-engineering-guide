@@ -21,7 +21,7 @@ appendix를 하나만 먼저 연다면 이 파일이 가장 실용적이다. `Di
 
 ## Entry tags
 
-이 표는 proposal이 요구한 per-entry tag를 reader path와 structural hint로 나눠 정리한 lookup map이다.
+이 표는 key entry를 canonical reader path와 structural hint로 함께 읽기 위한 lookup map이다.
 
 - `Reader path tags`는 README의 canonical path vocabulary를 그대로 쓴다.
 - `Structural hints`는 `source-of-truth`, `bridge chapter`, `case-study` 같은 appendix 전용 orientation label이다.

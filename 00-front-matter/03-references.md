@@ -36,6 +36,7 @@
 - `first-pass`: 이 장의 역할과 Tier 1, Tier 2, `Freshness watchlist`만 먼저 읽어도 충분하다.
 - `builder`: 관련 Part guide에서 제시한 `S*` cluster를 따라 세부 섹션으로 들어간다.
 - `reviewer`: chapter의 `Sources / evidence notes`에 적힌 `S*`, `P*`, `R*` ID를 이 장에서 다시 확인한다.
+- `source-first`: provenance나 watchlist 기준으로 먼저 source를 확인한 뒤 본문으로 되돌아간다.
 - `volatile re-check`: chapter edit 직전에 watchlist source와 release notes window를 다시 열고 evidence-pack 메모를 남긴다.
 
 ## Source tier quick guide

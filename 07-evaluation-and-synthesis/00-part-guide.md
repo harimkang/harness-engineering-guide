@@ -22,7 +22,7 @@
 - production trace와 feedback loop는 optimization에 어떤 입력을 제공하는가
 - dataset versioning, contamination, evidence pack은 eval 신뢰성을 어떻게 바꾸는가
 - 종합 장에서 ownership handoff와 benchmark question을 어떻게 다시 결합하는가
-- code-reading guide는 왜 본문 마지막 장이면서도 reference-adjacent하게 써야 하는가
+- code-reading guide는 왜 본문 마지막 장이면서도 reference 쪽 경로와 강하게 이어져야 하는가
 
 ## 먼저 읽을 원칙 장
 
