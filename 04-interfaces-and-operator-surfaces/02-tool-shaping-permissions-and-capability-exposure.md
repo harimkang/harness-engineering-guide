@@ -18,7 +18,7 @@
 - sandboxing 메커니즘 전체
 - trust dialog 자체의 startup semantics
 
-이 주제들은 [../execution/04-human-oversight-trust-and-approval.md](../05-execution-continuity-and-integrations/03-human-oversight-trust-and-approval.md), [../safety/02-sandboxing-permissions-and-policy-surfaces.md](../06-boundaries-deployment-and-safety/02-sandboxing-permissions-and-policy-surfaces.md)에서 다시 다룬다.
+이 주제들은 [03-human-oversight-trust-and-approval.md](../05-execution-continuity-and-integrations/03-human-oversight-trust-and-approval.md), [02-sandboxing-permissions-and-policy-surfaces.md](../06-boundaries-deployment-and-safety/02-sandboxing-permissions-and-policy-surfaces.md)에서 다시 다룬다.
 
 ## 자료와 독서 기준
 
@@ -40,7 +40,7 @@
 
 - [01-tool-contracts-and-the-agent-computer-interface.md](01-tool-contracts-and-the-agent-computer-interface.md)
 - [03-commands-skills-plugins-and-mcp.md](03-commands-skills-plugins-and-mcp.md)
-- [../safety/04-safety-autonomy-benchmark.md](../06-boundaries-deployment-and-safety/04-safety-autonomy-benchmark.md)
+- [04-safety-autonomy-benchmark.md](../06-boundaries-deployment-and-safety/04-safety-autonomy-benchmark.md)
 
 ## 세 층으로 읽어라
 

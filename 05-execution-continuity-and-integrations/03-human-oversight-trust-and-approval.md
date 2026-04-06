@@ -1,4 +1,4 @@
-# 04. 인간 감독, trust, approval fatigue
+# 03. 인간 감독, trust, approval fatigue
 
 ## 장 요약
 
@@ -18,7 +18,7 @@
 - 개별 permission request UI 컴포넌트의 모든 시각적 차이
 - 조직 정책과 제품 정책의 비기술적 운영 세부
 
-이 장은 [../safety/01-boundary-engineering-and-autonomy.md](../06-boundaries-deployment-and-safety/01-boundary-engineering-and-autonomy.md), [../safety/02-sandboxing-permissions-and-policy-surfaces.md](../06-boundaries-deployment-and-safety/02-sandboxing-permissions-and-policy-surfaces.md), [01-ui-transcripts-and-operator-control.md](../04-interfaces-and-operator-surfaces/05-ui-transcripts-and-operator-control.md)와 밀접하게 연결된다.
+이 장은 [01-boundary-engineering-and-autonomy.md](../06-boundaries-deployment-and-safety/01-boundary-engineering-and-autonomy.md), [02-sandboxing-permissions-and-policy-surfaces.md](../06-boundaries-deployment-and-safety/02-sandboxing-permissions-and-policy-surfaces.md), [05-ui-transcripts-and-operator-control.md](../04-interfaces-and-operator-surfaces/05-ui-transcripts-and-operator-control.md)와 밀접하게 연결된다.
 
 ## 자료와 독서 기준
 
@@ -40,10 +40,10 @@
 
 함께 읽으면 좋은 장:
 
-- [../safety/04-safety-autonomy-benchmark.md](../06-boundaries-deployment-and-safety/04-safety-autonomy-benchmark.md)
-- [../08-tool-system-and-permissions.md](../04-interfaces-and-operator-surfaces/07-claude-code-tool-system-and-permissions.md)
-- [01-ui-transcripts-and-operator-control.md](../04-interfaces-and-operator-surfaces/05-ui-transcripts-and-operator-control.md)
-- [03-task-orchestration-and-long-running-execution.md](02-task-orchestration-and-long-running-execution.md)
+- [04-safety-autonomy-benchmark.md](../06-boundaries-deployment-and-safety/04-safety-autonomy-benchmark.md)
+- [07-claude-code-tool-system-and-permissions.md](../04-interfaces-and-operator-surfaces/07-claude-code-tool-system-and-permissions.md)
+- [05-ui-transcripts-and-operator-control.md](../04-interfaces-and-operator-surfaces/05-ui-transcripts-and-operator-control.md)
+- [02-task-orchestration-and-long-running-execution.md](02-task-orchestration-and-long-running-execution.md)
 
 ## trust boundary는 session 시작에서 열린다
 

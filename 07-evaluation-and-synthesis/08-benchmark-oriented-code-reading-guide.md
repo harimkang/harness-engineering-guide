@@ -1,4 +1,4 @@
-# 15. benchmark-oriented 코드 독해 가이드
+# 08. benchmark-oriented 코드 독해 가이드
 
 ## 장 요약
 
@@ -26,7 +26,7 @@ Claude Code 같은 사례에서는 "어느 폴더에 무엇이 있는가"보다 
 
 이 장의 관찰은 2026-04-02 기준 현재 공개 사본의 다음 대표 발췌 출처에 한정한다.
 
-- `appendix/key-file-index.md`
+- `08-reference/02-key-file-index.md`
 - `src/entrypoints/cli.tsx`
 - `src/main.tsx`
 - `src/screens/REPL.tsx`
@@ -119,11 +119,11 @@ flowchart TD
 
 | benchmark 질문 | source 없이 볼 장 | 최소 이해 포인트 |
 | --- | --- | --- |
-| interactive 1턴은 누가 소유하는가 | [01-project-overview.md](../02-runtime-and-session-start/03-claude-code-project-overview.md), [06-query-engine-and-turn-lifecycle.md](../03-context-and-control/06-claude-code-query-engine-and-turn-lifecycle.md), [17-end-to-end-scenarios.md](07-claude-code-end-to-end-scenarios.md) | interactive turn의 owner는 REPL 계열이고, 실제 turn loop는 별도 query layer에서 돈다 |
-| headless path는 interactive path와 무엇을 공유하는가 | [02-architecture-map.md](../02-runtime-and-session-start/04-claude-code-architecture-map.md), [06-query-engine-and-turn-lifecycle.md](../03-context-and-control/06-claude-code-query-engine-and-turn-lifecycle.md) | core query loop는 공유되지만 state ownership과 reporting surface는 다르다 |
-| remote/direct-connect/bridge는 어떻게 갈라지는가 | [03-runtime-modes-and-entrypoints.md](../02-runtime-and-session-start/05-claude-code-runtime-modes-and-entrypoints.md), [14-remote-bridge-server-and-upstreamproxy.md](../06-boundaries-deployment-and-safety/05-claude-code-remote-bridge-server-and-upstream-proxy.md), [17-end-to-end-scenarios.md](07-claude-code-end-to-end-scenarios.md) | remote family는 entrypoint fan-out에서 먼저 갈라지고, direct-connect와 bridge는 서로 다른 배포/제어 계약을 가진다 |
-| resume와 persistence는 무엇을 복원하는가 | [06-query-engine-and-turn-lifecycle.md](../03-context-and-control/06-claude-code-query-engine-and-turn-lifecycle.md), [13-persistence-config-and-migrations.md](../05-execution-continuity-and-integrations/07-claude-code-persistence-config-and-migrations.md), [17-end-to-end-scenarios.md](07-claude-code-end-to-end-scenarios.md) | 저장된 transcript와 session metadata가 restore control plane을 통해 live state로 다시 주입된다 |
-| task, transcript, eval artifact는 어디서 만나는가 | [12-task-model-and-background-execution.md](../05-execution-continuity-and-integrations/06-claude-code-task-model-and-background-execution.md), [evaluation/01-model-evals-vs-harness-evals.md](01-model-evals-vs-harness-evals.md), [evaluation/04-production-traces-feedback-loops-and-optimization.md](04-production-traces-feedback-loops-and-optimization.md) | 작업 단위, transcript, usage/logging artifact가 함께 있어야 harness eval이 가능하다 |
+| interactive 1턴은 누가 소유하는가 | [03-claude-code-project-overview.md](../02-runtime-and-session-start/03-claude-code-project-overview.md), [06-claude-code-query-engine-and-turn-lifecycle.md](../03-context-and-control/06-claude-code-query-engine-and-turn-lifecycle.md), [07-claude-code-end-to-end-scenarios.md](07-claude-code-end-to-end-scenarios.md) | interactive turn의 owner는 REPL 계열이고, 실제 turn loop는 별도 query layer에서 돈다 |
+| headless path는 interactive path와 무엇을 공유하는가 | [04-claude-code-architecture-map.md](../02-runtime-and-session-start/04-claude-code-architecture-map.md), [06-claude-code-query-engine-and-turn-lifecycle.md](../03-context-and-control/06-claude-code-query-engine-and-turn-lifecycle.md) | core query loop는 공유되지만 state ownership과 reporting surface는 다르다 |
+| remote/direct-connect/bridge는 어떻게 갈라지는가 | [05-claude-code-runtime-modes-and-entrypoints.md](../02-runtime-and-session-start/05-claude-code-runtime-modes-and-entrypoints.md), [05-claude-code-remote-bridge-server-and-upstream-proxy.md](../06-boundaries-deployment-and-safety/05-claude-code-remote-bridge-server-and-upstream-proxy.md), [07-claude-code-end-to-end-scenarios.md](07-claude-code-end-to-end-scenarios.md) | remote family는 entrypoint fan-out에서 먼저 갈라지고, direct-connect와 bridge는 서로 다른 배포/제어 계약을 가진다 |
+| resume와 persistence는 무엇을 복원하는가 | [06-claude-code-query-engine-and-turn-lifecycle.md](../03-context-and-control/06-claude-code-query-engine-and-turn-lifecycle.md), [07-claude-code-persistence-config-and-migrations.md](../05-execution-continuity-and-integrations/07-claude-code-persistence-config-and-migrations.md), [07-claude-code-end-to-end-scenarios.md](07-claude-code-end-to-end-scenarios.md) | 저장된 transcript와 session metadata가 restore control plane을 통해 live state로 다시 주입된다 |
+| task, transcript, eval artifact는 어디서 만나는가 | [06-claude-code-task-model-and-background-execution.md](../05-execution-continuity-and-integrations/06-claude-code-task-model-and-background-execution.md), [01-model-evals-vs-harness-evals.md](01-model-evals-vs-harness-evals.md), [04-production-traces-feedback-loops-and-optimization.md](04-production-traces-feedback-loops-and-optimization.md) | 작업 단위, transcript, usage/logging artifact가 함께 있어야 harness eval이 가능하다 |
 
 ## source of truth와 integration seam를 먼저 구분하라
 
@@ -353,29 +353,29 @@ bridge는 giant supervisor 파일이므로 아래 앵커로만 접근하는 편�
 | direct connect가 넘기는 계약은 무엇인가 | `src/server/createDirectConnectSession.ts` | `src/main.tsx` | session config artifact를 확인했을 때 |
 | resume와 persistence는 어떤 control plane이 artifact를 복원하는가 | `src/utils/conversationRecovery.ts` | `src/utils/sessionRestore.ts` | transcript loader, session switch, restore hook, 즉 저장된 대화가 live session state로 바뀌는 경계를 확인했을 때 |
 
-이 표는 `appendix/key-file-index.md`를 대체하지 않는다. appendix가 빠른 색인이라면, 이 장은 "어떤 benchmark 질문에 어떤 색인을 써야 하는가"를 정하는 메타 가이드다.
+이 표는 `08-reference/02-key-file-index.md`를 대체하지 않는다. appendix가 빠른 색인이라면, 이 장은 "어떤 benchmark 질문에 어떤 색인을 써야 하는가"를 정하는 메타 가이드다.
 
 ## 독자 유형별 최소 루트
 
 ### 신규 독자
 
 1. [00-how-to-read-this-book.md](../00-front-matter/01-how-to-read-this-book.md)
-2. [01-project-overview.md](../02-runtime-and-session-start/03-claude-code-project-overview.md)
-3. [02-architecture-map.md](../02-runtime-and-session-start/04-claude-code-architecture-map.md)
+2. [03-claude-code-project-overview.md](../02-runtime-and-session-start/03-claude-code-project-overview.md)
+3. [04-claude-code-architecture-map.md](../02-runtime-and-session-start/04-claude-code-architecture-map.md)
 4. 이 장
 
 ### interactive harness 설계자
 
-1. [03-runtime-modes-and-entrypoints.md](../02-runtime-and-session-start/05-claude-code-runtime-modes-and-entrypoints.md)
+1. [05-claude-code-runtime-modes-and-entrypoints.md](../02-runtime-and-session-start/05-claude-code-runtime-modes-and-entrypoints.md)
 2. [05-context-assembly-and-query-pipeline.md](../03-context-and-control/05-claude-code-context-assembly-and-query-pipeline.md)
-3. [06-query-engine-and-turn-lifecycle.md](../03-context-and-control/06-claude-code-query-engine-and-turn-lifecycle.md)
+3. [06-claude-code-query-engine-and-turn-lifecycle.md](../03-context-and-control/06-claude-code-query-engine-and-turn-lifecycle.md)
 4. 이 장
 
 ### remote/deployment 비교 독자
 
-1. [14-remote-bridge-server-and-upstreamproxy.md](../06-boundaries-deployment-and-safety/05-claude-code-remote-bridge-server-and-upstream-proxy.md)
+1. [05-claude-code-remote-bridge-server-and-upstream-proxy.md](../06-boundaries-deployment-and-safety/05-claude-code-remote-bridge-server-and-upstream-proxy.md)
 2. 이 장
-3. [17-end-to-end-scenarios.md](07-claude-code-end-to-end-scenarios.md)
+3. [07-claude-code-end-to-end-scenarios.md](07-claude-code-end-to-end-scenarios.md)
 
 ## 이 장에서 가져가야 할 질문
 

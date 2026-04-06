@@ -18,7 +18,7 @@
 - 외부 벤치마크 harness의 샘플러/큐/DB 설계 전부
 - human labeler 운영 프로세스의 조직적 측면
 
-이 장은 [01-model-evals-vs-harness-evals.md](01-model-evals-vs-harness-evals.md) 위에서 읽는 것이 좋고, [04-production-traces-feedback-loops-and-optimization.md](04-production-traces-feedback-loops-and-optimization.md)와 [../appendix/references.md](../00-front-matter/03-references.md)로 이어진다.
+이 장은 [01-model-evals-vs-harness-evals.md](01-model-evals-vs-harness-evals.md) 위에서 읽는 것이 좋고, [04-production-traces-feedback-loops-and-optimization.md](04-production-traces-feedback-loops-and-optimization.md)와 [03-references.md](../00-front-matter/03-references.md)로 이어진다.
 
 ## 자료와 독서 기준
 
@@ -42,8 +42,8 @@
 
 - [01-model-evals-vs-harness-evals.md](01-model-evals-vs-harness-evals.md)
 - [03-benchmarking-coding-harnesses.md](03-benchmarking-long-running-agent-harnesses.md)
-- [../execution/03-task-orchestration-and-long-running-execution.md](../05-execution-continuity-and-integrations/02-task-orchestration-and-long-running-execution.md)
-- [../12-task-model-and-background-execution.md](../05-execution-continuity-and-integrations/06-claude-code-task-model-and-background-execution.md)
+- [02-task-orchestration-and-long-running-execution.md](../05-execution-continuity-and-integrations/02-task-orchestration-and-long-running-execution.md)
+- [06-claude-code-task-model-and-background-execution.md](../05-execution-continuity-and-integrations/06-claude-code-task-model-and-background-execution.md)
 
 ## evaluation vocabulary를 local artifact에 매핑하기
 

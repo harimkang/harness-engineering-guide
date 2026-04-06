@@ -1,4 +1,4 @@
-# 03. task orchestration과 long-running execution
+# 02. task orchestration과 long-running execution
 
 ## 장 요약
 
@@ -19,7 +19,7 @@
 - remote execution backend protocol의 세부
 - team/swarm orchestration 전체
 
-이 장은 [01-ui-transcripts-and-operator-control.md](../04-interfaces-and-operator-surfaces/05-ui-transcripts-and-operator-control.md), [02-state-resumability-and-session-ownership.md](01-state-resumability-and-session-ownership.md), [../12-task-model-and-background-execution.md](06-claude-code-task-model-and-background-execution.md)와 이어진다.
+이 장은 [05-ui-transcripts-and-operator-control.md](../04-interfaces-and-operator-surfaces/05-ui-transcripts-and-operator-control.md), [02-state-resumability-and-session-ownership.md](01-state-resumability-and-session-ownership.md), [06-claude-code-task-model-and-background-execution.md](06-claude-code-task-model-and-background-execution.md)와 이어진다.
 
 ## 자료와 독서 기준
 
@@ -42,9 +42,9 @@
 
 함께 읽으면 좋은 장:
 
-- [../context/03-compaction-memory-and-handoff-artifacts.md](../03-context-and-control/03-compaction-memory-and-handoff-artifacts.md)
-- [../execution/02-state-resumability-and-session-ownership.md](01-state-resumability-and-session-ownership.md)
-- [../17-end-to-end-scenarios.md](../07-evaluation-and-synthesis/07-claude-code-end-to-end-scenarios.md)
+- [03-compaction-memory-and-handoff-artifacts.md](../03-context-and-control/03-compaction-memory-and-handoff-artifacts.md)
+- [01-state-resumability-and-session-ownership.md](01-state-resumability-and-session-ownership.md)
+- [07-claude-code-end-to-end-scenarios.md](../07-evaluation-and-synthesis/07-claude-code-end-to-end-scenarios.md)
 
 ## 먼저 shared vocabulary를 만든다
 

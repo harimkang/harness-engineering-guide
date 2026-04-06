@@ -18,7 +18,7 @@
 - 모델 자체의 학습 데이터, preference tuning, base capability 분석
 - 평가 자동화 파이프라인의 CI wiring 세부
 
-이 내용은 [03-benchmarking-coding-harnesses.md](03-benchmarking-long-running-agent-harnesses.md), [04-production-traces-feedback-loops-and-optimization.md](04-production-traces-feedback-loops-and-optimization.md), [../appendix/references.md](../00-front-matter/03-references.md)에서 이어서 확장한다.
+이 내용은 [03-benchmarking-coding-harnesses.md](03-benchmarking-long-running-agent-harnesses.md), [04-production-traces-feedback-loops-and-optimization.md](04-production-traces-feedback-loops-and-optimization.md), [03-references.md](../00-front-matter/03-references.md)에서 이어서 확장한다.
 
 ## 자료와 독서 기준
 
@@ -41,10 +41,10 @@
 
 함께 읽으면 좋은 장:
 
-- [../context/01-context-as-an-operational-resource.md](../03-context-and-control/01-context-as-an-operational-resource.md)
-- [../execution/03-task-orchestration-and-long-running-execution.md](../05-execution-continuity-and-integrations/02-task-orchestration-and-long-running-execution.md)
-- [../safety/04-safety-autonomy-benchmark.md](../06-boundaries-deployment-and-safety/04-safety-autonomy-benchmark.md)
-- [../17-end-to-end-scenarios.md](07-claude-code-end-to-end-scenarios.md)
+- [01-context-as-an-operational-resource.md](../03-context-and-control/01-context-as-an-operational-resource.md)
+- [02-task-orchestration-and-long-running-execution.md](../05-execution-continuity-and-integrations/02-task-orchestration-and-long-running-execution.md)
+- [04-safety-autonomy-benchmark.md](../06-boundaries-deployment-and-safety/04-safety-autonomy-benchmark.md)
+- [07-claude-code-end-to-end-scenarios.md](07-claude-code-end-to-end-scenarios.md)
 
 ## 무엇을 고정하고 무엇을 측정하는가
 

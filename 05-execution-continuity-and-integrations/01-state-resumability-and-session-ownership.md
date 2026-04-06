@@ -1,4 +1,4 @@
-# 02. 상태, resumability, session ownership
+# 01. 상태, resumability, session ownership
 
 ## 장 요약
 
@@ -18,7 +18,7 @@
 - remote transport 프로토콜과 server-side session model 전부
 - context compaction 세부 알고리즘
 
-이 장은 [../context/03-compaction-memory-and-handoff-artifacts.md](../03-context-and-control/03-compaction-memory-and-handoff-artifacts.md), [../context/04-turn-loops-stop-hooks-and-recovery.md](../03-context-and-control/04-turn-loops-stop-hooks-and-recovery.md), [03-task-orchestration-and-long-running-execution.md](02-task-orchestration-and-long-running-execution.md)와 함께 읽는 것이 좋다.
+이 장은 [03-compaction-memory-and-handoff-artifacts.md](../03-context-and-control/03-compaction-memory-and-handoff-artifacts.md), [04-turn-loops-stop-hooks-and-recovery.md](../03-context-and-control/04-turn-loops-stop-hooks-and-recovery.md), [02-task-orchestration-and-long-running-execution.md](02-task-orchestration-and-long-running-execution.md)와 함께 읽는 것이 좋다.
 
 ## 자료와 독서 기준
 
@@ -39,9 +39,9 @@
 
 함께 읽으면 좋은 장:
 
-- [../13-persistence-config-and-migrations.md](07-claude-code-persistence-config-and-migrations.md)
-- [../09-state-ui-and-terminal-interaction.md](../04-interfaces-and-operator-surfaces/08-claude-code-state-ui-and-terminal-interaction.md)
-- [../16-risks-debt-and-observations.md](../06-boundaries-deployment-and-safety/06-claude-code-risks-debt-and-failure-modes.md)
+- [07-claude-code-persistence-config-and-migrations.md](07-claude-code-persistence-config-and-migrations.md)
+- [08-claude-code-state-ui-and-terminal-interaction.md](../04-interfaces-and-operator-surfaces/08-claude-code-state-ui-and-terminal-interaction.md)
+- [06-claude-code-risks-debt-and-failure-modes.md](../06-boundaries-deployment-and-safety/06-claude-code-risks-debt-and-failure-modes.md)
 
 ## owner와 substrate를 먼저 분리하라
 

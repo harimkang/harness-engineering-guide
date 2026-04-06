@@ -1,4 +1,4 @@
-# 01. UI, transcript, operator control
+# 05. UI, transcript, operator control
 
 ## 장 요약
 
@@ -18,7 +18,7 @@
 - remote session transport 세부
 - background task family의 상세 lifecycle 전부
 
-이 주제들은 [03-task-orchestration-and-long-running-execution.md](../05-execution-continuity-and-integrations/02-task-orchestration-and-long-running-execution.md), [04-human-oversight-trust-and-approval.md](../05-execution-continuity-and-integrations/03-human-oversight-trust-and-approval.md), [../09-state-ui-and-terminal-interaction.md](08-claude-code-state-ui-and-terminal-interaction.md)에서 각각 확장한다.
+이 주제들은 [02-task-orchestration-and-long-running-execution.md](../05-execution-continuity-and-integrations/02-task-orchestration-and-long-running-execution.md), [03-human-oversight-trust-and-approval.md](../05-execution-continuity-and-integrations/03-human-oversight-trust-and-approval.md), [08-claude-code-state-ui-and-terminal-interaction.md](08-claude-code-state-ui-and-terminal-interaction.md)에서 각각 확장한다.
 
 ## 자료와 독서 기준
 
@@ -44,10 +44,10 @@
 
 함께 읽으면 좋은 장:
 
-- [../context/04-turn-loops-stop-hooks-and-recovery.md](../03-context-and-control/04-turn-loops-stop-hooks-and-recovery.md)
-- [03-task-orchestration-and-long-running-execution.md](../05-execution-continuity-and-integrations/02-task-orchestration-and-long-running-execution.md)
-- [04-human-oversight-trust-and-approval.md](../05-execution-continuity-and-integrations/03-human-oversight-trust-and-approval.md)
-- [../17-end-to-end-scenarios.md](../07-evaluation-and-synthesis/07-claude-code-end-to-end-scenarios.md)
+- [04-turn-loops-stop-hooks-and-recovery.md](../03-context-and-control/04-turn-loops-stop-hooks-and-recovery.md)
+- [02-task-orchestration-and-long-running-execution.md](../05-execution-continuity-and-integrations/02-task-orchestration-and-long-running-execution.md)
+- [03-human-oversight-trust-and-approval.md](../05-execution-continuity-and-integrations/03-human-oversight-trust-and-approval.md)
+- [07-claude-code-end-to-end-scenarios.md](../07-evaluation-and-synthesis/07-claude-code-end-to-end-scenarios.md)
 
 ## REPL은 view가 아니라 owner-facing runtime surface다
 

@@ -44,8 +44,8 @@
 
 - [02-tasks-trials-transcripts-and-graders.md](02-tasks-trials-transcripts-and-graders.md)
 - [05-claude-code-benchmark-framework.md](05-harness-benchmark-framework.md)
-- [../16-risks-debt-and-observations.md](../06-boundaries-deployment-and-safety/06-claude-code-risks-debt-and-failure-modes.md)
-- [../appendix/references.md](../00-front-matter/03-references.md)
+- [06-claude-code-risks-debt-and-failure-modes.md](../06-boundaries-deployment-and-safety/06-claude-code-risks-debt-and-failure-modes.md)
+- [03-references.md](../00-front-matter/03-references.md)
 
 ## Claude Code의 trace stack
 

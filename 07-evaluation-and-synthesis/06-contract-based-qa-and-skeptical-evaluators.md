@@ -31,8 +31,8 @@ long-running coding harness에서 QA를 마지막 단계의 smoke test로만 두
 - [./02-tasks-trials-transcripts-and-graders.md](02-tasks-trials-transcripts-and-graders.md)
 - [./03-benchmarking-coding-harnesses.md](03-benchmarking-long-running-agent-harnesses.md)
 - [./04-production-traces-feedback-loops-and-optimization.md](04-production-traces-feedback-loops-and-optimization.md)
-- [../execution/03-task-orchestration-and-long-running-execution.md](../05-execution-continuity-and-integrations/02-task-orchestration-and-long-running-execution.md)
-- [../15-code-reading-guide.md](08-benchmark-oriented-code-reading-guide.md)
+- [02-task-orchestration-and-long-running-execution.md](../05-execution-continuity-and-integrations/02-task-orchestration-and-long-running-execution.md)
+- [08-benchmark-oriented-code-reading-guide.md](08-benchmark-oriented-code-reading-guide.md)
 
 외부 프레이밍:
 
@@ -170,7 +170,7 @@ contract-based QA와 skeptical evaluator는 long-running coding harness에서 ev
 
 1. [evaluation/02-tasks-trials-transcripts-and-graders.md](02-tasks-trials-transcripts-and-graders.md)
    grading input과 rule vocabulary를 먼저 잡는다.
-2. [execution/03-task-orchestration-and-long-running-execution.md](../05-execution-continuity-and-integrations/02-task-orchestration-and-long-running-execution.md)
+2. [02-task-orchestration-and-long-running-execution.md](../05-execution-continuity-and-integrations/02-task-orchestration-and-long-running-execution.md)
    chunking과 handoff artifact를 본다.
 3. [evaluation/04-production-traces-feedback-loops-and-optimization.md](04-production-traces-feedback-loops-and-optimization.md)
    calibration loop를 본다.
