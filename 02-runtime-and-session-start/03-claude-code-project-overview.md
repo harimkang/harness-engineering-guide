@@ -82,15 +82,10 @@ Anthropic의 [Building effective agents](https://www.anthropic.com/engineering/b
 
 이 저장소를 runtime shell로 읽을 때 놓치기 쉬운 축이 하나 더 있다. 그것은 "세션이 무엇을 먼저 읽고 무엇을 override로 받아들이는가"다. 공개 코드만으로는 settings precedence나 repo instruction discovery의 전체 규칙이 모두 드러나지 않지만, Anthropic 공식 문서와 OpenAI의 `AGENTS.md` 문서는 이 축이 현대 agent shell에서 별도 설계면임을 분명히 보여 준다.
 
-- Anthropic의 settings 문서는 user, project, local project, managed settings 같은 scope를 별도로 두고, managed policy가 override 불가능한 상위 제약이 될 수 있음을 보여 준다.
-- 같은 문서는 hooks, subagent configuration, plugin configuration을 settings surface와 같은 체계 안에서 다룬다.
-- Anthropic의 CLI reference는 `--append-system-prompt` 같은 세션별 prompt overlay가 별도 입력면임을 보여 준다.
-- OpenAI의 `AGENTS.md` 문서는 repo root에서 현재 작업 디렉터리까지 instruction chain을 재구성하는 방식을 공식화한다. `CLAUDE.md`와 직접 동일한 메커니즘이라고 단정할 수는 없지만, repo-level instructions가 startup-discovered input surface라는 점에서는 같은 부류다.
-- Anthropic의 Agent SDK overview는 Claude Code와 같은 agent loop, tools, context management가 headless owner 아래에서도 재사용된다고 설명한다. 즉 subagent나 SDK path 역시 startup contract의 일부 입력을 달리 받을 수 있다.
-
 해석:
 
 - 따라서 Claude Code를 "터미널 UI가 있는 CLI"로만 읽으면 안 되고, 세션 시작 전에 어떤 입력면이 결합되는 product shell로 읽어야 한다.
+- 세부 scope와 precedence는 [06-claude-code-session-startup-trust-and-initialization.md](06-claude-code-session-startup-trust-and-initialization.md)와 [09-instruction-surfaces-settings-hooks-claude-md-subagents.md](../04-interfaces-and-operator-surfaces/09-instruction-surfaces-settings-hooks-claude-md-subagents.md)에서 더 직접적으로 다룬다.
 
 ## 이 책을 관통하는 러닝 예시
 

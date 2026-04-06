@@ -331,20 +331,20 @@ for await (const update of toolUpdates) {
 
 ## trace와 비용 관점의 관찰 포인트
 
-이 장의 local code는 tracing schema를 직접 구현하지는 않지만, 운영 관찰 포인트를 어디에 둘지는 꽤 분명하게 보여 준다.
+이 장의 local code는 tracing schema를 직접 구현하지는 않지만, query path 안에서 어떤 지점이 관찰 포인트가 되는지는 꽤 분명하게 보여 준다. 여기서는 `context assembly`와 `query shaping`에 붙는 관찰 seam만 다룬다. multi-turn lifecycle, replay boundary, resume event 해석은 [06-claude-code-query-engine-and-turn-lifecycle.md](06-claude-code-query-engine-and-turn-lifecycle.md)에서 더 직접적으로 다룬다.
 
 | 관찰 포인트 | local signal | trace/event로 읽을 수 있는 것 |
 | --- | --- | --- |
 | conversation seed assembly | `getSystemContext()`, `getUserContext()` | stable prefix 길이, repo-instruction load, cacheable context candidate |
 | query config snapshot | `buildQueryConfig()` | turn-scoped feature gate, session binding, environment variant |
-| pressure control chain | tool-result budget, snip, microcompact, collapse, autocompact | context shrink 이유, compaction 빈도, replay boundary |
+| pressure control chain | tool-result budget, snip, microcompact, collapse, autocompact | context shrink 이유, compaction 빈도 |
 | token budget decision | `checkTokenBudget()` | continuation 수, diminishing return stop, turn cost escalation |
 | tool-result replacement | content replacement record | transcript 대비 model-visible working set 차이 |
 
 해석:
 
 - OpenAI tracing 문서가 말하는 agent-run event record와 OpenTelemetry GenAI span/event 관점으로 보면, 위 지점들은 query path의 핵심 observation seam이다.
-- 이 장의 범위에서는 정확한 schema를 확정하지 않지만, 무엇을 event로 남기고 무엇을 span 경계로 볼지는 이 정도 수준에서 먼저 정리할 수 있다.
+- 이 장의 범위에서는 정확한 schema를 확정하지 않지만, context assembly와 query shaping에 어떤 event 후보가 붙는지는 이 정도 수준에서 먼저 정리할 수 있다.
 
 ## 05-09를 함께 읽는 mini walkthrough
 
