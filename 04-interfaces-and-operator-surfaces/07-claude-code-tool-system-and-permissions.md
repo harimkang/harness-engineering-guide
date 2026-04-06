@@ -29,7 +29,7 @@ Anthropic Platform Docs의 [Agent SDK overview](https://platform.claude.com/docs
 - Anthropic Platform Docs, [Agent SDK overview](https://platform.claude.com/docs/en/agent-sdk/overview), 접근 시점 2026-04-01
 
 Sources / evidence notes:
-이 장의 reader-facing 외부 검증 축은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 Part 4 cluster를 따른다. tool contract와 capability exposure는 `S3`, `S10`, `S12`, `S14`, `S15`, `S25`를 우선 사용하고, MCP authorization/roots/elicitation과 같은 protocol-adjacent 설명은 `S16`, `S17`, `S18`, `S19`, `S20`을 함께 본다. sandboxing framing은 현재 registry의 `S5`를 보조적으로 참조한다.
+이 장의 reader-facing 외부 검증 축은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 Part 4 cluster를 따른다. tool contract와 capability exposure는 `S3`, `S9`, `S10`, `S12`, `S14`, `S15`, `S25`를 우선 사용하고, MCP authorization/roots/elicitation과 같은 protocol-adjacent 설명은 `S16`, `S17`, `S18`, `S19`, `S20`을 함께 본다. sandboxing framing은 현재 registry의 `S5`를 보조적으로 참조한다.
 
 이 장은 다음을 다룬다.
 

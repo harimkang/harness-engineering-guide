@@ -141,6 +141,9 @@ official docs 또는 spec으로 되돌아가 확인한다.
   - verified 2026-04-06
   - planner/generator/evaluator split, skeptical evaluator tuning, contract-based QA,
     cost/latency trade-offs
+- `S9` [Claude Code auto mode: a safer way to skip permissions](https://www.anthropic.com/engineering/claude-code-auto-mode)
+  - verified 2026-04-06
+  - auto mode, approval burden, permission-surface redistribution, autonomy/safety trade-off
 - `S32` [Quantifying infrastructure noise in agentic coding evals](https://www.anthropic.com/engineering/infrastructure-noise)
   - volatility-sensitive
   - infra noise, flakiness, benchmark realism

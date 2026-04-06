@@ -36,7 +36,7 @@ Anthropic의 [Beyond permission prompts: making Claude Code more secure and auto
 - Pan et al., [Natural-Language Agent Harnesses](https://arxiv.org/abs/2603.25723), 2026-03-26, under review
 
 Sources / evidence notes:
-이 장의 reader-facing 외부 검증 축은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 Part 6 cluster를 따른다. remote auth/authz, bridge/proxy boundary, remote MCP semantics에는 `S13`, `S15`, `S16`, `S17`, `S20`, `S25`, `S30`, `S31`을 우선 사용한다. `P1`은 remote boundary 비교의 보조 프레임으로만 사용한다.
+이 장의 reader-facing 외부 검증 축은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 Part 6 cluster를 따른다. remote auth/authz, bridge/proxy boundary, remote MCP semantics에는 `S9`, `S13`, `S15`, `S16`, `S17`, `S20`, `S25`, `S30`, `S31`을 우선 사용한다. `P1`은 remote boundary 비교의 보조 프레임으로만 사용한다.
 
 `src/screens/REPL.tsx`는 remote, direct connect, SSH가 실제로 같은 local operator surface에 붙는다는 사실을 보여 주는 attach-point 근거로만 제한적으로 사용한다.
 

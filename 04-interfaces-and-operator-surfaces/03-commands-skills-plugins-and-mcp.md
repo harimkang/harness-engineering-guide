@@ -40,7 +40,7 @@
 - Anthropic Platform Docs, [Agent SDK overview](https://platform.claude.com/docs/en/agent-sdk/overview), 확인 2026-04-02
 
 Sources / evidence notes:
-이 장의 reader-facing 외부 검증 축은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 Part 4 cluster를 따른다. 핵심 source ID는 `S3`, `S10`, `S11`, `S12`, `S14`, `S15`, `S16`, `S17`, `S18`, `S19`, `S20`, `S25`다. `S2`는 shared tooling과 orchestration substrate를 설명하는 보조 비교 프레임으로만 사용한다.
+이 장의 reader-facing 외부 검증 축은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 Part 4 cluster를 따른다. 핵심 source ID는 `S3`, `S9`, `S10`, `S11`, `S12`, `S14`, `S15`, `S16`, `S17`, `S18`, `S19`, `S20`, `S25`다. `S2`는 shared tooling과 orchestration substrate를 설명하는 보조 비교 프레임으로만 사용한다.
 
 함께 읽으면 좋은 장:
 

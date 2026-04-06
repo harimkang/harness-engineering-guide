@@ -40,7 +40,7 @@
 - Lee et al., [Meta-Harness: End-to-End Optimization of Model Harnesses](https://arxiv.org/abs/2603.28052), 2026-03-30
 
 Sources / evidence notes:
-이 장의 reader-facing 외부 검증 축은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 Part 6 cluster를 따른다. 핵심 source ID는 `S5`, `S15`, `S20`, `S25`, `S30`, `S31`이며, `S7`은 safety/autonomy benchmark를 eval language와 연결하는 보조 프레임으로만 사용한다.
+이 장의 reader-facing 외부 검증 축은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 Part 6 cluster를 따른다. 핵심 source ID는 `S5`, `S9`, `S15`, `S20`, `S25`, `S30`, `S31`이며, `S7`은 safety/autonomy benchmark를 eval language와 연결하는 보조 프레임으로만 사용한다.
 
 함께 읽으면 좋은 장:
 
