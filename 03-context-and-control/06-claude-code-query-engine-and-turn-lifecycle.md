@@ -4,7 +4,7 @@
 
 control loop를 읽을 때는 `한 turn 안에서 무슨 일이 일어나는가`와 `여러 turn에 걸쳐 어떤 상태가 유지되는가`를 분리해야 한다. 이 장은 그 문제를 Claude Code 사례에 적용한다. 핵심은 `src/query.ts`와 `src/QueryEngine.ts`를 같은 종류의 코드로 보지 않는 것이다. `src/query.ts`는 한 turn 안의 loop, recovery, continuation을 다루고, `src/QueryEngine.ts`는 여러 turn에 걸쳐 메시지, usage, permission denial, read-file cache 같은 in-memory state를 보존하며 그 loop를 감싼다. transcript는 그 state의 일부라기보다, `QueryEngine`이 별도로 기록 책임을 지는 persistence 산출물에 가깝다.
 
-해석: Claude Code의 제어 구조는 하나의 거대한 loop로 환원되지 않는다. `src/query.ts`는 turn-local control plane이고, `src/QueryEngine.ts`는 conversation-global state owner다. `src/query/stopHooks.ts`는 모델 응답 뒤의 post-model control branch를 담당하고, interactive REPL은 같은 `query()`를 직접 쓰되 `QueryEngine`을 거치지 않는다. 따라서 이 장은 `공유된 turn loop`와 `분리된 state owner`를 구분하는 사례 장이다.
+해석: Claude Code의 제어 구조는 하나의 거대한 loop로 환원되지 않는다. `src/query.ts`는 turn-local control plane이고, `src/QueryEngine.ts`는 conversation-global state owner다. `src/query/stopHooks.ts`는 모델 응답 뒤의 post-model control branch를 담당하고, interactive REPL은 같은 `query()`를 직접 쓰되 `QueryEngine`을 거치지 않는다. 따라서 이 장은 `공유된 turn loop`와 `분리된 state owner`를 구분하는 사례 장이자, turn lifecycle을 어떤 trace schema와 replay point로 관찰할지 제안할 수 있는 장이다.
 
 ## 원칙: long-running agent의 control loop는 무엇을 분리해야 하는가
 
@@ -12,6 +12,9 @@ control loop를 읽을 때는 `한 turn 안에서 무슨 일이 일어나는가`
 
 원칙: [Meta-Harness: End-to-End Optimization of Model Harnesses](https://arxiv.org/abs/2603.28052) (submitted 2026-03-30)는 모델 성능이 weights뿐 아니라 harness code, 즉 무엇을 저장하고 무엇을 다시 제시할지 결정하는 코드에 달려 있다고 말한다.  
 해석: 이 장은 그 관점을 Claude Code의 local control loop에 적용한다. `src/QueryEngine.ts`, `src/query.ts`, `src/query/stopHooks.ts`는 모두 "모델 호출 주변의 상태와 전이를 누가 관리하는가"라는 질문의 일부다.
+
+원칙: OpenAI tracing 문서는 agent run 동안 LLM generations, tool calls, handoffs, guardrails, custom events를 포괄적으로 기록한다고 설명하고, `workflow_name`, `trace_id`, `group_id` 같은 상위 식별자를 둔다. OpenTelemetry GenAI semantic conventions는 agent spans, model spans, events를 별도 신호로 둔다.
+해석: Claude Code의 turn lifecycle도 같은 관찰 프레임으로 다시 그릴 수 있다. 이 장에서는 local code를 기준으로 어떤 지점이 trace/span/event 후보인지 제안한다.
 
 ## 이 장의 직접 근거와 범위
 
@@ -27,6 +30,8 @@ control loop를 읽을 때는 `한 turn 안에서 무슨 일이 일어나는가`
 #### 공개 설계 원칙
 
 - Anthropic, [Effective harnesses for long-running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents), 2025-11-26
+- OpenAI, [Tracing](https://openai.github.io/openai-agents-python/tracing/), verified 2026-04-06
+- OpenTelemetry, [Generative AI semantic conventions](https://opentelemetry.io/docs/specs/semconv/gen-ai/), verified 2026-04-06
 
 #### 추가 자료
 
@@ -88,6 +93,28 @@ sequenceDiagram
 
 제품 사실: `QueryEngine`은 `query()`를 직접 재구현하지 않는다. turn 실행은 `src/query.ts`에 위임하고, 그 앞뒤에서 input 정규화, in-memory state 갱신, transcript persistence, usage 축적, permission denial 보고, 최종 result emission을 담당한다.  
 해석: 이 구조는 "한 conversation의 상태 owner"와 "한 turn의 loop"를 의도적으로 분리해 둔 형태다.
+
+## turn lifecycle를 trace schema로 보면
+
+아래 표는 local code에 OpenAI tracing이나 OpenTelemetry schema가 이미 내장돼 있다는 뜻이 아니다. 공식 문서가 제안하는 trace/span/event 개념을 Claude Code의 local control structure에 대응시켜 본 해석이다.
+
+| lifecycle surface | local source of truth | 관찰 primitive 제안 | replay/resume에서 중요한 이유 |
+| --- | --- | --- | --- |
+| conversation acceptance | `submitMessage()` | trace 시작 또는 상위 agent span 시작 | accepted input 지점이 persistence보다 앞서는지 뒤서는지 판단할 수 있다 |
+| turn execution | `query()` 호출 한 번 | child agent span 또는 turn span | 한 conversation 안의 turn 경계를 분리할 수 있다 |
+| model generation | `query.ts` 내부 sampling | model span / generation span | token usage, stop reason, retry를 분리해서 볼 수 있다 |
+| tool execution | wrapped `canUseTool`와 tool call path | function/tool span | denial, latency, retries를 tool 단위로 묶을 수 있다 |
+| post-model control | `handleStopHooks()` | custom event 또는 control span | stop hook blocking, preventContinuation을 transcript와 분리해 관찰할 수 있다 |
+| continuation | `token_budget_continuation`, `next_turn` | turn event | 같은 user turn 안의 추가 iteration인지 구분할 수 있다 |
+| transcript flush / state update | `recordTranscript()`, `mutableMessages` update | persistence event | replay 가능한 boundary가 어디인지 표시할 수 있다 |
+| recovery / resume | `conversationRecovery.ts`, interrupted turn handling | resume event | 어디서 semantic re-entry가 일어났는지 추적할 수 있다 |
+
+OpenAI tracing 문서의 `group_id`는 같은 conversation을 묶는 상위 식별자로 읽을 수 있고, `trace_id`는 개별 run 또는 session-scoped execution 식별자로 읽을 수 있다. 이는 Claude Code의 `sessionId`, conversation transcript, resume chain을 관찰 단위로 재구성할 때 특히 유용하다.
+
+주의:
+
+- 이는 source-derived inference다. Claude Code 공개 사본이 정확히 이 schema를 채택했다는 뜻은 아니다.
+- OpenAI tracing 문서가 generation/tool span에 민감한 input/output이 들어갈 수 있다고 경고하므로, 실제 계측을 붙인다면 masking 규칙을 먼저 정의해야 한다.
 
 ## 제품 사실 1: `QueryEngine`은 conversation-global state owner다
 

@@ -2,7 +2,7 @@
 
 ## 장 요약
 
-긴 세션을 운영한다는 것은 결국 무엇을 버리고 무엇을 남길지 결정하는 일이다. Claude Code는 이 문제를 하나의 "memory 기능"으로 뭉개지 않고, 현재 turn을 살리는 compaction, 반복적으로 다시 불러올 사실을 남기는 memory, 다음 owner가 복구에 사용할 transcript와 resume artifact를 분리한다. 이 장은 이 세 층을 저장 위치가 아니라 시간축과 owner transfer 기준으로 다시 묶어 읽는다.
+긴 세션을 운영한다는 것은 결국 무엇을 버리고 무엇을 남길지 결정하는 일이다. Claude Code는 이 문제를 하나의 "memory 기능"으로 뭉개지 않고, 현재 turn을 살리는 compaction, 반복적으로 다시 불러올 사실을 남기는 memory, 다음 owner가 복구에 사용할 transcript와 resume artifact를 분리한다. 여기에 checkpoint와 subagent handoff를 구분 축으로 더하면, 같은 "이어짐"도 서로 다른 owner transfer 문제라는 점이 더 선명해진다. 이 장은 이 다섯 층을 저장 위치가 아니라 시간축과 owner transfer 기준으로 다시 묶어 읽는다.
 
 ## 범위와 비범위
 
@@ -11,7 +11,7 @@
 - context 압력 완화를 위한 compaction 계층
 - auto-memory와 team memory가 transcript와 다른 목적을 갖는 이유
 - transcript, content replacement, resume state가 handoff artifact로 작동하는 방식
-- 현재 turn, 다음 turn, 다음 session이라는 세 시간축을 구분하는 이유
+- 현재 turn, 다음 turn, 다음 session, 다음 owner라는 시간축을 구분하는 이유
 
 이 장이 다루지 않는 것:
 
@@ -44,6 +44,8 @@
 - Anthropic, [Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents), 2025-09-29
 - Anthropic, [Effective harnesses for long-running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents), 2025-11-26
 - Anthropic, [Harness design for long-running application development](https://www.anthropic.com/engineering/harness-design-long-running-apps), 2026-03-24
+- LangGraph Docs, [Persistence](https://docs.langchain.com/oss/python/langgraph/persistence), verified 2026-04-06
+- LangGraph Docs, [Interrupts](https://docs.langchain.com/oss/python/langgraph/interrupts), verified 2026-04-06
 - Pan et al., [Natural-Language Agent Harnesses](https://arxiv.org/abs/2603.25723), 2026-03-26, under review
 
 함께 읽으면 좋은 장:
@@ -53,19 +55,24 @@
 - [../execution/02-state-resumability-and-session-ownership.md](../05-execution-continuity-and-integrations/01-state-resumability-and-session-ownership.md)
 - [../appendix/references.md](../00-front-matter/03-references.md)
 
-## 세 가지 시간축 답변
+## 다섯 가지 시간축 답변
 
 | 전략 | 질문 | 대표 구조 | owner transfer 기준 |
 | --- | --- | --- | --- |
 | compaction | "지금 window를 어떻게 살릴까?" | `trySessionMemoryCompaction()`, `compactConversation()` | 같은 owner 안에서 현재 turn을 계속 이어 간다 |
 | memory | "다음 turn이나 다음 날에도 다시 쓸 사실은 무엇인가?" | `memdir/*`, `extractMemories`, `autoDream` | 현재 owner가 추려서 durable note로 남긴다 |
+| checkpoint | "같은 engine이 정확히 어느 지점에서 다시 시작할 것인가?" | LangGraph `StateSnapshot`, checkpointer 같은 명시적 snapshot 개념 | 대체로 같은 owner와 같은 runtime이 재개한다 |
 | handoff artifact | "다음 owner가 무엇을 받아야 이어서 일할 수 있는가?" | transcript JSONL, content replacements, restore state | owner가 바뀌거나 세션이 끊겨도 재시작 가능해야 한다 |
+| subagent handoff | "하위 owner에게 어떤 좁은 작업 packet을 넘길 것인가?" | task description, tool 제한, output contract, scoped overlay | 부모 owner가 child owner에게 제한된 문맥만 넘긴다 |
 
-이 셋을 구분하지 않으면 흔히 두 가지 오독이 생긴다.
+이 다섯 층을 구분하지 않으면 흔히 몇 가지 오독이 생긴다.
 여기서 `owner transfer`라는 표현 역시 코드 안의 공식 타입명이 아니라, transcript, resume, worktree/session restore 경로를 하나의 설계 단위로 읽기 위한 해석 용어다.
 
 - compaction이 곧 memory라고 생각해 현재 turn을 살리는 기술과 장기 기억을 같은 것으로 본다.
+- checkpoint와 handoff artifact를 같은 것으로 생각해 "같은 engine 재개"와 "다음 owner 이해"를 혼동한다.
 - transcript를 단순 로그라고 생각해 resume/handoff contract를 문서에서 놓친다.
+
+여기서 checkpoint는 비교 프레임이다. LangGraph persistence 문서는 checkpointer가 thread마다 checkpoint를 저장하고, 각 super-step 경계마다 `StateSnapshot`을 남겨 human-in-the-loop, time travel, fault-tolerant execution을 가능하게 한다고 설명한다. Claude Code 공개 사본은 LangGraph처럼 `checkpoint`라는 first-class object를 직접 노출하지 않지만, 바로 그 사실이 handoff artifact와 checkpoint를 구분해 읽어야 하는 이유가 된다.
 
 ## Claude Code는 먼저 "지금 세션"을 살린다
 
@@ -203,6 +210,8 @@ export async function recordContentReplacement(
 
 이것이 중요한 이유는 resume 때 "무슨 말을 했는가"만 복구하면 충분하지 않기 때문이다. 어떤 tool result가 대체되었고, 어떤 chain boundary가 생겼는지까지 복구해야 같은 session semantics가 유지된다.
 
+checkpoint와 handoff artifact의 차이도 여기서 드러난다. checkpoint는 보통 engine이 자기 자신을 재개하기 위해 남기는 구조적 snapshot이고, handoff artifact는 다음 owner가 이해할 수 있도록 의미를 복구해 주는 bundle이다. LangGraph 문서가 `thread_id`와 checkpoint를 resume pointer로 쓰는 반면, Claude Code 공개 사본은 transcript chain, restore state, conversation recovery를 조합해 resume contract를 만든다. 둘 다 continuity를 돕지만, 설명 단위가 다르다.
+
 ## resume는 단순 파일 재로드가 아니라 의미 복구다
 
 `src/utils/conversationRecovery.ts`는 resume에 앞서 serialized transcript를 그대로 믿지 않는다. unresolved tool use, orphaned thinking-only assistant message, whitespace-only assistant message를 정리하고, mid-turn interruption이면 synthetic continuation message까지 붙인다.
@@ -219,6 +228,8 @@ if (internalState.kind === 'interrupted_turn') {
   }))
 }
 ```
+
+LangGraph interrupts 문서와 비교하면 이 차이는 더 선명해진다. LangGraph는 interrupt가 발생하면 persistence layer에 현재 state를 저장하고, 같은 `thread_id`와 `Command(resume=...)`로 다시 진입하도록 한다. Claude Code 공개 사본의 resume path는 이와 같은 first-class interrupt primitive 대신 transcript filtering, synthetic continuation, sidecar state restore를 조합해 semantic re-entry를 만든다. 즉 checkpoint-like resume와 handoff-like resume는 구현 형태부터 다를 수 있다.
 
 그 다음 `restoreSessionStateFromLog()`는 file history, attribution, context-collapse commit log, todo state를 복원한다.
 
@@ -239,7 +250,7 @@ export function restoreSessionStateFromLog(
 
 즉 handoff artifact는 transcript 한 파일이 아니라, 다음 owner가 의미적으로 같은 session을 재개할 수 있게 만드는 복합 bundle이다.
 
-## 시간축으로 보면 세 층의 관계가 분명해진다
+## 시간축으로 보면 다섯 층의 관계가 분명해진다
 
 ```mermaid
 flowchart LR
@@ -251,6 +262,12 @@ flowchart LR
 ```
 
 이 다이어그램에서 왼쪽 가지는 "현재 turn을 살리는" 경로이고, 아래쪽 오른쪽은 "다음 owner나 다음 날을 돕는" 경로다. 같은 artifact family처럼 보여도 실제 책임은 다르다.
+
+- compaction은 현재 owner의 현재 window를 살린다.
+- memory는 이후 owner에게도 도움이 될 수 있는 사실을 별도로 남긴다.
+- checkpoint는 같은 engine이 어느 boundary에서 재개할지 정한다.
+- handoff artifact는 다음 owner가 의미적으로 같은 session을 재개할 수 있게 한다.
+- subagent handoff는 전체 session을 넘기지 않고 좁은 작업만 위임한다.
 
 ## 대표 failure mode
 
@@ -268,6 +285,7 @@ flowchart LR
 - Claude Code는 compaction과 memory를 별도 코드 경로로 구현한다.
 - transcript와 content replacement는 resume semantics를 위해 별도 저장된다.
 - recovery는 raw log 재로드가 아니라 invalid state filtering과 synthetic continuation을 포함한다.
+- checkpoint와 handoff artifact는 같은 continuity 장치가 아니라, 서로 다른 owner transition을 설명하는 언어다.
 
 원칙:
 
@@ -275,12 +293,14 @@ flowchart LR
 - memory는 transcript의 축약본이 아니라 selection layer여야 한다.
 - handoff artifact는 단순 저장보다 "같은 semantics로 재개 가능한가"를 기준으로 설계해야 한다.
 - compaction과 reset은 같은 계열의 continuity 기술처럼 보여도 다른 failure mode를 푼다.
+- subagent handoff는 full transcript replay보다 더 좁은 delegation contract로 설명해야 한다.
 
 해석:
 
 - Anthropic이 long-running harness에서 강조하는 clean state와 structured artifact 개념은 이 코드베이스에서 transcript, content replacement, restore state로 구체화된다.
 - Natural-Language Agent Harnesses가 말하는 durable artifact도 결국 이런 owner-transfer surface를 뜻한다.
 - Anthropic의 2026-03-24 글을 함께 읽으면, continuity 설계는 compaction vs reset의 선택 문제까지 포함한다는 점이 더 분명해진다.
+- LangGraph persistence/interrupts 문서와 비교하면 checkpoint-like resume와 handoff-like resume를 같은 용어로 뭉개면 안 된다는 점이 더 명확해진다.
 
 권고:
 
@@ -294,11 +314,12 @@ flowchart LR
 1. 이 시스템은 현재 turn을 살리는 compaction과 장기 기억을 남기는 memory를 구분하는가.
 2. transcript 외에 resume semantics를 유지하는 sidecar artifact가 있는가.
 3. interruption 이후 재개 시 invalid state를 정리하는 recovery 단계가 있는가.
-4. memory artifact가 transcript나 handoff artifact를 대체하지 않는다는 사실이 설계에 드러나는가.
+4. checkpoint와 handoff artifact의 차이가 설계와 문서 양쪽에서 드러나는가.
+5. memory artifact가 transcript나 handoff artifact를 대체하지 않는다는 사실이 설계에 드러나는가.
 
 ## 요약
 
-compaction, memory, handoff artifact는 비슷해 보이지만 서로 다른 시간축 문제에 답한다. Claude Code는 먼저 현재 window를 살리고, 별도로 durable memory를 정리하며, transcript와 sidecar state로 다음 owner의 resume contract를 만든다. 장기 실행형 하네스를 설계할 때 이 세 층을 분리하지 않으면 continuity 설명도, failure analysis도 곧바로 흔들린다.
+compaction, memory, checkpoint, handoff artifact, subagent handoff는 비슷해 보여도 서로 다른 시간축 문제에 답한다. Claude Code는 먼저 현재 window를 살리고, 별도로 durable memory를 정리하며, transcript와 sidecar state로 다음 owner의 resume contract를 만든다. 여기에 checkpoint-like resume pointer와 subagent delegation packet까지 구분해 두어야 continuity 설명도, failure analysis도 흔들리지 않는다.
 
 ## 대표 근거 읽기 순서
 

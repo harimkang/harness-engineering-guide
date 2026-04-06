@@ -38,6 +38,8 @@
 
 - Anthropic, [Effective harnesses for long-running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents), 2025-11-26
 - Anthropic, [Harness design for long-running application development](https://www.anthropic.com/engineering/harness-design-long-running-apps), 2026-03-24
+- LangGraph Docs, [Persistence](https://docs.langchain.com/oss/python/langgraph/persistence), verified 2026-04-06
+- LangGraph Docs, [Interrupts](https://docs.langchain.com/oss/python/langgraph/interrupts), verified 2026-04-06
 - Lee et al., [Meta-Harness: End-to-End Optimization of Model Harnesses](https://arxiv.org/abs/2603.28052), 2026-03-30
 
 함께 읽으면 좋은 장:
@@ -70,6 +72,8 @@ flowchart TD
 ```
 
 이 다이어그램의 핵심은 stop hook과 resume가 core loop 밖의 부가 기능이 아니라, 전이 규칙을 완성하는 필수 구성 요소라는 점이다.
+
+LangGraph 문서와 비교하면 용어 차이가 더 선명해진다. LangGraph에서는 interrupt가 graph execution을 멈추고 checkpointer가 exact graph state를 저장한 뒤, 같은 `thread_id`로 resume한다. Claude Code 공개 사본은 이와 똑같은 primitive 이름을 쓰지 않지만, stop hook, token-budget continuation, conversation recovery가 "어디서 멈추고 어떻게 다시 들어가는가"를 결정한다는 점에서는 같은 계열의 harness 문제를 푼다.
 
 ## turn 시작: immutable snapshot과 mutable working state를 분리한다
 
@@ -224,6 +228,15 @@ if (decision.action === 'continue') {
 ```
 
 이 구조가 시사하는 바는 분명하다. Claude Code의 loop는 model output을 수동으로 소비하는 것이 아니라, 종료 사유와 continuation 사유를 명시적으로 추적하는 control system이다.
+
+이 지점을 checkpoint/interrupt lens로 읽으면 다음처럼 정리할 수 있다.
+
+- `token_budget_continuation`은 같은 owner 안에서의 in-loop continuation이다.
+- `stop_hook_blocking`은 post-model governor가 loop를 되감는 경우다.
+- abort나 reactive compact retry는 failure-aware re-entry다.
+- `conversationRecovery.ts`는 loop 바깥에서 semantic resume를 만드는 외부 recovery path다.
+
+즉 "계속하기"와 "재개하기"를 같은 말로 뭉개면 control plane 설명이 곧바로 흐려진다.
 
 ## REPL과 QueryEngine은 같은 loop를 다르게 책임진다
 

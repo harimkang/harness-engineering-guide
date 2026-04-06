@@ -59,6 +59,14 @@
 이 표의 요지는 "context의 종류"가 파일 분류가 아니라 ownership 분류라는 점이다. 어떤 정보가 어디에 실려 있는지보다, 누가 그것을 만들고 언제까지 유지하는지가 더 중요하다.
 또한 이 다섯 class는 코드에 선언된 공식 enum이 아니라, 분산된 타입과 runtime state를 읽기 쉽게 묶은 분석 프레임이라는 점을 분명히 해 둘 필요가 있다.
 
+여기서 한 가지를 더 분명히 하자. checkpoint, handoff artifact, subagent handoff는 위 표의 다섯 class와 같은 "context class"가 아니다. 그것들은 여러 class를 묶어 옮기는 persistence 또는 delegation artifact다.
+
+- checkpoint는 같은 engine이 같은 owner 아래서 재개하기 위해 남기는 state snapshot에 가깝다.
+- handoff artifact는 다음 owner가 의미를 복구할 수 있게 만드는 번들에 가깝다.
+- subagent handoff는 그보다 더 좁은 delegation packet이다.
+
+즉 class와 artifact를 같은 표에서 같은 종류처럼 다루면 곧바로 leakage가 생긴다.
+
 ## system context와 user context는 conversation seed다
 
 `src/context.ts`에서 system context와 user context는 모두 `memoize()`로 감싼 async factory다. 둘 다 conversation 동안 상대적으로 안정적인 seed이며, 매 turn의 query loop 안에서 직접 mutable하게 바뀌지 않는다.
@@ -138,6 +146,8 @@ export type TaskStateBase = {
 ```
 
 이 구조는 task context가 "모델이 기억하는 것"이 아니라 "owner가 추적하는 작업 상태"라는 사실을 보여 준다. task의 output file, lifecycle status, notification 여부는 conversation memory와는 전혀 다른 차원의 맥락이다. background execution이나 subagent resume를 설명하려면 이 task-scoped context를 분리해서 읽어야 한다.
+
+subagent handoff는 바로 여기와 맞닿아 있다. 하위 owner에게 넘기는 것은 전체 conversation memory가 아니라, task description, tool 제한, output contract, 필요한 일부 overlay처럼 더 좁은 작업 packet인 경우가 많다. 그래서 subagent handoff를 transcript 전체나 global memory와 같은 층으로 취급하면 안 된다.
 
 ## environment context는 문자열이 아니라 실행 위치와 정책의 묶음이다
 
@@ -223,6 +233,7 @@ const systemPrompt = asSystemPrompt([
 
 - Anthropic이 말하는 context engineering의 핵심은 더 많은 정보를 넣는 기법이 아니라, 정보의 class와 boundary를 설계하는 작업에 가깝다.
 - Claude Code는 이 구분을 타입과 resume artifact 수준에서 드러내기 때문에 교육용 사례로 적합하다.
+- checkpoint, handoff artifact, subagent handoff는 context class가 아니라 class를 가로지르는 artifact boundary라는 점까지 같이 보면 더 선명해진다.
 
 권고:
 

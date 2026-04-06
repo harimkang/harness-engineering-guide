@@ -4,7 +4,7 @@
 
 특정 제품 codebase를 harness engineering 사례로 읽으려면 먼저 기능 목록보다 어떤 운영 문제가 한 runtime 안에 겹쳐 있는지부터 봐야 한다. 이 장은 그 입구를 Claude Code 사례에 적용한다. 표면적으로 보면 이 저장소는 터미널에서 실행하는 도구처럼 보인다. 하지만 실제 코드를 따라가 보면, 이 프로젝트는 여러 실행 경로, startup 정책, interactive 세션, query/control loop, task 실행, 원격 연결, 확장 표면을 한 저장소 안에서 함께 운영한다. 따라서 이 프로젝트를 이해할 때는 "무슨 기능이 있나"보다 "어떤 운영 문제들이 한 런타임 안에 겹쳐 있는가"를 먼저 보는 편이 맞다.
 
-이 장의 목적은 세 가지다. 첫째, Claude Code를 왜 좋은 하네스 사례로 볼 수 있는지 설명한다. 둘째, 이 저장소를 처음 읽는 독자가 무엇을 먼저 볼지, 무엇을 나중으로 미룰지 결정하게 돕는다. 셋째, 이후 장에서 더 자세히 분해할 여섯 개의 축, 즉 실행 모드, startup과 trust, query와 control, 도구/작업 표면, 운영자 제어 표면, 원격/확장 계층을 한 번에 잡게 만든다.
+이 장의 목적은 세 가지다. 첫째, Claude Code를 왜 좋은 하네스 사례로 볼 수 있는지 설명한다. 둘째, 이 저장소를 처음 읽는 독자가 무엇을 먼저 볼지, 무엇을 나중으로 미룰지 결정하게 돕는다. 셋째, 이후 장에서 더 자세히 분해할 여섯 개의 축, 즉 실행 모드, startup과 trust, query와 control, 도구/작업 표면, 운영자 제어 표면, 원격/확장 계층을 한 번에 잡게 만든다. 이때 startup과 trust 축에는 settings, hooks, CLI prompt flags, repo-level instructions, skills/subagents처럼 "첫 turn 이전에 세션 계약을 형성하는 입력면"도 함께 포함된다고 보는 편이 맞다.
 
 ## 왜 이 장이 필요한가
 
@@ -35,6 +35,7 @@ Anthropic의 [Building effective agents](https://www.anthropic.com/engineering/b
 | --- | --- |
 | 하네스 | 모델, 도구, 세션, 정책, UI를 함께 묶는 운영 시스템 |
 | 런타임 셸 | 여러 실행 경로와 상태를 조립하는 바깥 구조 |
+| startup contract | 첫 turn 이전에 어떤 정책 입력과 실행 조건이 세션에 묶이는지에 대한 계약 |
 | 운영자 제어 표면 | 사람이 현재 상태를 읽고 개입하는 표면 |
 | MCP | tool/resource/prompt를 노출하는 확장 프로토콜 계층 |
 
@@ -72,6 +73,20 @@ Anthropic의 [Building effective agents](https://www.anthropic.com/engineering/b
 | 원격/확장 계층 | `services/`, `bridge/`, `remote/`, `server/` | [10-services-and-integrations.md](../05-execution-continuity-and-integrations/04-claude-code-services-and-integrations.md), [11-agent-skill-plugin-mcp-and-coordination.md](../05-execution-continuity-and-integrations/05-claude-code-agent-skill-plugin-mcp-and-coordination.md), [14-remote-bridge-server-and-upstreamproxy.md](../06-boundaries-deployment-and-safety/05-claude-code-remote-bridge-server-and-upstream-proxy.md) |
 
 이 표를 먼저 잡고 읽으면, 뒤에서 만나는 큰 파일들이 "덩치가 큰 이유"를 기능 수가 아니라 운영 문제 수로 이해할 수 있다.
+
+## startup contract 입력면을 먼저 보라
+
+이 저장소를 runtime shell로 읽을 때 놓치기 쉬운 축이 하나 더 있다. 그것은 "세션이 무엇을 먼저 읽고 무엇을 override로 받아들이는가"다. 공개 코드만으로는 settings precedence나 repo instruction discovery의 전체 규칙이 모두 드러나지 않지만, Anthropic 공식 문서와 OpenAI의 `AGENTS.md` 문서는 이 축이 현대 agent shell에서 별도 설계면임을 분명히 보여 준다.
+
+- Anthropic의 settings 문서는 user, project, local project, managed settings 같은 scope를 별도로 두고, managed policy가 override 불가능한 상위 제약이 될 수 있음을 보여 준다.
+- 같은 문서는 hooks, subagent configuration, plugin configuration을 settings surface와 같은 체계 안에서 다룬다.
+- Anthropic의 CLI reference는 `--append-system-prompt` 같은 세션별 prompt overlay가 별도 입력면임을 보여 준다.
+- OpenAI의 `AGENTS.md` 문서는 repo root에서 현재 작업 디렉터리까지 instruction chain을 재구성하는 방식을 공식화한다. `CLAUDE.md`와 직접 동일한 메커니즘이라고 단정할 수는 없지만, repo-level instructions가 startup-discovered input surface라는 점에서는 같은 부류다.
+- Anthropic의 Agent SDK overview는 Claude Code와 같은 agent loop, tools, context management가 headless owner 아래에서도 재사용된다고 설명한다. 즉 subagent나 SDK path 역시 startup contract의 일부 입력을 달리 받을 수 있다.
+
+해석:
+
+- 따라서 Claude Code를 "터미널 UI가 있는 CLI"로만 읽으면 안 되고, 세션 시작 전에 어떤 입력면이 결합되는 product shell로 읽어야 한다.
 
 ## 이 책을 관통하는 러닝 예시
 
@@ -113,6 +128,7 @@ Anthropic의 [Building effective agents](https://www.anthropic.com/engineering/b
 관찰:
 
 - Claude Code는 startup과 query 사이에 trust, permission, approval, managed settings 같은 정책 표면을 둔다.
+- settings, hooks, CLI prompt flags, `CLAUDE.md`류 repo instructions, skills/subagents 같은 입력면도 첫 turn 이전 contract에 개입한다.
 
 해석:
 
@@ -328,10 +344,12 @@ import { initBundledSkills } from './skills/bundled/index.js';
 관찰:
 
 - MCP와 bundled skills는 별도 부가 기능이 아니라 초기 조립 경로 안에 나타난다.
+- 공식 settings/CLI/AGENTS 문서까지 함께 보면 hooks, managed policy, repo instructions, session별 prompt overlay도 같은 startup contract 입력면에 속한다.
 
 해석:
 
 - tool/task surface와 extension 계층은 선택적 후처리가 아니라 runtime shell 일부로 읽는 편이 맞다.
+- product shell은 import graph보다 넓은 입력면을 가진다. local snapshot과 공식 문서를 함께 읽어야 그 조립 계약이 보인다.
 
 ## 상위 구조가 말해주는 것
 

@@ -16,6 +16,9 @@ long-running harness의 query path는 단순한 `입력 -> API 호출 -> 응답`
 원칙: Anthropic의 [Effective harnesses for long-running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents) (2025-11-26)는 long-running coherence가 compaction과 환경 정돈 같은 보조 구조에 의존한다고 설명한다.  
 해석: 이 장은 그 관점을 context/query path에 적용해, 어떤 로컬 구조가 실제로 context pressure와 continuation을 관리하는지 읽는다. 다만 이 네 개의 로컬 모듈이 유일한 필수 집합이라고 주장하지는 않는다.
 
+원칙: Anthropic의 prompt caching 문서는 안정적인 prompt prefix를 재사용하면 처리 시간과 비용을 줄일 수 있고, 긴 multi-turn conversation이 대표적 사용처라고 설명한다. 또한 cache write와 cache read는 서로 다른 가격 구조를 가진다.
+해석: 따라서 context assembly는 품질 문제일 뿐 아니라 prefix stability와 churn distribution을 설계하는 경제 문제이기도 하다.
+
 원칙: Pan et al.의 [Natural-Language Agent Harnesses](https://arxiv.org/abs/2603.25723) (submitted 2026-03-26)는 harness behavior가 controller 안에 묻힌 구현이 아니라 explicit runtime structure로 비교돼야 한다고 제안한다.  
 해석: 이 장은 Claude Code의 context/query path를 바로 그런 runtime structure의 일부로 읽는다.
 
@@ -34,9 +37,12 @@ long-running harness의 query path는 단순한 `입력 -> API 호출 -> 응답`
 
 - Anthropic, [Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents), 2025-09-29
 - Anthropic, [Effective harnesses for long-running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents), 2025-11-26
+- Anthropic Docs, [Prompt caching](https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching), verified 2026-04-06
 
 #### 추가 자료
 
+- OpenAI, [Tracing](https://openai.github.io/openai-agents-python/tracing/), verified 2026-04-06
+- OpenTelemetry, [Generative AI semantic conventions](https://opentelemetry.io/docs/specs/semconv/gen-ai/), verified 2026-04-06
 - Pan et al., [Natural-Language Agent Harnesses](https://arxiv.org/abs/2603.25723), submitted 2026-03-26
 
 이 장의 관찰은 2026-04-01 기준 현재 공개 사본에 한정한다.
@@ -179,6 +185,8 @@ export function buildQueryConfig(): QueryConfig {
 
 이 구분은 중요하다. cache와 snapshot은 모두 "한 번만 계산한다"처럼 보이지만, lifetime이 다르다. 하나는 conversation-scoped이고, 다른 하나는 query-scoped다.
 
+경제 관점에서도 이 차이는 중요하다. conversation-scoped context material은 상대적으로 안정적인 prefix 후보가 되고, query-scoped config와 mutable working set은 cache churn과 latency variance를 키우는 요소가 되기 쉽다. 즉 Claude Code의 query path를 읽을 때는 "무엇을 넣는가"와 함께 "무엇을 안정적으로 유지하는가"도 봐야 한다.
+
 ## 제품 사실 3: `src/query.ts`는 mutable loop state를 중심으로 돌며, pressure control을 먼저 적용한다
 
 출처:
@@ -317,6 +325,23 @@ for await (const update of toolUpdates) {
 
 원칙: Anthropic의 context engineering 글은 context를 finite resource로 다루고, 가능한 한 informative yet tight하게 유지하라고 조언한다.  
 해석: Claude Code의 local implementation은 바로 그 원칙을 `messagesForQuery`를 줄이고, compact boundary를 나누고, token budget continuation을 계산하는 코드로 실현한다.
+
+## trace와 비용 관점의 관찰 포인트
+
+이 장의 local code는 tracing schema를 직접 구현하지는 않지만, 운영 관찰 포인트를 어디에 둘지는 꽤 분명하게 보여 준다.
+
+| 관찰 포인트 | local signal | trace/event로 읽을 수 있는 것 |
+| --- | --- | --- |
+| conversation seed assembly | `getSystemContext()`, `getUserContext()` | stable prefix 길이, repo-instruction load, cacheable context candidate |
+| query config snapshot | `buildQueryConfig()` | turn-scoped feature gate, session binding, environment variant |
+| pressure control chain | tool-result budget, snip, microcompact, collapse, autocompact | context shrink 이유, compaction 빈도, replay boundary |
+| token budget decision | `checkTokenBudget()` | continuation 수, diminishing return stop, turn cost escalation |
+| tool-result replacement | content replacement record | transcript 대비 model-visible working set 차이 |
+
+해석:
+
+- OpenAI tracing 문서가 말하는 agent-run event record와 OpenTelemetry GenAI span/event 관점으로 보면, 위 지점들은 query path의 핵심 observation seam이다.
+- 이 장의 범위에서는 정확한 schema를 확정하지 않지만, 무엇을 event로 남기고 무엇을 span 경계로 볼지는 이 정도 수준에서 먼저 정리할 수 있다.
 
 ## 05-09를 함께 읽는 mini walkthrough
 

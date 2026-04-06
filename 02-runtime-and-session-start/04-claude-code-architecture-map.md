@@ -65,6 +65,14 @@
 
 이 장은 여섯 파일을 이 여섯 용어로 읽는다.
 
+추가로 이 장에서는 reader-facing shorthand로 다섯 가지 태그를 함께 쓴다.
+
+- `source of truth`: 특정 경계의 authoritative routing 또는 sequencing이 처음 결정되는 위치
+- `adapter`: 상위 조립 결과를 실제 mount 또는 호출 형식으로 바꾸는 얇은 접점
+- `orchestrator`: 여러 하위 단계의 순서와 전이를 조정하는 조립자
+- `operator surface`: 사람이 상태를 보고 개입하는 표면
+- `persistence substrate`: turn 밖으로 이어질 상태를 붙잡는 바닥층
+
 ## 러닝 예시를 이 장에서 읽는 법
 
 [01-project-overview.md](03-claude-code-project-overview.md)에서 제시한 러닝 예시를 이 장에서는 여섯 파일에 배치해 본다.
@@ -288,16 +296,16 @@ for await (const message of query({
 
 ## 여섯 파일의 거시 역할 요약
 
-| 파일 | 거시 역할 | 이 장에서 직접 확인한 사실 |
-| --- | --- | --- |
-| `src/entrypoints/cli.tsx` | dispatch layer | `src/main.tsx` 이전에 bridge/daemon 같은 경로를 분기한다 |
-| `src/main.tsx` | runtime assembly | prefetch, trust gate, external 연결, direct-connect 조립을 담당한다 |
-| `src/replLauncher.tsx` | launch seam | interactive session을 `<App><REPL /></App>` 구조로 mount한다 |
-| `src/screens/REPL.tsx` | interactive operator surface + message state holder | message state를 들고 query event를 소비하며 interactive 세션을 운영한다 |
-| `src/query.ts` | turn-local control plane | turn state를 누적하고 다음 turn 상태를 만든다 |
-| `src/QueryEngine.ts` | headless conversation state owner | 여러 turn에 걸친 message/usage/permission denial을 보존하고 `query()`를 호출한다 |
+| 파일 | 거시 역할 | 태그 | 이 장에서 직접 확인한 사실 |
+| --- | --- | --- | --- |
+| `src/entrypoints/cli.tsx` | dispatch layer | `source of truth`, `orchestrator` | `src/main.tsx` 이전에 bridge/daemon 같은 경로를 분기한다 |
+| `src/main.tsx` | runtime assembly | `source of truth`, `orchestrator` | prefetch, trust gate, external 연결, direct-connect 조립을 담당한다 |
+| `src/replLauncher.tsx` | launch seam | `adapter` | interactive session을 `<App><REPL /></App>` 구조로 mount한다 |
+| `src/screens/REPL.tsx` | interactive operator surface + message state holder | `operator surface` | message state를 들고 query event를 소비하며 interactive 세션을 운영한다 |
+| `src/query.ts` | turn-local control plane | `orchestrator` | turn state를 누적하고 다음 turn 상태를 만든다 |
+| `src/QueryEngine.ts` | headless conversation state owner | `orchestrator`, `persistence substrate` | 여러 turn에 걸친 message/usage/permission denial을 보존하고 `query()`를 호출한다 |
 
-해석: 이 여섯 파일만으로도 Claude Code 거시 구조의 핵심 seam 몇 가지는 식별된다. 복잡도는 더 넓게 분산되어 있지만, 이 장의 범위 안에서는 dispatch, assembly, launch, interactive surface, control plane, mode-specific state ownership이라는 축을 확인할 수 있다.
+해석: 이 여섯 파일만으로도 Claude Code 거시 구조의 핵심 seam 몇 가지는 식별된다. 복잡도는 더 넓게 분산되어 있지만, 이 장의 범위 안에서는 dispatch, assembly, launch, interactive surface, control plane, mode-specific state ownership이라는 축을 확인할 수 있다. 위 태그를 붙여 보면 무엇이 authoritative source이고 무엇이 adapter이며 무엇이 persistence substrate인지 더 빨리 구분된다.
 
 ## 이 장에서 직접 확인 가능한 품질 속성
 

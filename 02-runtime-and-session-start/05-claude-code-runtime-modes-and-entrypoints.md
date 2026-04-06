@@ -36,6 +36,7 @@ runtime family를 따로 읽는 이유는 장기 실행형 harness가 하나의 
 #### 추가 자료
 
 - Anthropic Platform Docs, [Agent SDK overview](https://platform.claude.com/docs/en/agent-sdk/overview), 접근 시점 2026-04-01
+- Anthropic Docs, [Claude Code release notes](https://docs.anthropic.com/en/release-notes/claude-code), verified 2026-04-06
 
 이 장의 관찰은 2026-04-01 기준 현재 공개 사본에 한정한다. 커밋 해시가 없으므로 파일 경로와 재검증 가능한 코드 절단면을 근거 단위로 사용한다.
 
@@ -339,6 +340,21 @@ export async function launchResumeChooser(root: Root, appProps: {
 
 해석: Claude Code는 "default interactive CLI"만 있는 제품이 아니다. 더 정확히는 interactive family가 가장 눈에 띌 뿐이고, 배포물 전체로 보면 supervisor, bridge host, background session controller, auxiliary fast-path families, headless runner까지 한 binary 아래에서 공존한다.
 
+## freshness note: remote/bridge/gateway/auth transport는 release-volatile하다
+
+이 장의 topology 자체는 비교적 안정적인 편이지만, remote/bridge/gateway/auth transport의 구체 구현은 그렇지 않다. Anthropic의 Claude Code release notes를 2026-04-06에 다시 확인하면, 최근 버전들에서 다음 주제가 반복적으로 바뀌고 있다.
+
+- remote sessions와 `/remote-control`의 가용 범위 및 reconnect 동작
+- MCP OAuth refresh, step-up authorization, authorization server discovery, Client ID Metadata support
+- HTTP/SSE MCP transport 성능과 auth failure caching
+- third-party gateway나 proxy 경로에서의 beta/header/tool-search 동작
+- streamable HTTP를 기본으로 삼는 일부 MCP integration
+
+해석:
+
+- 따라서 bridge/control family나 direct-connect/remote session family를 설명할 때는 "현재도 이 transport가 정확히 이 방식이다"라고 오래 고정된 사실처럼 말하면 안 된다.
+- 이 장에서는 family 분기와 entrypoint 위치를 source of truth로 삼고, transport/auth 세부는 release-note 재검증이 필요한 freshness-sensitive 층으로 둔다.
+
 ## 이 topology가 갖는 설계 함의
 
 ### 1. startup 비용을 모든 경로에 공평하게 부과하지 않는다
@@ -373,6 +389,12 @@ export async function launchResumeChooser(root: Root, appProps: {
 3. bridge, worker, runner, session controller 같은 비-TUI family를 별도 runtime family로 모델링했는가?
 4. interactive family 안에서도 일반 mainline와 one-off dialog launch를 구분했는가?
 5. resume, background-session attach, direct connect처럼 세션 성격이 다른 경로를 같은 launch 초기화로 처리하고 있지는 않은가?
+
+## 점검 질문
+
+- remote/bridge/gateway/auth transport의 세부 설명에 evidence date가 붙어 있는가?
+- entrypoint topology 자체와 release-volatile transport detail을 같은 안정도로 말하고 있지는 않은가?
+- remote session, direct connect, bridge/control을 모두 "원격 모드" 한 문장으로 뭉개고 있지는 않은가?
 
 ## 마무리
 

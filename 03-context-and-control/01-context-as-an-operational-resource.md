@@ -2,7 +2,7 @@
 
 ## 장 요약
 
-이 책에서 context는 "모델에게 넘기는 텍스트"보다 더 넓은 개념이다. Claude Code의 실제 구현을 보면 context는 conversation 동안 캐시되고, turn 시작 시 다시 조립되며, query loop 안에서 토큰 예산과 compaction 정책에 따라 계속 재배치된다. 따라서 하네스 설계자가 물어야 할 핵심은 "무슨 문장을 넣을까"보다 "무엇을 어떤 lifetime으로 들고 있고, 압력이 오면 무엇을 줄이며, 세션 경계를 넘을 때 무엇을 외부화할까"에 가깝다.
+이 책에서 context는 "모델에게 넘기는 텍스트"보다 더 넓은 개념이다. Claude Code의 실제 구현을 보면 context는 conversation 동안 캐시되고, turn 시작 시 다시 조립되며, query loop 안에서 토큰 예산과 compaction 정책에 따라 계속 재배치된다. 따라서 하네스 설계자가 물어야 할 핵심은 "무슨 문장을 넣을까"보다 "무엇을 어떤 lifetime으로 들고 있고, 압력이 오면 무엇을 줄이며, 세션 경계를 넘을 때 무엇을 외부화할까"에 가깝다. 이때 context는 품질 자원일 뿐 아니라 latency, cache hit, token spend를 좌우하는 경제 자원이기도 하다.
 
 ## 범위와 비범위
 
@@ -36,6 +36,7 @@
 
 - Anthropic, [Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents), 2025-09-29
 - Anthropic, [Harness design for long-running application development](https://www.anthropic.com/engineering/harness-design-long-running-apps), 2026-03-24
+- Anthropic Docs, [Prompt caching](https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching), verified 2026-04-06
 - Pan et al., [Natural-Language Agent Harnesses](https://arxiv.org/abs/2603.25723), 2026-03-26, under review
 
 함께 읽으면 좋은 장:
@@ -55,6 +56,12 @@
 4. 세션이 끊기거나 owner가 바뀌면 무엇을 다시 불러와야 하는가
 
 이 네 질문은 모두 텍스트 품질이 아니라 자원 관리 문제다. 그래서 context engineering은 prompt authoring의 하위 작업이 아니라 runtime design의 일부가 된다.
+
+같은 이유로 context는 경제 자원이기도 하다. Anthropic의 prompt caching 문서는 안정적인 prompt prefix를 재사용하면 처리 시간과 비용을 줄일 수 있고, 이 방식이 긴 multi-turn conversation에도 특히 유용하다고 설명한다. 같은 문서에서 cache read는 base input token보다 훨씬 저렴하고, cache write는 별도 가격 계층을 가진다고 밝힌다. 여기서 중요한 일반 원칙은 숫자 자체보다 구조다.
+
+- conversation-scoped seed가 안정적일수록 cacheable prefix를 만들기 쉽다.
+- query-scoped churn이 많을수록 cache hit가 줄고 context economics가 나빠진다.
+- context engineering은 무엇을 넣을지뿐 아니라 어떤 부분을 안정적으로 유지해 reuse할지까지 설계해야 한다.
 
 ## Claude Code에서 context가 형성되는 세 단계
 
@@ -168,6 +175,8 @@ export function buildQueryConfig(): QueryConfig {
 
 이 분리는 context를 운영 자원으로 읽게 만드는 핵심 단서다. 좋은 하네스는 "계속 바뀌는 것"과 "turn 동안 고정되어야 하는 것"을 같은 객체에 뒤섞지 않는다. immutable snapshot이 있어야 loop는 재진입 가능하고, 이후 recovery 설명도 일관성을 갖는다.
 
+경제 관점에서도 이 분리는 중요하다. cacheable prefix 후보는 conversation-scoped seed와 비교적 안정적인 snapshot 쪽에 가깝고, 매 iteration마다 churn하는 working set은 비용과 latency의 변동 원인에 가깝다. 즉 cache, budget, compaction은 모두 context architecture의 부산물이 아니라 핵심 설계 결과다.
+
 ## 압력 제어는 context engineering의 일부다
 
 많은 문서가 compaction을 비상 탈출구처럼 다루지만, Claude Code는 그렇게 읽히지 않는다. `src/services/compact/autoCompact.ts`는 먼저 session memory compaction을 시도하고, 실패하면 legacy compaction으로 넘어간다.
@@ -199,6 +208,7 @@ const compactionResult = await compactConversation(
 - system/user context는 `memoize`로 conversation-scoped seed를 만들고, REPL/QueryEngine은 turn entry에서 이를 다시 조립한다.
 - query loop는 compact boundary 이후의 working set을 기준으로 tool-result replacement, microcompact, auto-compact를 순차 적용한다.
 - 같은 제품 안에서도 REPL path와 SDK path는 owner가 달라 context overlay가 다르다.
+- prompt caching 관점에서 보면 stable prefix와 high-churn working set이 분리되어야 context economics를 설명할 수 있다.
 
 원칙:
 
@@ -210,12 +220,14 @@ const compactionResult = await compactConversation(
 
 - Claude Code의 context layer는 prompt assembly 서브루틴이 아니라 scheduling layer와 강하게 연결된 control subsystem이다.
 - Anthropic의 context engineering 글이 말하는 finite resource 관점은 이 코드베이스에서 추상적 비유가 아니라 실제 구현 원리로 확인된다.
+- prompt caching 문서가 말하는 time/cost 절감은 Claude Code 같은 하네스에서 "어떤 context를 안정적으로 유지할 것인가"라는 설계 문제로 다시 돌아온다.
 
 권고:
 
 - 새 하네스를 설계할 때는 context를 최소한 seed, overlay, working set, durable artifact 네 층으로 나눠 inventory를 만들어 보라.
 - context 압력 제어를 나중에 붙이는 최적화로 취급하지 말고, 처음부터 query loop 설계의 일부로 포함하라.
 - REPL, SDK, background agent처럼 owner가 다른 경로가 있다면 어떤 overlay가 각 경로에만 붙는지 문서화하라.
+- cache hit, compaction 빈도, continuation 수를 별도 지표로 두고 context economics를 관찰하라.
 
 ## benchmark 질문
 
