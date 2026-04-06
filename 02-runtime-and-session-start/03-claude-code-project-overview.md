@@ -104,7 +104,7 @@ Anthropic의 [Building effective agents](https://www.anthropic.com/engineering/b
 - [03-runtime-modes-and-entrypoints.md](05-claude-code-runtime-modes-and-entrypoints.md): 1-2단계를 자세히 본다.
 - [04-session-startup-trust-and-initialization.md](06-claude-code-session-startup-trust-and-initialization.md): 3단계를 자세히 본다.
 - [05-context-assembly-and-query-pipeline.md](../03-context-and-control/05-claude-code-context-assembly-and-query-pipeline.md)와 [06-query-engine-and-turn-lifecycle.md](../03-context-and-control/06-claude-code-query-engine-and-turn-lifecycle.md): 4-5단계를 자세히 본다.
-- [17-end-to-end-scenarios.md](../07-evaluation-and-synthesis/07-claude-code-end-to-end-scenarios.md): 전체를 다시 시간 순서로 합친다.
+- [07-claude-code-end-to-end-scenarios.md](../07-evaluation-and-synthesis/07-claude-code-end-to-end-scenarios.md): 전체를 다시 시간 순서로 합친다.
 
 이 장의 역할은 이 여섯 단계 중 어디에 어떤 운영 문제가 숨어 있는지 미리 보여 주는 것이다.
 

@@ -43,8 +43,8 @@
 
 - [../05-context-assembly-and-query-pipeline.md](05-claude-code-context-assembly-and-query-pipeline.md)
 - [../06-query-engine-and-turn-lifecycle.md](06-claude-code-query-engine-and-turn-lifecycle.md)
-- [../execution/03-task-orchestration-and-long-running-execution.md](../05-execution-continuity-and-integrations/02-task-orchestration-and-long-running-execution.md)
-- [../appendix/references.md](../00-front-matter/03-references.md)
+- [02-task-orchestration-and-long-running-execution.md](../05-execution-continuity-and-integrations/02-task-orchestration-and-long-running-execution.md)
+- [03-references.md](../00-front-matter/03-references.md)
 
 Sources / evidence notes:
 이 장의 reader-facing 외부 검증 축은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 `S4`, `S6`, `S33`을 따른다.

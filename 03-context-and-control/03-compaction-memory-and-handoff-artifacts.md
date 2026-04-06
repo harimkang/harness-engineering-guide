@@ -19,7 +19,7 @@
 - remote session transport의 상세 네트워크 프로토콜
 - 전체 task orchestration 체계
 
-이 주제들은 [../execution/02-state-resumability-and-session-ownership.md](../05-execution-continuity-and-integrations/01-state-resumability-and-session-ownership.md), [../execution/03-task-orchestration-and-long-running-execution.md](../05-execution-continuity-and-integrations/02-task-orchestration-and-long-running-execution.md), [../13-persistence-config-and-migrations.md](../05-execution-continuity-and-integrations/07-claude-code-persistence-config-and-migrations.md)에서 확장한다.
+이 주제들은 [01-state-resumability-and-session-ownership.md](../05-execution-continuity-and-integrations/01-state-resumability-and-session-ownership.md), [02-task-orchestration-and-long-running-execution.md](../05-execution-continuity-and-integrations/02-task-orchestration-and-long-running-execution.md), [07-claude-code-persistence-config-and-migrations.md](../05-execution-continuity-and-integrations/07-claude-code-persistence-config-and-migrations.md)에서 확장한다.
 
 ## 자료와 독서 기준
 
@@ -53,7 +53,7 @@
 - [01-context-as-an-operational-resource.md](01-context-as-an-operational-resource.md)
 - [04-turn-loops-stop-hooks-and-recovery.md](04-turn-loops-stop-hooks-and-recovery.md)
 - [../execution/02-state-resumability-and-session-ownership.md](../05-execution-continuity-and-integrations/01-state-resumability-and-session-ownership.md)
-- [../appendix/references.md](../00-front-matter/03-references.md)
+- [03-references.md](../00-front-matter/03-references.md)
 
 Sources / evidence notes:
 이 장의 reader-facing 외부 검증 축은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 `S4`, `S6`, `S26`, `S27`를 따른다.
