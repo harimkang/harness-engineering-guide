@@ -2,19 +2,20 @@
 
 > Last verified against official docs: 2026-04-06
 > Volatile topics: Claude Code settings, skills, CLI flags, MCP client semantics, remote/bridge behavior, tracing and eval tooling
+> Source policy: proposal `S*` IDs are immutable canonical references; supplemental research and observed artifacts use separate IDs
 
 장기 실행형 에이전트 하네스를 설계, 분석, 평가하기 위한 책형 문서 세트입니다. 이 책은 일반적인 harness engineering 원칙을 먼저 세우고, Claude Code를 반복 사례로 사용해 그 원칙이 실제 product runtime에 어떻게 드러나는지 보여 줍니다.
 
-읽는 단위는 기능 목록이 아니라 운영 문제입니다. context를 어떻게 조립하고 줄일지, tool과 permission을 어떤 계약 표면으로 설계할지, 사람이 언제 개입하고 어떤 artifact가 continuity를 떠받칠지, deployment boundary와 eval loop를 어디에 둘지를 문서 전체에서 일관된 언어로 다룹니다.
+읽는 단위는 기능 목록이 아니라 운영 문제입니다. context를 어떻게 조립하고 줄일지, tool과 permission을 어떤 계약 표면으로 설계할지, 사람이 언제 개입하고 어떤 artifact가 continuity와 reviewability를 떠받칠지, observability와 economics를 어떤 운영 표면으로 끌어올릴지, deployment boundary와 eval loop를 어디에 둘지를 문서 전체에서 일관된 언어로 다룹니다.
 
-이 문서세트는 proposal에 정리한 공식 출처를 canonical source registry로 사용합니다. reader-facing 본문을 실질적으로 수정할 때는 먼저 관련 공식 문서와 사양을 다시 확인하고, 그 근거를 [00-front-matter/03-references.md](./00-front-matter/03-references.md)와 각 장의 evidence note에 반영해야 합니다.
+이 문서세트는 proposal에 정리한 공식 출처를 canonical source registry로 사용합니다. reader-facing 본문을 실질적으로 수정할 때는 먼저 관련 proposal source ID의 공식 문서와 사양을 다시 확인하고, 그 근거를 [00-front-matter/03-references.md](./00-front-matter/03-references.md)와 각 장의 evidence note에 반영해야 합니다. source tier, freshness class, observed-artifact citation 규칙은 [00-front-matter/02-source-analysis-method.md](./00-front-matter/02-source-analysis-method.md)에 고정합니다.
 
 ## 이 책이 하는 일
 
 - 하네스를 단순 프롬프트 묶음이 아니라 운영 시스템으로 읽는다.
 - 일반 원칙과 Claude Code 사례를 왕복하면서 설계 언어를 만든다.
 - 평가를 뒤에 붙는 부록이 아니라 설계와 운영의 일부로 다룬다.
-- instruction surfaces, observability/economics, governance, eval hygiene 같은 축을 독립 설계면으로 끌어올린다.
+- instruction surfaces, observability/economics, governance, eval hygiene, reviewability를 독립 설계면으로 끌어올린다.
 
 ## 이 책이 하지 않는 일
 
@@ -93,7 +94,7 @@
 역할:
 
 - workflow, runtime, harness, eval harness를 구분한다.
-- 하네스를 독립된 설계 영역으로 읽는 기본 축을 세운다.
+- 하네스를 독립된 설계 영역으로 읽는 기본 축을 세우고, observability, economics, reviewability, evaluator-driven design을 foundations 수준에서 드러낸다.
 - 이후 paired parts를 읽기 위한 공통 기반을 제공한다.
 
 ### Part 2. Runtime And Session Start
@@ -183,9 +184,9 @@
 ## 핵심 참조 장치
 
 - [00-front-matter/02-source-analysis-method.md](./00-front-matter/02-source-analysis-method.md)
-  이 책의 증거 규칙, freshness 분류, source verification 규칙을 설명합니다.
+  이 책의 source tier, freshness 분류, observed-artifact citation, source verification 규칙을 설명합니다.
 - [00-front-matter/03-references.md](./00-front-matter/03-references.md)
-  공식 문서, 엔지니어링 글, 사양, 프레임워크 문서, 연구 자료의 canonical registry를 모아 둡니다.
+  공식 문서, 엔지니어링 글, 사양, 프레임워크 문서, supplemental research, observed artifact의 canonical registry와 proposal source ID 재진입 지점을 모아 둡니다.
 - [08-reference/01-glossary.md](./08-reference/01-glossary.md)
   핵심 용어의 정의, 차이, confusable terms를 모아 둡니다.
 - [08-reference/02-key-file-index.md](./08-reference/02-key-file-index.md)
@@ -196,5 +197,6 @@
 - 새 문서를 추가할 때는 먼저 어느 Part의 원칙/사례/reference에 속하는지 결정합니다.
 - 독서 경로나 Part 구성이 바뀌면 이 `README`와 관련 `00-part-guide.md`를 함께 갱신합니다.
 - 새 외부 자료가 본문에 들어오면 [00-front-matter/03-references.md](./00-front-matter/03-references.md)를 함께 갱신합니다.
-- substantive change를 넣기 전에 proposal에 정리한 공식 출처를 먼저 다시 확인합니다.
+- substantive change를 넣기 전에 proposal에 정리한 공식 출처와 관련 `S*` ID를 먼저 다시 확인합니다.
+- supplemental research와 observed artifact는 canonical `S*` ID를 재사용하지 않고 별도 ID로 등록합니다.
 - volatile chapter는 verified date와 freshness class를 함께 갱신합니다.

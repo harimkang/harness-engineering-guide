@@ -1,200 +1,140 @@
 # 03. 에이전트 하네스의 품질 속성
 
-## 장 요약
+> Why this chapter exists: 기능 목록보다 먼저 봐야 하는 harness quality
+> attributes를 고정하고, observability, trace privacy, economic efficiency,
+> reviewability를 독립 속성으로 올린다.
+> Reader level: beginner / advanced / reviewer
+> Last verified: 2026-04-06
+> Freshness class: medium
+> Verified proposal sources: `S6`, `S7`, `S8`, `S22`, `S23`, `S29`
 
-하네스를 설계할 때는 기능 목록보다 품질 속성을 먼저 보는 편이 낫다. Claude Code 사례에서도 중요한 것은 "명령이 몇 개인가"보다 reliability, steerability, recoverability, observability, reproducibility, efficiency 같은 속성이 어떤 code path와 artifact에 스며 있는가다. 이 장은 그 속성을 정리하고, 각 속성이 실제로 어떤 local surface에 기대는지 보여 준다.
+## Core claim
 
-## 범위와 비범위
+하네스를 설계할 때는 기능 목록보다 품질 속성을 먼저 보는 편이 낫다. 중요한
+것은 "명령이 몇 개인가"보다 reliability, steerability, recoverability,
+observability, trace privacy, reviewability, reproducibility, economic
+efficiency가 어떤 artifact와 운영 습관에 기대고 있는가다.
 
-이 장이 다루는 것:
+`S22`는 trace/span과 sensitive-data capture를 runtime artifact로 다루고,
+`S23`은 eval-driven development와 workflow trace grading을 권장한다.
+`S6`과 `S8`은 long-running harness가 handoff artifact와 scaffold cost를 함께
+관리해야 함을 보여 준다. 그래서 품질 속성은 추상적인 미덕이 아니라,
+"무엇을 남기고 무엇을 측정하며 무엇을 다시 검토할 수 있는가"의 문제다.
 
-- production coding harness를 읽을 때 유용한 핵심 품질 속성
-- 각 속성이 local artifact와 어떻게 연결되는지
-- 속성들 사이의 대표 trade-off와 failure signature
+## What this chapter is not claiming
 
-이 장이 다루지 않는 것:
+- 모든 시스템이 아래 속성을 동일한 비중으로 최적화해야 한다는 주장
+- 속성 수가 많을수록 좋은 harness라는 주장
+- 특정 제품의 최종 scorecard를 이 장 하나로 확정하겠다는 주장
 
-- 특정 시스템의 최종 scorecard
-- 모든 품질 속성의 완전한 taxonomy
-- 하위 구현 최적화 팁 전부
+## 여덟 품질 속성
 
-이 장은 품질 속성 프레임을 세우는 foundations 장이며, 이후 파트에서 각 속성이 context/tools/execution/safety/evaluation으로 세분화된다.
-
-## 자료와 독서 기준
-
-대표 발췌 출처:
-
-- `src/query.ts`
-- `src/query/tokenBudget.ts`
-- `src/screens/REPL.tsx`
-- `src/utils/sessionRestore.ts`
-- `src/hooks/useLogMessages.ts`
-- `src/utils/permissions/permissions.ts`
-- `src/services/analytics/growthbook.ts`
-- `src/services/vcr.ts`
-- `src/cost-tracker.ts`
-
-외부 프레이밍:
-
-- Anthropic, [Effective harnesses for long-running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents), 2025-11-26
-- Anthropic, [Harness design for long-running application development](https://www.anthropic.com/engineering/harness-design-long-running-apps), 2026-03-24
-- Lee et al., [Meta-Harness: End-to-End Optimization of Model Harnesses](https://arxiv.org/abs/2603.28052), 2026-03-30
-
-함께 읽으면 좋은 장:
-
-- [../execution/04-human-oversight-trust-and-approval.md](../05-execution-continuity-and-integrations/03-human-oversight-trust-and-approval.md)
-- [../evaluation/03-benchmarking-coding-harnesses.md](../07-evaluation-and-synthesis/03-benchmarking-long-running-agent-harnesses.md)
-- [04-core-design-axes-context-control-tools-memory-safety-evals.md](04-core-design-axes-context-control-tools-memory-safety-evals.md)
-
-## 여섯 품질 속성
-
-| 품질 속성 | 핵심 질문 | Claude Code에서 먼저 볼 곳 |
+| 품질 속성 | 핵심 질문 | 대표 artifact |
 | --- | --- | --- |
-| reliability | 같은 작업을 예측 가능한 구조로 이어 갈 수 있는가 | `src/query.ts`, task lifecycle |
-| steerability | 사람이 세션을 이해하고 방향을 바꿀 수 있는가 | REPL, permission surface, transcript |
-| recoverability | 실패 후 같은 의미로 다시 이어 갈 수 있는가 | session restore, transcript, content replacement |
-| observability | 현재 상태와 결과를 읽을 수 있는가 | transcript, result packet, diagnostics, notifications |
-| reproducibility | 같은 조건을 다시 만들 수 있는가 | GrowthBook override, VCR fixture |
-| efficiency | 불필요한 turn, token, cost, friction을 줄이는가 | token budget, compaction, cost tracker |
+| reliability | 같은 작업을 예측 가능한 구조로 이어 갈 수 있는가 | task lifecycle, retry policy, terminal state |
+| steerability | 사람이 상태를 읽고 방향을 바꿀 수 있는가 | transcript, approval queue, override surface |
+| recoverability | 중단 뒤 semantic continuity가 유지되는가 | handoff note, resume summary, restore state |
+| observability | 현재 상태와 결과를 읽을 수 있는가 | trace, transcript, diagnostics, result packet |
+| trace privacy | trace가 유용하면서도 민감정보 노출을 통제하는가 | redaction rule, capture setting, masking policy |
+| reviewability | skeptical reviewer가 pass/fail 이유를 재구성할 수 있는가 | grader criteria, trace link, cost record, policy note |
+| reproducibility | 같은 조건을 다시 만들 수 있는가 | isolated environment, version pin, fixture, dataset provenance |
+| economic efficiency | 같은 결과를 적은 turn, 적은 latency, 적은 비용으로 내는가 | cost record, cache, token budget, retry churn |
 
-이 여섯 속성은 체크리스트가 아니라 서로 충돌하는 품질 목표다. production harness는 항상 이들 사이에서 균형을 잡는다.
+이 여덟 속성은 체크리스트가 아니라 서로 긴장하는 품질 목표다.
 
-## reliability: loop와 lifecycle이 흔들리지 않는가
+## observability와 reviewability는 다르다
 
-reliability는 단순히 crash가 없다는 뜻이 아니다. long-running harness에서는 다음 turn이 같은 규칙 아래 이어지고, task family가 terminal state를 잘 처리하며, session이 길어져도 control loop가 붕괴하지 않는지가 더 중요하다.
+둘은 밀접하지만 같지 않다.
 
-`src/query.ts`의 explicit continuation state와 `src/Task.ts`의 terminal status 구분은 reliability의 대표 evidence다.
+- observability는 시스템이 무엇을 했는지 보이게 하는 속성이다.
+- reviewability는 그 기록만으로 skeptical reviewer가 판단을 재구성할 수 있게
+  하는 속성이다.
 
-## steerability: 사람이 제때 이해하고 개입할 수 있는가
+trace가 많아도 grader criteria, policy context, cost record가 없으면
+reviewability는 낮다. 반대로 간결한 artifact라도 why-pass / why-fail이
+재구성되면 reviewability는 높을 수 있다.
 
-steerability는 "사람이 수동으로 다 조종한다"는 뜻이 아니다. operator가 현재 상태를 읽고, 필요한 순간에 의미 있게 개입할 수 있느냐가 핵심이다.
+## trace privacy는 observability의 하위 항목이 아니라 독립 속성이다
 
-- transcript mode
-- tool-specific permission request
-- background/foreground task 전환
-- explicit command surface
+`S22`는 built-in tracing이 기본 활성화이며, generation/function span의
+input/output capture가 민감정보를 담을 수 있음을 명시한다. 또
+`trace_include_sensitive_data`로 이를 제어할 수 있다고 설명한다. 따라서
+"trace를 남긴다"는 말은 곧 "무엇을 캡처하고 무엇을 숨기는가"를 함께 설계한다는
+뜻이다.
 
-이런 surface가 있으면 operator는 시스템을 steer할 수 있다. 반대로 아무리 모델이 좋아도 현재 상태를 읽을 길이 없으면 steerability는 낮다.
+`S29`는 GenAI events, metrics, model spans, agent spans vocabulary를 제안하지만
+현재 status가 `Development`다. 즉 schema 표준화는 도움을 주지만, 그대로
+고정 규칙처럼 다루기보다 freshness note와 함께 써야 한다.
 
-## recoverability: 중단 뒤 semantic continuity가 유지되는가
+## economic efficiency는 정확도의 적이 아니라 설계 제약이다
 
-recoverability는 restart가 아니라 semantic continuity의 문제다. transcript, resume, worktree restore, cost restore, invalid state filtering이 함께 작동해야 한다.
+`S8`은 더 강한 scaffold가 quality를 올릴 수 있지만, 비용과 wall-clock
+latency도 크게 늘릴 수 있음을 보여 준다. 그래서 economic efficiency는
+"돈을 아끼자"가 아니라 "성공당 얼마를 써도 되는가"를 명시하는 속성이다.
 
-이 속성은 `src/utils/sessionRestore.ts`, `src/utils/conversationRecovery.ts`, `src/utils/sessionStorage.ts`에 흩어져 있다. 따라서 recoverability는 한 함수가 아니라 artifact family 전체를 읽어야 보인다.
+이 속성은 보통 아래와 같이 드러난다.
 
-## observability: 시스템이 스스로를 설명할 수 있는가
+- 더 많은 evaluator loop를 돌릴 것인가
+- 긴 trace와 rich artifact를 어디까지 보존할 것인가
+- clean-state reset을 더 자주 할 것인가
+- approval과 retry를 얼마나 허용할 것인가
 
-observability는 사람이 현재 무슨 일이 일어나는지, run이 어떻게 끝났는지, 어디서 실패했는지 읽을 수 있게 만드는 속성이다.
+## quality attribute는 operational artifact와 함께 읽어야 한다
 
-- transcript chain
-- QueryEngine result packet
-- diagnostics summary
-- task notification
-- permission decision log
+품질 속성을 artifact와 연결하지 않으면 문장이 공허해진다.
 
-이런 artifact가 없으면 operator와 reviewer는 대부분의 failure를 추정으로만 말하게 된다.
-
-## reproducibility: 같은 조건을 다시 만들 수 있는가
-
-reproducibility는 evaluation 파트에서만 필요한 속성이 아니다. production bug를 고치려면 같은 feature configuration과 같은 external interaction을 다시 만들어야 한다.
-
-`GrowthBook` env override와 `VCR` fixture는 바로 이 품질 속성을 product code 안에서 드러낸다. 이것이 없는 harness는 테스트는 통과해도 field bug를 설명하기 어렵다.
-
-## efficiency: 좋은 결과를 낭비 없이 내는가
-
-efficiency는 비용 절감만이 아니다. token budget continuation, compaction, safe allowlist, cost tracking처럼 "같은 결과를 더 적은 turn, 적은 friction, 적은 비용으로 내는가"를 묻는 속성이다.
-
-```ts
-const decision = checkTokenBudget(
-  budgetTracker!,
-  toolUseContext.agentId,
-  getCurrentTurnTokenBudget(),
-  getTurnOutputTokens(),
-)
-```
-
-이 코드는 efficiency가 단순 limit check가 아니라 continuation policy라는 사실을 보여 준다.
+- reliability는 terminal state와 retry path를 남기는 artifact가 있어야 보인다.
+- recoverability는 handoff note와 resume summary가 있어야 보인다.
+- observability는 trace와 transcript가 있어야 보인다.
+- trace privacy는 capture toggle과 masking policy가 있어야 보인다.
+- reviewability는 grader criteria와 pass/fail evidence가 있어야 보인다.
+- reproducibility는 isolated environment와 provenance가 있어야 보인다.
+- economic efficiency는 cost record와 latency budget이 있어야 보인다.
 
 ## 대표 trade-off
 
 | 속성 쌍 | 흔한 긴장 |
 | --- | --- |
-| reliability vs efficiency | 더 많은 guard와 artifact는 안정성을 높이지만 비용과 latency를 올린다 |
-| steerability vs autonomy | operator surface를 넓히면 개입은 쉬워지지만 자율 흐름은 자주 끊길 수 있다 |
-| recoverability vs simplicity | restore path를 강화할수록 상태 공간과 coupling이 복잡해진다 |
-| observability vs noise | 더 많은 trace와 status는 분석을 돕지만 operator 부담도 키운다 |
+| observability vs trace privacy | 더 많은 capture는 분석을 돕지만 민감정보 노출 위험을 늘린다 |
+| reviewability vs economic efficiency | richer artifact와 grader loop는 재검토를 돕지만 비용과 latency를 올린다 |
+| recoverability vs simplicity | handoff와 restore를 강화할수록 상태 공간이 복잡해진다 |
 | reproducibility vs flexibility | dynamic config가 많을수록 동일 조건 재현은 어려워진다 |
+| steerability vs autonomy | operator surface를 넓히면 개입은 쉬워지지만 자율 흐름은 자주 끊길 수 있다 |
 
-하네스 품질을 읽을 때는 "무엇이 좋은가"보다 "무엇을 대가로 선택했는가"를 함께 보는 편이 정확하다.
+## What to measure
 
-## failure signature로 읽어라
+- trace completeness와 missing span 비율
+- sensitive-data capture 설정과 masking coverage
+- skeptical reviewer가 동일 판단에 도달하는 비율
+- isolated rerun 재현 성공률
+- 성공 task당 cost, latency, retry 횟수
+- handoff 뒤 재작업 없이 이어진 세션 비율
 
-속성마다 실패 signature도 다르다.
+## Failure signatures
 
-- reliability failure  
-  같은 조건에서도 loop나 lifecycle이 예측 가능하게 유지되지 않는다.
-- steerability failure  
-  operator가 현재 상태를 이해하거나 개입할 위치를 찾지 못한다.
-- recoverability failure  
-  중단 뒤 다시 이어 붙일 artifact나 restore path가 부족하다.
-- observability failure  
-  transcript/result/diagnostic가 빈약해 왜 실패했는지 읽을 수 없다.
-- reproducibility failure  
-  동일 bug를 다시 만들 수 없어 개선 검증이 흔들린다.
-- efficiency failure  
-  불필요하게 많은 turn, token, permission prompt, cost가 든다.
+- trace는 있지만 reviewer가 pass/fail 이유를 설명하지 못한다.
+- 민감정보를 남길까 봐 trace를 끄고, 그 결과 장애 원인 분석이 막힌다.
+- 동일 failure를 재현하지 못해 개선 검증이 흔들린다.
+- evaluator loop가 효과는 있지만 cost와 시간 증가를 설명하지 못한다.
+- artifact는 풍부하지만 schema와 status가 불분명해 도구 간 비교가 어렵다.
 
-이 failure signature는 기능 목록보다 훨씬 빨리 문제의 층을 가리켜 준다.
-
-## 관찰, 원칙, 해석, 권고
-
-관찰:
-
-- Claude Code의 품질 속성은 한 파일에 모여 있지 않고 loop, transcript, permissions, task, telemetry에 흩어져 있다.
-- reproducibility는 evaluation용 부가 기능이 아니라 production 품질 속성으로도 중요하다.
-- efficiency와 reliability는 종종 같은 code path에서 함께 설계된다.
-
-원칙:
-
-- 기능보다 품질 속성을 먼저 읽어야 구조적 장단점이 보인다.
-- 품질 속성은 반드시 artifact와 연결해 설명해야 한다.
-- trade-off를 숨기면 품질 속성 설명은 금방 공허해진다.
-
-해석:
-
-- Anthropic의 long-running harness 원칙은 Claude Code에서 품질 속성별 artifact cluster로 읽힌다.
-- Meta-Harness 관점에서도 최적화 대상은 모델이 아니라 이런 품질 속성 조합을 구현한 harness 전체다.
-
-권고:
-
-- 새 harness를 리뷰할 때는 기능 목록 전에 여섯 품질 속성 표를 먼저 채워 보라.
-- weakness를 설명할 때는 반드시 failure signature와 연결해 적어라.
-- reproducibility를 evaluation 파트로만 미루지 말고 foundations 단계에서부터 품질 속성으로 넣어라.
-
-## benchmark 질문
+## Review questions
 
 1. 이 시스템의 strongest/weakest quality attribute는 무엇인가.
-2. 각 속성을 뒷받침하는 artifact를 실제로 가리킬 수 있는가.
-3. 같은 기능도 속성 관점으로 보면 어떤 trade-off를 만드는지 설명할 수 있는가.
-4. reproducibility를 product-quality concern으로 보고 있는가.
+2. observability와 reviewability를 서로 다른 artifact로 설명할 수 있는가.
+3. trace privacy는 "나중에 붙일 옵션"이 아니라 설계 속성으로 다뤄지고 있는가.
+4. economic efficiency를 성공률과 함께 읽고 있는가.
 
-## 요약
+## Sources / evidence notes
 
-기능이 같아 보여도 하네스 품질은 크게 다를 수 있다. Claude Code 사례는 reliability, steerability, recoverability, observability, reproducibility, efficiency가 실제 code path와 artifact에 어떻게 스며드는지 보여 준다. 이후 장들은 이 속성을 context, tools, execution, safety, evaluation으로 더 구체화한다.
-
-## 대표 근거 읽기 순서
-
-아래 라벨은 독자가 별도 source를 열어야 한다는 뜻이 아니라, 이 장에서 이미 인용하고 설명한 코드 발췌가 어떤 구현 단면을 대표하는지 다시 묶어 주는 provenance 메모다.
-
-1. `src/query/tokenBudget.ts`
-   efficiency와 continuation policy를 먼저 본다.
-2. `src/query.ts`
-   reliability가 state transition에 어떻게 박히는지 본다.
-3. `src/screens/REPL.tsx`
-   steerability와 observability surface를 확인한다.
-4. `src/utils/sessionRestore.ts`
-   recoverability를 본다.
-5. `src/services/analytics/growthbook.ts`와 `src/services/vcr.ts`
-   reproducibility surface를 확인한다.
-6. `src/cost-tracker.ts`
-   efficiency와 economics가 어떻게 이어지는지 본다.
+- `S22`는 built-in tracing, trace/span 구조, sensitive-data capture toggle을
+  제공한다. observability와 trace privacy를 분리해 설명하는 근거다.
+- `S23`은 eval-driven development, workflow trace grading, grader criteria를
+  강조한다. reviewability 속성을 별도로 두는 근거다.
+- `S29`는 GenAI events, metrics, model spans, agent spans vocabulary를 주지만
+  아직 `Development` status다. observability schema를 freshness-sensitive하게
+  다뤄야 하는 근거다.
+- `S6`은 clean state와 handoff artifact를 강조한다. recoverability와
+  reviewability를 operational artifact에 연결하는 근거다.
+- `S8`은 stronger scaffold와 cost/latency trade-off를 보여 준다. economic
+  efficiency를 독립 속성으로 올리는 근거다.

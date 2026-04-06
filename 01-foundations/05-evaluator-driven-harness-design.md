@@ -1,174 +1,158 @@
 # 05. evaluator-driven harness 설계
 
-## 장 요약
+> Why this chapter exists: evaluator-driven design을 task, workflow trace,
+> skeptical review, eval hygiene, operational artifact 관점에서 읽는 법을
+> 고정한다.
+> Reader level: advanced / reviewer
+> Last verified: 2026-04-06
+> Freshness class: medium
+> Verified proposal sources: `S6`, `S7`, `S8`, `S21`, `S22`, `S23`
 
-장기 실행형 하네스가 실패하는 이유를 "모델이 약해서" 하나로 묶으면 중요한 절반을 놓친다. Anthropic의 2026-03-24 글은 긴 코딩 작업에서 context drift만큼이나 self-evaluation failure가 크다는 점을 강조한다. agent는 자기 산출물을 과하게 후하게 보는 경향이 있고, 이 문제는 subjective task에서 더 쉽게 드러나지만 verifiable task에서도 사라지지 않는다. 이 장은 그런 failure mode를 다루기 위해 evaluator-driven harness를 어떻게 읽고 설계할지 정리한다.
+## Core claim
 
-이 장의 핵심은 세 가지다. 첫째, planner, generator, evaluator는 단지 역할 이름이 아니라 서로 다른 실패를 줄이는 scaffold다. 둘째, subjective judgment를 criteria와 threshold로 다시 적지 않으면 evaluator는 쉽게 drift한다. 셋째, 이런 scaffold는 영구불변 구조가 아니라 현재 모델이 무엇을 solo로 안정적으로 할 수 있는지에 따라 다시 제거되거나 단순화될 수 있다.
+장기 실행형 하네스가 실패하는 이유를 "모델이 약해서" 하나로 묶으면 중요한
+절반을 놓친다. evaluator-driven harness의 핵심은 agent 수를 늘리는 데 있지
+않다. 더 중요한 것은 self-grading leniency를 별도 failure mode로 보고,
+planner, generator, evaluator를 서로 다른 judgment layer로 분리하며,
+workflow-level trace와 grader artifact를 남기고, contamination과 shared-state
+noise를 줄이는 hygiene 규칙을 세우는 데 있다.
 
-## 범위와 비범위
+`S8`은 generator와 evaluator를 분리하고 evaluator를 더 skeptical하게
+튜닝하는 편이 self-grading 문제를 다루기 쉽다고 말한다. `S7`은 task, trial,
+transcript, grader, isolated environment를 갖춘 eval harness를 설명한다.
+`S23`은 eval-driven development와 trace grading을 권장한다. 따라서
+evaluator-driven design은 사후 QA가 아니라 운영 artifact와 control loop를
+함께 설계하는 일이다.
 
-이 장이 다루는 것:
+## What this chapter is not claiming
 
-- self-evaluation failure를 별도 harness 문제로 읽는 법
-- planner, generator, evaluator 분리가 어떤 실패를 줄이는지
-- subjective quality를 gradable criteria로 바꾸는 방법
-- evaluator를 skeptical persona로 다루는 이유
-- model-relative scaffold pruning의 의미
+- 모든 harness가 planner/generator/evaluator 삼분 구조를 가져야 한다는 주장
+- evaluator를 추가하면 곧바로 품질이 보장된다는 주장
+- 특정 제품이 full evaluator loop를 내부적으로 구현한다고 단정하겠다는 주장
 
-이 장이 다루지 않는 것:
+## 왜 naive self-grading은 쉽게 무너지는가
 
-- 특정 prompt 문구의 최적값
-- 특정 QA toolchain이나 Playwright script의 구현 세부
-- Claude Code 공개 사본이 full planner/generator/evaluator 구조를 직접 구현한다고 단정하는 일
+agent에게 "방금 네가 만든 게 충분히 좋은가"를 묻는 순간, 흔히 두 문제가 생긴다.
 
-이 장은 원칙 장이다. 따라서 local product 사실을 새로 증명하기보다, 이미 다른 장에서 정리한 artifact와 Anthropic의 외부 원칙을 연결하는 synthesis frame을 제공한다.
-
-## 자료와 독서 기준
-
-주요 reader-facing 근거:
-
-- [../foundations/04-core-design-axes-context-control-tools-memory-safety-evals.md](04-core-design-axes-context-control-tools-memory-safety-evals.md)
-- [../context/03-compaction-memory-and-handoff-artifacts.md](../03-context-and-control/03-compaction-memory-and-handoff-artifacts.md)
-- [../execution/03-task-orchestration-and-long-running-execution.md](../05-execution-continuity-and-integrations/02-task-orchestration-and-long-running-execution.md)
-- [../evaluation/02-tasks-trials-transcripts-and-graders.md](../07-evaluation-and-synthesis/02-tasks-trials-transcripts-and-graders.md)
-- [../evaluation/03-benchmarking-coding-harnesses.md](../07-evaluation-and-synthesis/03-benchmarking-long-running-agent-harnesses.md)
-- [../evaluation/04-production-traces-feedback-loops-and-optimization.md](../07-evaluation-and-synthesis/04-production-traces-feedback-loops-and-optimization.md)
-
-외부 프레이밍:
-
-- Anthropic, [Harness design for long-running application development](https://www.anthropic.com/engineering/harness-design-long-running-apps), 2026-03-24
-- Anthropic, [Effective harnesses for long-running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents), 2025-11-26
-- Anthropic, [Building effective agents](https://www.anthropic.com/engineering/building-effective-agents), 2024-12-19
-
-함께 읽으면 좋은 장:
-
-- [../evaluation/06-contract-based-qa-and-skeptical-evaluators.md](../07-evaluation-and-synthesis/06-contract-based-qa-and-skeptical-evaluators.md)
-- [../17-end-to-end-scenarios.md](../07-evaluation-and-synthesis/07-claude-code-end-to-end-scenarios.md)
-- [../15-code-reading-guide.md](../07-evaluation-and-synthesis/08-benchmark-oriented-code-reading-guide.md)
-
-## naive self-grading은 왜 쉽게 무너지는가
-
-agent에게 "방금 네가 만든 게 충분히 좋은가?"를 물으면, 많은 경우 두 가지 문제가 생긴다.
-
-1. 자기 worklog와 의도를 너무 잘 알아서 결함을 변호한다.
+1. 자기 의도와 worklog를 너무 잘 알아서 결함을 변호한다.
 2. 확인 행동보다 설명과 합리화에 더 쉽게 끌린다.
 
-subjective task에서는 이 문제가 특히 분명하다. design quality나 originality는 binary test로 닫히지 않기 때문에, generator는 "그럴듯해 보인다"는 이유만으로 pass를 내리기 쉽다. 하지만 verifiable task에서도 문제는 남는다. edge case를 몇 개 놓쳤더라도, generator는 "큰 방향은 맞다"는 이유로 스스로 승인해 버릴 수 있다.
+`S8`은 subjective task에서 이 문제가 특히 강하지만, verifiable task에서도
+poor judgment가 남는다고 설명한다. 따라서 evaluator-driven harness의 첫
+출발점은 self-critique를 더 세게 요구하는 것이 아니라, self-grading 자체를
+별도 failure mode로 인식하는 일이다.
 
-따라서 evaluator-driven harness의 첫 출발점은 model self-critique를 더 세게 요구하는 것이 아니라, self-grading 자체를 별도 failure mode로 인식하는 일이다.
+## planner, generator, evaluator는 judgment layer다
 
-## planner, generator, evaluator는 서로 다른 실패를 줄인다
-
-Anthropic의 2026-03-24 글은 planner, generator, evaluator를 단순 multi-agent ornament로 다루지 않는다. 각 agent는 서로 다른 결함을 보정한다.
-
-| 역할 | 주로 줄이려는 실패 | 대표 산출물 |
+| 역할 | 주로 줄이려는 실패 | 대표 artifact |
 | --- | --- | --- |
-| planner | under-scoping, premature implementation, spec drift의 출발점 | expanded spec, high-level design 방향 |
-| generator | 실제 build failure, integration failure, implementation churn | code, 실행 결과, intermediate artifact |
-| evaluator | self-justification, shallow QA, subjective drift | critique, fail/pass judgment, feedback artifact |
+| planner | under-scoping, premature implementation, vague acceptance criteria | expanded spec, sprint plan |
+| generator | 구현 churn, integration failure, incomplete execution | code diff, run output, handoff note |
+| evaluator | self-justification, shallow QA, lenient pass judgment | grader criteria, critique, fail/pass record |
 
-이 표가 뜻하는 바는 분명하다. planner, generator, evaluator를 분리한다는 것은 "agent 수를 늘린다"가 아니라, 문제를 서로 다른 judgment layer로 나눠 다룬다는 뜻이다.
+이 표가 뜻하는 바는 분명하다. 세 역할을 분리한다는 것은 "agent 수를 늘린다"가
+아니라, 서로 다른 판단을 서로 다른 artifact 위에서 하게 만든다는 뜻이다.
 
-## subjective quality를 gradable criteria로 바꿔라
+## evaluator-driven design을 가능하게 하는 operational artifact
 
-evaluator가 정말로 skeptical하게 동작하려면, "좋은가?"라는 질문을 그대로 던져서는 안 된다. subjective task를 evaluation loop에 넣으려면 먼저 criteria language로 다시 적어야 한다.
+evaluator가 제대로 일하려면 단순한 reviewer persona만으로는 부족하다.
+다음 artifact family가 함께 필요하다.
 
-예를 들어 design task라면 다음처럼 쪼갤 수 있다.
+- task or sprint contract
+  - 무엇을 만들고 무엇을 검사할지 미리 고정한다.
+- workflow trace와 transcript
+  - 어떤 판단과 tool call이 pass/fail에 이르렀는지 다시 본다.
+- grader criteria와 threshold
+  - "좋다"가 아니라 무엇이 통과 조건인지 적는다.
+- handoff note와 result packet
+  - 다음 loop가 무엇을 이어받아야 하는지 남긴다.
+- cost / latency record
+  - evaluator loop가 값어치를 했는지 판단한다.
 
-- design quality  
-  전체 mood와 identity가 일관된가
-- originality  
-  default-heavy output이 아니라 deliberate choice가 보이는가
-- craft  
-  spacing, hierarchy, contrast 같은 기본기가 무너지지 않았는가
-- functionality  
-  aesthetic judgment과 별개로 usable한가
+`S21`과 `S22`는 full trace, trace/span, handoff-aware execution을 설명한다.
+`S23`의 trace grading은 workflow trace가 evaluator artifact가 될 수 있음을
+명시적으로 보여 준다.
 
-핵심은 criteria가 많다는 사실이 아니라, 무엇을 더 중요하게 보는지까지 같이 적는 것이다. 그렇지 않으면 evaluator는 다시 평균적인 안전 판단으로 돌아간다.
+## skeptical evaluator는 persona이자 policy다
 
-## evaluator는 persona이자 policy다
+`S8`의 중요한 교훈은 standalone evaluator를 skeptical하게 튜닝하는 것이,
+generator가 자기 work를 비판적으로 보게 만드는 것보다 더 tractable하다는
+점이다. 이 장에서는 evaluator를 두 층으로 나눠 읽는다.
 
-evaluator를 하나의 model call로만 생각하면, drift와 calibration 문제가 문서에서 사라진다. 더 좋은 독법은 evaluator를 두 층으로 나누는 것이다.
+- persona
+  - strict reviewer, skeptical QA, taste-heavy critic 같은 태도
+- policy
+  - criteria, threshold, fail rule, escalation rule 같은 판정 규칙
 
-1. persona  
-   design critic, skeptical QA, strict code reviewer처럼 어떤 태도로 볼 것인가
-2. policy  
-   criteria, threshold, fail rule, contract를 어떻게 적용할 것인가
-
-이 둘을 분리해 두면 다음과 같은 질문이 가능해진다.
+이 둘을 분리하면 다음 질문이 가능해진다.
 
 - evaluator가 너무 forgiving한가
-- rule은 괜찮지만 threshold가 낮은가
-- criteria는 있는데 실제 inspection behavior가 shallow한가
+- criteria는 괜찮지만 threshold가 낮은가
+- trace는 풍부한데 inspection behavior가 shallow한가
 
-즉 evaluator는 단순 reviewer가 아니라, persona와 policy가 함께 shaped된 execution surface다.
+## eval hygiene와 contamination control
+
+평가 artifact가 많아질수록 hygiene 규칙도 중요해진다.
+
+- trial은 가능한 한 isolated environment에서 시작해야 한다.
+- shared state, leftover file, cache noise는 agent quality와 infrastructure noise를
+  섞어 버린다.
+- production trace를 eval dataset로 재사용할 때는 provenance, deduping,
+  time window, policy/version drift를 함께 기록해야 한다.
+- generator prompt와 grader criteria가 섞일수록 평가가 느슨해질 수 있으므로,
+  둘을 artifact와 역할 수준에서 분리하는 편이 낫다.
+
+위 네 번째 항목은 `S7`의 stable environment / isolated trial framing과 `S23`의
+task-specific eval, trace grading, continuous evaluation practice를 바탕으로 한
+운영 권고다.
 
 ## scaffold는 현재 모델에 대한 가설이다
 
-Anthropic의 2026-03-24 글이 특히 중요한 이유는, 복잡한 harness를 만든 뒤 그대로 신성시하지 않았기 때문이다. planner, sprint construct, per-sprint evaluator 같은 요소를 하나씩 제거해 보면서 무엇이 여전히 load-bearing한지 다시 점검했다. 이 과정이 뜻하는 것은 단순하다.
+`S8`은 복잡한 harness를 만든 뒤에도 planner, evaluator, reset, sprint scaffold를
+영구 구조로 신성시하지 않는다. 무엇이 여전히 load-bearing한지 다시 확인한다.
+
+이는 중요한 설계 태도를 준다.
 
 - scaffold는 영구 아키텍처가 아니다.
-- scaffold는 현재 모델이 solo로 잘 못하는 것을 보완하기 위한 operating hypothesis다.
+- scaffold는 현재 모델이 solo로 안정적으로 못하는 것을 보완하는 가설이다.
+- 모델이 바뀌면 evaluator loop와 contract ritual이 과잉 복잡도가 될 수 있다.
+- 반대로 작업 종류가 바뀌면 이전에는 불필요했던 evaluator가 다시 중요해질 수 있다.
 
-모델이 더 긴 context를 안정적으로 다루고, solo build quality가 좋아지면 이전에는 필수였던 scaffold가 비용과 latency만 늘리는 장치가 될 수 있다. 반대로 새로운 종류의 작업이 들어오면, 이전에는 필요 없던 evaluator가 새로 load-bearing해질 수도 있다.
+## What to measure
 
-## 이 책에서 이 프레임을 어떻게 써야 하는가
+- grader agreement와 skeptical reviewer agreement
+- isolated rerun에서 pass/fail이 유지되는 비율
+- trace grading이 찾아낸 failure category 수
+- evaluator loop 추가 전후의 품질 상승 대비 cost / latency 변화
+- production trace에서 eval dataset으로 승격된 사례의 provenance completeness
 
-이 책의 Claude Code 사례 spine은 transcript, task artifact, compaction, resume, permission, trace stack을 강하게 보여 준다. 반면 full evaluator-driven coding loop를 local product fact로 직접 보여 주지는 않는다. 따라서 독자는 두 단계를 분리해 읽는 편이 안전하다.
+## Failure signatures
 
-1. local code가 실제로 무엇을 보여 주는가  
-   transcript, outcome, restore, task artifact, operator surface
-2. Anthropic의 외부 원칙이 어떤 비교 프레임을 추가하는가  
-   self-evaluation failure, skeptical evaluator, contract-first QA, scaffold pruning
+- generator가 자기 work를 계속 통과시키고 evaluator가 형식적 승인만 한다.
+- trace는 남지만 grader criteria와 threshold가 없어 why-pass를 설명하지 못한다.
+- production issue를 eval dataset으로 옮겼지만 provenance와 time window가 없다.
+- shared state 때문에 eval score가 흔들리는데 이를 model failure로 오해한다.
+- evaluator loop는 길어졌지만 실제 품질 개선과 economics trade-off를 설명하지 못한다.
 
-이 구분을 지켜야 외부 원칙을 local product 사실처럼 오독하지 않게 된다.
-
-## 관찰, 원칙, 해석, 권고
-
-관찰:
-
-- Anthropic의 2026-03-24 글은 self-evaluation failure를 context drift와 별도 failure mode로 다룬다.
-- planner, generator, evaluator는 서로 다른 실패를 줄이는 scaffold로 제시된다.
-- 현재 공개 Claude Code 스냅샷만으로는 full evaluator-driven coding loop를 local fact로 단정할 수 없다.
-
-원칙:
-
-- self-grading failure는 별도 harness 문제로 다루는 편이 낫다.
-- evaluator는 generator와 구분된 skeptical role이어야 한다.
-- scaffold necessity는 model-relative하게 재검증해야 한다.
-
-해석:
-
-- evaluator-driven harness는 evaluation 축을 control 축 안으로 더 깊이 끌어당긴다.
-- planner/generator/evaluator 분리는 multi-agent ornament가 아니라 judgment layer 분리다.
-
-권고:
-
-- self-grading leniency 사례를 별도 failure bucket으로 모아라.
-- evaluator를 설계할 때 input, criteria, threshold, persona를 분리해 문서화하라.
-- 모델이 바뀔 때는 planner, sprint, evaluator scaffold를 하나씩 제거해 보며 load-bearing 여부를 다시 점검하라.
-
-## benchmark 질문
+## Review questions
 
 1. 이 하네스는 self-evaluation failure를 별도 failure mode로 다루는가.
-2. planner, generator, evaluator가 서로 다른 실패를 줄이는 구조로 설명되는가.
-3. subjective quality가 criteria와 threshold로 다시 적혀 있는가.
-4. evaluator scaffold가 현재 모델에 대해 여전히 load-bearing한지 재검증하는가.
+2. planner, generator, evaluator가 서로 다른 artifact와 judgment layer를 가지는가.
+3. workflow trace와 grader criteria가 pass/fail 재구성에 충분한가.
+4. eval hygiene와 contamination control 규칙이 명시돼 있는가.
+5. evaluator scaffold가 현재 모델에 대해 여전히 load-bearing한지 재검증하는가.
 
-## 요약
+## Sources / evidence notes
 
-evaluator-driven harness 설계의 핵심은 agent 수를 늘리는 데 있지 않다. 더 중요한 것은 self-grading leniency를 별도 문제로 보고, planner/generator/evaluator를 서로 다른 judgment layer로 분리하며, criteria와 threshold를 explicit하게 적고, 모델이 바뀔 때 그 scaffold를 다시 걷어 볼 수 있게 만드는 데 있다. 이 관점이 있어야 long-running harness의 복잡도가 왜 필요한지, 또 언제 과해지는지를 함께 설명할 수 있다.
-
-## 대표 근거 읽기 순서
-
-1. [appendix/references.md](../00-front-matter/03-references.md)
-   2026-03-24 글이 이 책에서 어떤 역할을 맡는지 먼저 고정한다.
-2. [context/03-compaction-memory-and-handoff-artifacts.md](../03-context-and-control/03-compaction-memory-and-handoff-artifacts.md)
-   context continuity와 reset/compaction 논의를 본다.
-3. [evaluation/02-tasks-trials-transcripts-and-graders.md](../07-evaluation-and-synthesis/02-tasks-trials-transcripts-and-graders.md)
-   grader input과 rule vocabulary를 확인한다.
-4. [evaluation/04-production-traces-feedback-loops-and-optimization.md](../07-evaluation-and-synthesis/04-production-traces-feedback-loops-and-optimization.md)
-   calibration과 optimization loop를 본다.
-5. [evaluation/06-contract-based-qa-and-skeptical-evaluators.md](../07-evaluation-and-synthesis/06-contract-based-qa-and-skeptical-evaluators.md)
-   contract-first QA 구조를 이어서 읽는다.
+- `S8`은 self-evaluation 문제, skeptical evaluator tuning, planner/generator/
+  evaluator split, contract-based QA를 직접 설명한다.
+- `S7`은 task, trial, transcript, grader, isolated environment를 갖춘 eval
+  harness를 설명한다. hygiene와 contamination control의 기초 근거다.
+- `S23`은 eval-driven development, task-specific eval, trace grading을
+  강조한다. workflow-level trace를 evaluator artifact로 다루는 근거다.
+- `S21`과 `S22`는 full trace, trace/span, handoff-aware execution, sensitive
+  data control을 설명한다. evaluator-driven loop의 operational artifact를
+  reviewable하게 만드는 근거다.
+- `S6`은 clean state와 structured handoff artifact를 강조한다. planner/
+  generator/evaluator가 세션 사이를 넘나들 때 continuity artifact가 필요한
+  근거다.
