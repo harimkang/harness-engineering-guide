@@ -1,4 +1,4 @@
-# ignore superpowers
+# ignore local planning artifacts
 
-superpowers/*
+superpowers/
 node_modules/
