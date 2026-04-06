@@ -1,15 +1,34 @@
 # Harness Engineering: Designing Operational Systems for Long-Running Agents
 
+> Last verified against official docs: 2026-04-06
+> Volatile topics: Claude Code settings, skills, CLI flags, MCP client semantics, remote/bridge behavior, tracing and eval tooling
+
 장기 실행형 에이전트 하네스를 설계, 분석, 평가하기 위한 책형 문서 세트입니다. 이 책은 일반적인 harness engineering 원칙을 먼저 세우고, Claude Code를 반복 사례로 사용해 그 원칙이 실제 product runtime에 어떻게 드러나는지 보여 줍니다.
 
 읽는 단위는 기능 목록이 아니라 운영 문제입니다. context를 어떻게 조립하고 줄일지, tool과 permission을 어떤 계약 표면으로 설계할지, 사람이 언제 개입하고 어떤 artifact가 continuity를 떠받칠지, deployment boundary와 eval loop를 어디에 둘지를 문서 전체에서 일관된 언어로 다룹니다.
+
+이 문서세트는 proposal에 정리한 공식 출처를 canonical source registry로 사용합니다. reader-facing 본문을 실질적으로 수정할 때는 먼저 관련 공식 문서와 사양을 다시 확인하고, 그 근거를 [00-front-matter/03-references.md](./00-front-matter/03-references.md)와 각 장의 evidence note에 반영해야 합니다.
+
+## 이 책이 하는 일
+
+- 하네스를 단순 프롬프트 묶음이 아니라 운영 시스템으로 읽는다.
+- 일반 원칙과 Claude Code 사례를 왕복하면서 설계 언어를 만든다.
+- 평가를 뒤에 붙는 부록이 아니라 설계와 운영의 일부로 다룬다.
+- instruction surfaces, observability/economics, governance, eval hygiene 같은 축을 독립 설계면으로 끌어올린다.
+
+## 이 책이 하지 않는 일
+
+- 일반 LLM 입문서 역할
+- 모델 학습, 파인튜닝, 내부 가중치 분석
+- 비공개 구현을 추정해 채워 넣는 일
+- 특정 제품의 기능 소개 문서를 대체하는 일
 
 ## 이 레포를 어떻게 읽는가
 
 - 처음 읽는다면 `README -> 00-front-matter -> 01-foundations -> 관심 있는 part guide` 순서가 가장 안전합니다.
 - 각 Part는 원칙 장으로 시작하고, 바로 이어지는 Claude Code 사례 장으로 그 원칙을 구체화합니다.
 - Claude Code 사례 장은 파일명에 `claude-code-`가 들어가므로 일반론과 빠르게 구분할 수 있습니다.
-- `08-reference`는 본문 서사가 아니라 lookup과 source re-entry를 돕는 보조 장치입니다.
+- `08-reference`는 본문 서사가 아니라 lookup, tagging, source re-entry를 돕는 보조 장치입니다.
 
 ## 가장 빠른 시작 경로
 
@@ -20,7 +39,18 @@
 5. [01-foundations/01-why-harness-engineering-matters.md](./01-foundations/01-why-harness-engineering-matters.md)
 6. [02-runtime-and-session-start/00-part-guide.md](./02-runtime-and-session-start/00-part-guide.md)
 
-이 여섯 문서를 먼저 읽으면 독서 규칙, 근거 체계, 기본 개념, 그리고 새 paired-parts 독서 흐름이 한 번에 고정됩니다.
+이 여섯 문서를 먼저 읽으면 독서 규칙, 근거 체계, 기본 개념, 그리고 paired-parts 독서 흐름이 한 번에 고정됩니다.
+
+## 초심자 90분 코스
+
+1. [README.md](./README.md)
+2. [00-front-matter/01-how-to-read-this-book.md](./00-front-matter/01-how-to-read-this-book.md)
+3. [01-foundations/01-why-harness-engineering-matters.md](./01-foundations/01-why-harness-engineering-matters.md)
+4. [01-foundations/02-workflows-agents-runtimes-and-harnesses.md](./01-foundations/02-workflows-agents-runtimes-and-harnesses.md)
+5. [02-runtime-and-session-start/00-part-guide.md](./02-runtime-and-session-start/00-part-guide.md)
+6. [03-context-and-control/01-context-as-an-operational-resource.md](./03-context-and-control/01-context-as-an-operational-resource.md)
+7. [04-interfaces-and-operator-surfaces/01-tool-contracts-and-the-agent-computer-interface.md](./04-interfaces-and-operator-surfaces/01-tool-contracts-and-the-agent-computer-interface.md)
+8. [07-evaluation-and-synthesis/07-claude-code-end-to-end-scenarios.md](./07-evaluation-and-synthesis/07-claude-code-end-to-end-scenarios.md)
 
 ## 이 책이 다루는 질문
 
@@ -28,10 +58,10 @@
 - context reset과 compaction을 언제 구분할 것인가
 - 여러 턴, interruption, recovery, handoff를 어떻게 운영할 것인가
 - tool, command, skill, plugin, MCP를 어떤 계약 표면으로 설계할 것인가
-- 운영자가 언제 보고 개입하고 승인해야 하는가
+- settings, hooks, `CLAUDE.md`, subagents, CLI flags 같은 instruction surface를 어떻게 읽을 것인가
+- observability, traces, run artifacts, cost, latency, headroom을 언제 운영 문제로 끌어올릴 것인가
 - sandbox, trust, remote boundary를 어디에 둘 것인가
 - model eval이 아니라 harness eval을 어떻게 설계할 것인가
-- self-evaluation failure를 external evaluator, explicit criteria, contract-based QA로 어떻게 보완할 것인가
 
 ## 레포 구성
 
@@ -153,17 +183,18 @@
 ## 핵심 참조 장치
 
 - [00-front-matter/02-source-analysis-method.md](./00-front-matter/02-source-analysis-method.md)
-  이 책의 증거 규칙과 chapter scaffold 규칙을 설명한다.
+  이 책의 증거 규칙, freshness 분류, source verification 규칙을 설명합니다.
 - [00-front-matter/03-references.md](./00-front-matter/03-references.md)
-  외부 참고 문헌과 canonical source registry를 모아 둔다.
+  공식 문서, 엔지니어링 글, 사양, 프레임워크 문서, 연구 자료의 canonical registry를 모아 둡니다.
 - [08-reference/01-glossary.md](./08-reference/01-glossary.md)
-  핵심 용어의 정의, 차이, 대표 근거 라벨을 모아 둔다.
+  핵심 용어의 정의, 차이, confusable terms를 모아 둡니다.
 - [08-reference/02-key-file-index.md](./08-reference/02-key-file-index.md)
-  benchmark question 중심으로 어떤 발췌와 provenance label을 다시 볼지 정리할 때 쓴다.
+  benchmark question 중심으로 어떤 발췌와 provenance label을 다시 볼지 정리할 때 씁니다.
 
 ## 이 레포를 갱신할 때
 
-- 새 문서를 추가할 때는 먼저 어느 Part의 원칙/사례/reference에 속하는지 결정한다.
-- 독서 경로나 Part 구성이 바뀌면 이 `README`와 관련 `00-part-guide.md`를 함께 갱신한다.
-- 새 외부 자료가 본문에 들어오면 [00-front-matter/03-references.md](./00-front-matter/03-references.md)를 함께 갱신한다.
-- reader-facing corpus만으로 읽히는 입구 구조를 유지한다.
+- 새 문서를 추가할 때는 먼저 어느 Part의 원칙/사례/reference에 속하는지 결정합니다.
+- 독서 경로나 Part 구성이 바뀌면 이 `README`와 관련 `00-part-guide.md`를 함께 갱신합니다.
+- 새 외부 자료가 본문에 들어오면 [00-front-matter/03-references.md](./00-front-matter/03-references.md)를 함께 갱신합니다.
+- substantive change를 넣기 전에 proposal에 정리한 공식 출처를 먼저 다시 확인합니다.
+- volatile chapter는 verified date와 freshness class를 함께 갱신합니다.

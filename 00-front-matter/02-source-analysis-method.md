@@ -1,91 +1,181 @@
-# Appendix. Source Analysis Method
+# 02. Source Analysis Method
 
-## 장 요약
+> Why this chapter exists: 이 책이 어떤 source를 어떤 무게로 읽고, 어떤 문장을 어떤 근거 위에 쓰는지 고정한다.
+> Reader level: beginner / advanced / reviewer
+> Last verified: 2026-04-06
+> Freshness class: medium
 
-이 부록은 reader-facing 문서들이 어떤 근거 규칙과 provenance 규약 아래 쓰였는지 요약한다. 핵심은 독자가 이 레포의 문서만으로도 논지를 따라갈 수 있게 하되, 편집자와 검수자는 필요할 때 구현 provenance 경로를 기준으로 다시 검증할 수 있게 만드는 것이다.
+## Core claim
 
-## 목적
+이 문서 세트는 `관찰`, `원칙`, `해석`, `권고`를 섞어 쓰되, 그 층위를 분리해서 읽게 해야 한다. 특히 fast-moving topic을 다룰 때는 proposal에 정리한 공식 출처를 먼저 다시 확인하고, 그 확인 결과를 freshness note와 evidence note에 남겨야 한다.
 
-이 부록은 본문 문서들이 어떤 전제와 방법론 위에서 작성되었는지 명시한다. 특히 공개 소스 스냅샷을 바탕으로 구조를 해설하는 문서에서는 "직접 확인한 사실", "코드에서 합리적으로 읽어낸 해석", "확인할 수 없어 말하지 않는 것"을 명확히 구분하는 편이 중요하다.
+## What this chapter is not claiming
+
+- 공개 스냅샷 밖의 구현을 확정할 수 있다는 주장
+- 연구 preprint가 공식 제품 문서와 같은 무게를 가진다는 주장
+- code block이나 Mermaid 하나만으로 운영 현실을 확정할 수 있다는 주장
 
 ## 적용 범위
 
 이 부록의 규칙은 reader-facing 문서 집합에 적용한다.
 
 - `README.md`
-- [00-how-to-read-this-book.md](01-how-to-read-this-book.md)
-- `foundations/**`, `context/**`, `interfaces/**`, `execution/**`, `safety/**`, `evaluation/**`
-- `01`~`17`
-- `appendix/**`
+- [01-how-to-read-this-book.md](01-how-to-read-this-book.md)
+- `01-foundations/**`
+- `02-runtime-and-session-start/**`
+- `03-context-and-control/**`
+- `04-interfaces-and-operator-surfaces/**`
+- `05-execution-continuity-and-integrations/**`
+- `06-boundaries-deployment-and-safety/**`
+- `07-evaluation-and-synthesis/**`
+- `08-reference/**`
 
-다음 경로는 독자용 본문 범위 밖의 내부 작업 문서이므로 이 부록의 출판 규약 적용 대상이 아니다.
+다음 경로는 내부 작업 문서이므로 출판 규약 적용 대상에서 제외한다.
 
 - `superpowers/**`
 
-## 분석 단위
+## Source weight
 
-이 문서 세트의 기본 분석 단위는 다음 세 가지다.
+reader-facing 문서에서 쓰는 source의 기본 무게는 아래 순서를 따른다.
 
-1. 진입점과 orchestration 파일
-2. 특정 서브시스템의 대표 디렉터리와 핵심 타입
-3. 횡단 관심사를 드러내는 runtime 경계
+1. Primary / official docs
+2. Official engineering posts
+3. Protocol specifications
+4. Framework docs
+5. Research papers / preprints
+6. Observed code / public artifact snapshot
 
-따라서 파일 수가 많더라도 모든 파일을 같은 깊이로 설명하지 않는다. 대신 전체 구조를 이해하는 데 결정적인 경로를 먼저 고정하고, 그 위에 command/tool/task/remote/UI 같은 서브시스템을 덧씌우는 방식으로 읽는다.
+fast-moving topic에서는 추가 우선순위를 둔다.
 
-## 주장 층위와 근거 층위
+1. official docs
+2. release notes
+3. observed artifact
+4. preprint
 
-이 문서 세트는 근거 층위와 문장 층위를 함께 관리한다.
+under-review 논문이나 preprint는 반드시 provisional framing으로 취급한다.
 
-### 제품 사실
+## Proposal source verification rule
 
-- source file 안의 import, 함수, 분기, 타입, 상수
-- 디렉터리와 파일의 존재 여부
-- 특정 기능이 feature flag나 runtime gate 뒤에 있다는 사실
-- 문서 작성 시점에 실제 스냅샷에 포함된 코드 구조
+이번 개편에서 `harness-engineering-guide-revision-proposal.md`의 출처 섹션은 canonical source registry다. reader-facing 문서를 실질적으로 업데이트, 추가, 수정, 삭제할 때는 다음 순서를 따른다.
 
-### 공개 설계 원칙
+1. proposal에서 관련 source ID를 찾는다.
+2. 공식 URL을 실제로 다시 열어 현재 내용을 확인한다.
+3. 확인한 사실만 본문에 반영한다.
+4. drift, 불일치, 폐기된 경로가 있으면 추정으로 메우지 않고 `Freshness class`, `Last verified`, `Sources / evidence notes`에 남긴다.
 
-- Anthropic engineering 글
-- Anthropic Platform 문서
-- 제품 설계자가 공개적으로 설명한 runtime principle
+2026-04-06 기준으로 다음 고변동 공식 문서는 실제 URL을 다시 확인했다.
 
-### 연구 보강 자료
+- Claude Code settings
+- Claude Code skills
+- Claude Code CLI reference
+- Claude Code release notes
+- MCP specification `2025-11-25`
+- MCP client concepts
+- OpenAI `AGENTS.md` guide
+- OpenAI Agents SDK guide
+- OpenAI tracing
+- OpenAI evaluation best practices / agent evals
+- LangGraph persistence / interrupts / observability
+- LangSmith masking docs
+- OpenTelemetry GenAI semantic conventions
+- NIST AI RMF Generative AI Profile / Playbook
 
-- 하네스를 비교 가능한 실행 구조로 읽게 해 주는 논문과 프리프린트
-- 제품 사실을 직접 증명하지 않고, 비교 프레임을 제공하는 자료
+## Claim status
 
-### 저자 해석
+이 문서 세트는 장 안에서 아래 claim status를 분리한다.
 
-- 왜 특정 책임이 이 파일에 모였는지에 대한 구조적 설명
-- 어느 파일이 composition root처럼 보인다는 판단
-- 어떤 경계가 복잡도를 만든다는 관찰
-- 한 장의 논지를 위해 여러 파일을 연결하는 서술
+- Fact from official docs
+- Fact from observed artifact/code
+- Interpretation / synthesis
+- Recommendation
+- Open question / unverifiable from current sources
 
-본문에서는 가능하면 해석이 사실처럼 읽히지 않도록, code block, 표, 대표 흐름 설명을 통해 근거를 함께 제시한다.
+문장 표기와의 대응은 아래처럼 읽는다.
 
-### 설계 권고
+- `관찰:` local code 또는 관찰 가능한 artifact에서 직접 확인한 사실
+- `원칙:` 공식 문서나 공식 엔지니어링 글이 직접 말하는 주장
+- `해석:` 여러 근거를 종합한 구조적 판단
+- `권고:` 독자가 자기 하네스 설계에 적용할 일반화된 지침
+- `확인 불가:` 스냅샷 밖이거나 source만으로 확정할 수 없는 연결고리
 
-- 독자가 자기 하네스를 설계하거나 평가할 때 쓸 일반화된 질문
-- local code 사실 자체가 아니라, 사례를 바탕으로 도출한 적용 지침
+## Freshness classes
 
-## 출처와 버전 고정 규칙
+- `stable`
+  - foundational distinctions, glossary-level definitions, 오래 유지되는 taxonomy
+- `medium`
+  - eval practices, observability schema, 운영 패턴 일반론
+- `volatile`
+  - settings, skills, MCP semantics, release-note-heavy features, auth, remote bridge, CLI flags
 
-### 코드 스냅샷
+`volatile` 장은 장 서두에 verified date를 남기고, 어떤 source를 다시 확인했는지 적는다.
 
-- 커밋 해시나 태그가 제공되면 그것을 사용한다.
-- 커밋 해시가 없는 공개 배포본이면 `현재 공개 사본`과 기준 날짜를 함께 적는다.
-- git 이력과 커밋 의도는 본문 핵심 근거가 아니다.
+## Snapshot and observed-artifact citation rules
 
-### 외부 1차 자료
+공개 사본이나 관찰 가능한 artifact를 인용할 때는 가능하면 아래 식별자 중 최소 둘 이상을 남긴다.
 
-- URL과 발행일 또는 접근 시점을 함께 적는다.
-- 제목만 적고 링크를 생략하지 않는다.
-- canonical source registry는 [references.md](03-references.md)에 유지한다.
-- 외부 원칙이 local code 사실을 덮어쓰지 않게, `관찰`과 `원칙`을 분리한다.
+- commit hash
+- tag or release version
+- package version
+- acquisition path
+- verification date
+
+커밋 해시가 없는 공개 배포본이면 `현재 공개 사본`과 기준 날짜를 함께 적는다.
+
+## Evidence block rules
+
+code block과 diagram은 증거이지만, 단독으로 장의 주장을 완성하지는 않는다.
+
+- code block은 짧게 유지한다.
+- 한 block은 한 주장에 대응시킨다.
+- block 바로 아래에 해설을 붙인다.
+- 긴 함수는 생략을 명시한다.
+- provenance 단서로 파일 경로와 함수/구간 이름을 남긴다.
+
+권장 evidence metadata:
+
+```md
+출처:
+- 파일 경로
+- 함수/구간 이름
+- 스냅샷 기준
+- 발췌 규칙
+- 출처 단서
+```
+
+## Diagram discipline
+
+diagram은 선택이 아니라 검토 대상이다.
+
+- runtime, session, context, tooling, permission, resumability, trace, boundary 계열 장은 diagram candidate로 본다.
+- Mermaid는 구조도, 시퀀스, 상태 전이를 요약하는 용도로 쓴다.
+- 다이어그램만 있고 본문 해설이 없는 상태는 허용하지 않는다.
+- diagram을 넣지 않기로 했으면, 본문 구조만으로 충분한 이유가 설명 가능해야 한다.
+
+## Chapter template contract
+
+새 장과 실질적으로 재작성하는 기존 장은 가능하면 아래 골격을 따른다.
+
+```md
+> Why this chapter exists
+> Reader level
+> Last verified
+> Freshness class
+
+## Core claim
+## What this chapter is not claiming
+## Mental model / diagram
+## Design implications
+## What to measure
+## Failure signatures
+## Review questions
+## Sources / evidence notes
+```
+
+모든 장을 기계적으로 같은 길이로 맞출 필요는 없지만, 독자가 "왜 이 장을 읽는가"와 "무엇을 근거로 믿어야 하는가"를 빠르게 알 수 있어야 한다.
 
 ## 스냅샷에 없는 것은 추정하지 않는다
 
-이 문서 세트는 다음 정보를 주된 근거로 삼지 않는다.
+다음 정보는 reader-facing 본문의 핵심 근거가 아니다.
 
 - git 이력과 커밋 의도
 - 테스트 인프라 전체
@@ -93,90 +183,12 @@
 - 빌드 파이프라인의 외부 단계
 - 저장소 외부 서비스의 서버 구현
 
-이 정보가 스냅샷에 직접 포함되지 않거나, 포함되더라도 부분적이라면 본문에서는 "확인 불가" 또는 "스냅샷 범위 밖"으로 취급한다.
-
-## Code Block 발췌 원칙
-
-### 1. 증거로 쓴다
-
-code block은 장문 복사본이 아니라 본문의 주장을 뒷받침하는 증거다.
-
-### 2. 짧게 유지한다
-
-기본 길이는 5~25줄 정도를 목표로 한다. 더 길어질 경우에는 한 장 안에서도 block을 나누어 설명한다.
-
-### 3. 한 block은 한 주장에 대응시킨다
-
-예를 들어 startup trust gating을 설명하는 block과 REPL launch를 설명하는 block은 분리한다.
-
-### 4. 항상 해설을 붙인다
-
-code block 아래에는 "이 코드가 무엇을 하고 있는가"와 "왜 이 장의 주장을 지지하는가"를 바로 설명한다.
-
-### 5. 중간 생략을 명시한다
-
-긴 함수에서 일부만 인용할 때는 `// ... 생략 ...` 같은 표기를 사용해, 독자가 전체 함수가 아님을 알 수 있게 한다.
-
-### 6. 출처 단서를 남긴다
-
-가능하면 코드 블록 근처에 provenance를 설명하는 최소 단서를 둔다. 이 단서는 독자에게 원본 source 탐색을 요구하기 위한 것이 아니라, 인용된 발췌가 어떤 구현 단면에서 왔는지 밝히기 위한 편집 메모다. reader-facing 표기에서는 가능한 한 일관된 구현 provenance 경로를 사용한다.
-
-- 파일 경로
-- 함수명 또는 섹션명
-
-## Mermaid 사용 원칙
-
-Mermaid는 구조와 흐름을 압축해서 보여주는 도구다. 하지만 Mermaid만으로 구현 디테일을 확정하지 않는다. 이 문서 세트에서는 다음 규칙을 따른다.
-
-- Mermaid는 구조도, 시퀀스, 상태 흐름 같은 큰 관계를 요약한다.
-- 표와 code block이 더 구체적인 근거 역할을 한다.
-- 흐름 중심 장에서는 최소 하나 이상의 Mermaid를 사용한다.
-- 다이어그램만 있고 텍스트 해설이 없는 상태는 허용하지 않는다.
-
-## 문서 간 책임 분리 원칙
-
-중복을 줄이기 위해 장 간 초점을 다르게 유지한다.
-
-- `03`은 실행 분기
-- `04`는 startup/trust 게이트
-- `05`는 context/query preparation
-- `06`은 turn lifecycle
-- `08`은 tool/permission
-- `12`는 task/background execution
-- `10`은 service 계층
-- `11`은 extension/coordination 계층
-- `14`는 remote/network 계층
-
-같은 source file이 여러 장에 등장해도, 매번 다른 책임 절단면을 설명하는 방식으로만 재사용한다.
-
-## 표현 규칙
-
-- 장 요약과 범위/비범위를 앞쪽에 둔다.
-- 파일 경로와 대표 함수명은 provenance 단서로만 명시한다.
-- 원칙 장과 사례 장은 가능하면 장 끝에 `대표 근거 읽기 순서`를 둔다.
-- front matter와 pure lookup appendix는 `대표 근거 읽기 순서` 대신 `사용법` 또는 `이 문서를 언제 참조할 것인가`를 명시해도 된다.
-- appendix는 단순 표가 아니라 설명형 부록으로 쓴다.
-
-## chapter scaffold 규칙
-
-reader-facing chapter는 가능하면 아래 순서를 따른다.
-
-1. 장 요약
-2. 범위와 비범위
-3. source basis 또는 외부 프레이밍
-4. 핵심 논지와 증거
-5. benchmark 질문 또는 적용 질문
-6. 대표 근거 읽기 순서 또는 명시적 예외
-
-모든 문서를 같은 길이와 같은 소절 수로 기계적으로 맞추지는 않는다. 다만 독자가 "이 문서가 무엇을 하려는가"와 "어떤 발췌와 설명이 핵심 근거인가"를 빠르게 알 수 있어야 한다.
-
-## 불확실성 처리 규칙
-
-- local code에서 확인되지 않으면 `관찰`로 쓰지 않는다.
-- 외부 자료가 강하게 시사하더라도 local product 사실처럼 단정하지 않는다.
-- 불일치 가능성이 있으면 `해석` 또는 `확인 불가`로 분리한다.
-- under-review 논문은 framing 자료로만 쓰고, local 구조의 직접 증거처럼 다루지 않는다.
+이 정보가 스냅샷에 직접 포함되지 않거나 부분적이면 본문에서는 `확인 불가:` 또는 `스냅샷 범위 밖`으로 취급한다.
 
 ## 요약
 
-이 문서 세트는 공개 스냅샷을 기반으로 Claude Code의 구조를 해설하는 책형 분석 문서다. 핵심은 "추정하지 않기", "code block을 증거로 쓰기", "근거 층위와 문장 층위를 분리하기", "장 간 초점을 분리하기", "docs-only 독자도 읽히게 하면서 편집자와 검수자는 provenance로 재검증할 수 있게 만들기"에 있다.
+이 문서 세트는 공개 스냅샷과 공식 문서를 결합해 Claude Code를 사례 기반 하네스 엔지니어링 교재로 읽는다. 핵심 규칙은 세 가지다.
+
+1. source weight를 분리한다.
+2. claim status를 분리한다.
+3. fast-moving topic은 반드시 다시 검증하고 freshness를 남긴다.
