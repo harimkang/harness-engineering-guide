@@ -14,6 +14,8 @@ Anthropic의 [Beyond permission prompts: making Claude Code more secure and auto
 
 따라서 이 장은 "어떤 폴더가 원격 기능을 담는가"보다 "어떤 boundary를 어떤 adapter가 넘는가"를 묻는다. 이 질문이 잡혀 있어야 뒤에서 safety benchmark와 end-to-end scenario를 읽을 때 local, remote, bridge, proxy, SSH가 왜 서로 다른 trade-off를 갖는지 설명할 수 있다.
 
+여기에는 freshness note도 붙는다. remote MCP transport, OAuth, streamable HTTP 계열은 공식 문서와 release notes에서 계속 바뀌는 영역이므로, 배포 family 설명은 transport 이름보다 auth/authz boundary와 session contract의 역할을 먼저 적는 편이 안정적이다.
+
 ## 이 장의 근거와 범위
 
 이 장의 관찰은 2026-04-02 기준 현재 공개 사본의 다음 대표 발췌 출처에 한정한다.

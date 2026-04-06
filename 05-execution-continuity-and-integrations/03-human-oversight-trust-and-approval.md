@@ -162,6 +162,8 @@ logEvent('tengu_tool_use_show_permission_request', {
 
 감독 설계는 결국 이런 trace 없이 개선하기 어렵다.
 
+또한 fatigue를 줄이는 방법은 ask를 무조건 없애는 것이 아니다. 어떤 action은 auto-allow나 classifier-assisted path로 보내고, 어떤 action은 bypass-immune하게 남기며, 어떤 경우에는 내용을 일부 가린 상태로도 승인할 수 있게 해야 한다. 따라서 approval 설계는 trust, explanation quality, masking/redaction, reversible action을 함께 다뤄야 한다.
+
 ## 위험한 allow rule을 미리 막는 것도 감독의 일부다
 
 `src/utils/permissions/permissionSetup.ts`는 auto mode에서 위험한 Bash/PowerShell allow rule을 탐지한다. 예를 들어 tool-level allow, wildcard, interpreter prefix 등은 classifier를 우회해 arbitrary code execution을 허용할 수 있으므로 dangerous pattern으로 취급한다.
@@ -191,6 +193,7 @@ logEvent('tengu_tool_use_show_permission_request', {
 - trust와 approval을 같은 층으로 설계하면 안 된다.
 - fatigue management는 approval 제거가 아니라 approval 재배치와 rule shaping의 문제다.
 - 위험한 allow rule은 runtime 전에 authoring 단계에서부터 제어해야 한다.
+- approval burden은 operator UX 지표이면서 safety 지표다.
 
 해석:
 
@@ -203,6 +206,12 @@ logEvent('tengu_tool_use_show_permission_request', {
 - bypass mode가 있더라도 bypass-immune edge를 최소 하나 이상 명시하라.
 - permission prompt의 개수만 세지 말고, 어떤 decision reason이 반복되는지도 함께 계측하라.
 - approval fatigue 측정값을 trace/diagnostic artifact와 연결해 두어야 나중에 원인을 다시 분해할 수 있다.
+
+## Review scaffold
+
+- trust acceptance, action approval, auto-allow, bypass-immune edge를 한 장표에서 분리해 설명할 수 있어야 한다.
+- masking/redaction 없이 approval만 재배치하고 있지 않은지 확인하라.
+- approval fatigue를 줄였다는 주장은 prompt 수뿐 아니라 decision reason, revoke 가능성, 설명 품질까지 함께 봐야 한다.
 
 ## benchmark 질문
 

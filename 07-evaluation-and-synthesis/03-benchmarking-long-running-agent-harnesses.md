@@ -133,6 +133,8 @@ if (env.isCI && !isEnvTruthy(process.env.VCR_RECORD)) {
 
 이런 surface가 없으면 trial variance가 모델 때문인지, runtime flag 때문인지, 외부 API drift 때문인지 구분하기 어려워진다.
 
+여기에 time budget, cost budget, headroom, flaky dependency policy를 같이 적어야 long-running benchmark가 실제 운영 질문에 가까워진다. infrastructure noise 문맥에서 보듯이, 느린 run과 나쁜 run, 비싼 run과 실패한 run을 같은 bucket에 넣으면 benchmark 해석이 바로 왜곡된다.
+
 ## minimal scoring rule은 "존재"가 아니라 "설명 가능성"까지 봐야 한다
 
 출판용 프레임에서는 각 차원을 0-3으로 간단히 볼 수 있다.
@@ -203,6 +205,7 @@ if (env.isCI && !isEnvTruthy(process.env.VCR_RECORD)) {
 - 각 차원은 artifact와 explanation을 함께 요구해야 한다.
 - variance가 큰 harness는 평균 점수보다 recovery와 reproducibility를 먼저 본다.
 - evaluator separation과 contract explicitness도 benchmark 차원으로 기록하는 편이 낫다.
+- time budget, cost budget, flaky dependency policy가 없으면 장기 실행 benchmark는 운영 가능성을 과장하기 쉽다.
 
 해석:
 
@@ -215,6 +218,12 @@ if (env.isCI && !isEnvTruthy(process.env.VCR_RECORD)) {
 - point estimate보다 variance와 failure signature를 함께 기록하라.
 - 약한 차원을 찾았으면 먼저 그 차원이 모델 문제인지 harness 구조 문제인지 분리해라.
 - evaluator를 붙였다면, 그 evaluator가 overhead인지 leverage인지 별도 열로 적어라.
+
+## Review scaffold
+
+- task family마다 time budget, cost budget, headroom assumption을 적고 있는지 확인하라.
+- flaky dependency와 infrastructure noise를 model/harness fault와 분리해 기록하라.
+- benchmark score만 남기고 variance policy를 버리고 있지 않은지 점검하라.
 
 ## benchmark 질문
 

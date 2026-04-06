@@ -6,7 +6,7 @@
 
 Claude Code 같은 사례에서는 "어느 폴더에 무엇이 있는가"보다 "내가 지금 어떤 설계 질문을 검증하려는가"를 먼저 정해야 한다. interactive turn의 state owner를 알고 싶은지, remote boundary의 adapter를 보고 싶은지, headless path가 어디서 interactive path와 갈라지는지, resume control plane이 어디에 있는지에 따라 첫 파일이 달라진다.
 
-이 장의 목적은 바로 그 질문-선택 규칙을 주는 것이다. Anthropic의 [Demystifying evals for AI agents](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents) (2026-01-09)는 task, trial, transcript, outcome, evaluation harness를 분리해서 생각해야 한다고 설명한다. Anthropic의 [Harness design for long-running application development](https://www.anthropic.com/engineering/harness-design-long-running-apps) (2026-03-24)는 long-running harness 성능이 clean state, handoff artifact, evaluator feedback 같은 scaffold 선택에 크게 좌우된다고 말한다. Lee et al., [Meta-Harness](https://arxiv.org/abs/2603.28052) (2026-03-30)은 harness 자체가 source code, scores, execution traces를 대상으로 최적화될 수 있는 객체라고 본다. 이 세 관점을 합치면, 코드 독해는 단순한 구조 탐색이 아니라 "어떤 benchmark 질문을 어느 artifact와 state owner를 통해 답할 것인가"를 정하는 작업이 된다.
+이 장의 목적은 바로 그 질문-선택 규칙을 주는 것이다. Anthropic의 [Demystifying evals for AI agents](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents) (2026-01-09)는 task, trial, transcript, outcome, evaluation harness를 분리해서 생각해야 한다고 설명한다. Anthropic의 [Harness design for long-running application development](https://www.anthropic.com/engineering/harness-design-long-running-apps) (2026-03-24)는 long-running harness 성능이 clean state, handoff artifact, evaluator feedback 같은 scaffold 선택에 크게 좌우된다고 말한다. Lee et al., [Meta-Harness](https://arxiv.org/abs/2603.28052) (2026-03-30)은 harness 자체가 source code, scores, execution traces를 대상으로 최적화될 수 있는 객체라고 본다. 이 세 관점을 합치면, 코드 독해는 단순한 구조 탐색이 아니라 "어떤 benchmark 질문을 어느 artifact와 state owner를 통해 답할 것인가"를 정하는 작업이 된다. 그래서 이 장은 본문 마지막에 있지만 실질적으로는 reference-adjacent guide로 읽는 편이 맞다.
 
 ## 왜 benchmark-oriented reading guide가 필요한가
 
@@ -68,6 +68,8 @@ Claude Code 같은 사례에서는 "어느 폴더에 무엇이 있는가"보다 
 | loop lens | 실제 turn loop와 tool recursion은 어디에 있는가 | `src/query.ts` |
 
 이 다섯 렌즈는 eval 기사에서 말하는 task, transcript, outcome, harness 구분을 코드 읽기로 옮긴 것이다. `transport artifact`는 cross-boundary contract를, `persistence artifact`는 saved state reload path를 뜻한다. task를 보고 싶으면 turn loop와 entrypoint를, transcript와 restore를 보고 싶으면 ownership과 persistence artifact를, harness를 보고 싶으면 분기와 adapter를 잡아야 한다.
+
+이 장을 통해 얻어야 할 산출물은 "어디부터 읽을까"뿐 아니라 "어떤 evidence bundle이 있어야 비교 질문을 닫을 수 있는가"다. source hop만 적고 transcript/trace/config snapshot을 안 적으면 benchmark-oriented reading guide라고 부르기 어렵다.
 
 ## evaluator-heavy harness를 읽을 때는 contract와 criteria부터 고정하라
 

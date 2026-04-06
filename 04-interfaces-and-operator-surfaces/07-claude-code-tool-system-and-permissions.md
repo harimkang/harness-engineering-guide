@@ -358,6 +358,8 @@ export function assembleToolPool(
 
 이 함수는 built-in tool을 먼저 `getTools()`로 줄인 뒤, MCP tool에도 같은 deny-rule filtering을 적용하고, 마지막에 name 기준 dedupe까지 수행한다. 따라서 built-in과 MCP는 "마지막에 그냥 붙는다"가 아니라, 같은 boundary 규칙을 공유한 뒤 하나의 model-visible pool로 합쳐진다.
 
+하지만 이것이 trust path까지 같다는 뜻은 아니다. tool list에 보인다는 사실은 "호출 가능 후보"라는 뜻이지, 해당 server가 이미 승인되었거나 안전하다는 뜻이 아니다. MCP의 roots는 작업 범위 힌트일 뿐 sandbox가 아니고, remote MCP의 OAuth나 channel authorization은 별도 경계다. 따라서 capability exposure, authorization, privacy/masking을 같은 층으로 설명하면 permission model을 잘못 읽게 된다.
+
 ## Claude Code의 tool layer를 어떻게 읽어야 하는가
 
 이 장의 로컬 코드만 놓고 보면 Claude Code의 tool layer는 다섯 층으로 정리할 수 있다.
@@ -384,10 +386,18 @@ export function assembleToolPool(
 - blanket deny rule과 MCP server-prefix deny rule이 capability surface를 어떻게 바꾸는가?
 - built-in과 MCP tool은 같은 boundary 규칙 아래서 합쳐지는가?
 - `mode`, `rule`, `directory`, `gate`가 하나의 permission context로 조립되는 구조가 드러나는가?
+- roots나 advertised scope를 security boundary처럼 읽고 있지 않은가?
+- capability exposure, authorization, privacy/masking을 구분해서 설명하는가?
 
 ## 마무리
 
 이 장의 결론은 다음과 같다. Claude Code의 tool system은 함수 목록이 아니라 계약과 경계의 결합이다. `src/Tool.ts`는 tool contract와 execution context를 정의하고, `src/utils/permissions/permissionSetup.ts`와 `src/utils/permissions/permissions.ts`는 어떤 boundary 아래서 tool을 열지 결정하며, `src/tools.ts`는 그 결과를 바탕으로 모델에게 실제로 보일 capability surface를 조립한다. 따라서 tool/permission 계층은 단순 승인 UI가 아니라, capability exposure와 boundary enforcement를 함께 구현하는 핵심 하네스 층으로 읽는 편이 맞다.
+
+## Review scaffold
+
+- 동일한 tool request가 built-in, local MCP, remote MCP일 때 각각 어떤 승인 경로와 trust path를 거치는지 비교해 보라.
+- roots, sandbox, OAuth/authorization, masking 중 무엇이 어떤 종류의 통제인지 혼동하지 않는지 확인하라.
+- operator에게 보이는 tool list가 실제 authorization 상태를 과장하지 않는지 점검하라.
 
 ## 대표 근거 읽기 순서
 

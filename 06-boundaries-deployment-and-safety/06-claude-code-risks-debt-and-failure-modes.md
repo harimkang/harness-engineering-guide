@@ -59,6 +59,8 @@
 
 이 표의 요점은 복잡도가 단순한 구현 실수라기보다 기능적 가치와 맞바꾼 구조라는 점이다.
 
+이 관찰을 운영 부채 언어로 다시 쓰면 catalog가 더 또렷해진다. docs drift, config sprawl, feature-flag drift, trace privacy debt, eval contamination debt, infrastructure-noise debt는 모두 코드 밖에서만 생기는 문제가 아니라 이 긴장 축이 장기간 누적된 결과로 읽을 수 있다.
+
 ## 제품 사실 1: 큰 파일의 문제는 길이가 아니라 boundary density다
 
 현재 공개 사본에서 핵심 조립 파일의 길이는 다음과 같다.
@@ -251,6 +253,7 @@ if ((permissionMode === 'bypassPermissions' || allowDangerouslySkipPermissions) 
 
 - mode breadth는 기능 풍부함을 주지만, regression surface를 크게 넓힌다.
 - feature gate는 build-time dead-code elimination에 유리하지만, 코드 독해 시 어떤 경로가 실제로 활성인지 확신하기 어렵게 만든다.
+- docs와 benchmark artifact가 이 변화 속도를 따라가지 못하면 설명 부채도 함께 커진다.
 
 해석:
 
@@ -309,6 +312,7 @@ if (closeCode === 4001) {
 3. 이 경로의 failure mode는 개별 기능 오동작인가, 아니면 예를 들어 permission mode transition, resume restore, remote reconnect 같은 운영 결정 경계의 실패인가.
 4. file-count-heavy 영역과 protocol-dense 영역을 같은 유지보수 척도로 보고 있지 않은가.
 5. 이 복잡도는 제거해야 할 잡음인가, 아니면 제품 가치와 직접 맞물린 구조적 비용인가.
+6. config sprawl, trace privacy debt, eval contamination debt 중 무엇이 이미 code-adjacent risk로 보이는가.
 
 ## 대표 근거 읽기 순서
 

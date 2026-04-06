@@ -309,6 +309,8 @@ export function formatDescriptionWithSource(cmd: Command): string {
 
 이 함수는 typeahead와 help 같은 UI에서 provenance를 operator에게 드러내기 위한 것이다. 즉, provenance는 구현 세부가 아니라 surface semantics의 일부다. 사용자는 command가 plugin에서 왔는지, bundled skill인지, workflow인지 구분해서 읽을 수 있다.
 
+동시에 이것은 command surface가 instruction provenance와도 맞닿아 있음을 보여 준다. 같은 slash command처럼 보여도 built-in command는 제품 contract이고, local skill command는 repo or user instruction surface이며, plugin-delivered command는 bundle provenance를 가진다. command system을 읽을 때는 [09-instruction-surfaces-settings-hooks-claude-md-subagents.md](09-instruction-surfaces-settings-hooks-claude-md-subagents.md)의 instruction stack과 provenance stack을 겹쳐 봐야 한다.
+
 ## command pool에서 어떤 하위 surface가 다시 만들어지는가
 
 여기서 중요한 구분이 하나 더 있다. `getCommands()`가 만든 전체 pool은 곧바로 하나의 표면으로만 쓰이지 않는다.
@@ -396,6 +398,8 @@ export function isBridgeSafeCommand(cmd: Command): boolean {
 
 remote mode는 REPL이 원격 실행 맥락에서 어떤 command를 보여줄지의 문제고, bridge inbound safety는 모바일·웹 같은 inbound channel에서 어떤 slash command를 받아도 되는지의 문제다. 전자는 목록을 다시 자르는 filter이고, 후자는 개별 command가 안전한지 판정하는 predicate에 가깝다. 둘 다 command surface를 제한하지만, 적용 시점과 기준은 다르다.
 
+release notes와 MCP 문서를 같이 보면 이 구분은 더 중요해진다. 최근 remote MCP, OAuth, transport 변화는 command surface 주변의 capability ingress를 계속 바꾸고 있다. 따라서 command chapter는 기능 목록보다 provenance와 freshness note를 함께 남기는 편이 안전하다.
+
 ## command system을 operator surface로 읽을 때 보이는 것
 
 이 장의 로컬 코드만 놓고 보면 Claude Code의 command system은 네 층으로 정리할 수 있다.
@@ -420,6 +424,8 @@ remote mode는 REPL이 원격 실행 맥락에서 어떤 command를 보여줄지
 - 최종 command surface는 aggregation 뒤에 어떤 필터를 한 번 더 거치는가?
 - model-invocable prompt command 집합과 broader skill inventory를 구분하고 있는가?
 - remote mode와 bridge inbound safety를 같은 문제로 뭉개고 있지는 않은가?
+- 같은 slash surface가 서로 다른 instruction provenance를 가진다는 점이 드러나는가?
+- remote-delivered capability를 local built-in처럼 설명하고 있지 않은가?
 
 ## 마무리
 

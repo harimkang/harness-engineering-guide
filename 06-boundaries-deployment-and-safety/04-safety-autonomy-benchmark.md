@@ -126,6 +126,8 @@ Claude Code 사례가 보여 주는 중요한 점은 이것이다. autonomy dept
 
 이 절차를 따르면 safety benchmark가 permission dialog 숫자 세기로 축소되지 않는다.
 
+benchmark-ready 문서라면 여기에 evidence pack도 붙여 두는 편이 좋다. boundary map, decision reason sample, approval burden metric, recovery trace, deployment-family variance note가 함께 남아야 나중에 "왜 이 점수를 줬는가"를 재검토할 수 있다. eval hygiene 장의 reproducibility bundle과 여기의 safety evidence는 분리되지만 강하게 인접한다.
+
 ## 관찰, 원칙, 해석, 권고
 
 관찰:
@@ -139,6 +141,7 @@ Claude Code 사례가 보여 주는 중요한 점은 이것이다. autonomy dept
 - safety-autonomy benchmark는 boundary placement를 먼저 봐야 한다.
 - autonomy depth를 높일 때 어떤 boundary가 남는지 반드시 같이 적어야 한다.
 - deployment variance와 constrained recovery를 benchmark에서 빼면 실제 위험을 놓친다.
+- governance review에 쓸 evidence artifact를 남기지 않으면 benchmark 결과는 재사용성이 낮다.
 
 해석:
 
@@ -150,6 +153,12 @@ Claude Code 사례가 보여 주는 중요한 점은 이것이다. autonomy dept
 - 새 harness를 평가할 때는 safety benchmark 표에 반드시 `deployment variance handling` 축을 넣어라.
 - prompt 수보다 decision reason과 bypass-immune edge를 먼저 기록하라.
 - recovery under constraint를 별도 축으로 남겨라. 안전 경계가 강할수록 이 축이 더 중요해진다.
+
+## Review scaffold
+
+- boundary map, operator burden, constrained recovery, deployment variance가 한 bundle로 남는지 확인하라.
+- safety-autonomy 점수만 남기고 evidence artifact를 버리고 있지 않은지 점검하라.
+- 이 benchmark 결과를 governance review 언어로 다시 번역할 수 있어야 한다.
 
 ## benchmark 질문
 

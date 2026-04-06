@@ -16,7 +16,7 @@ Anthropic의 [Effective harnesses for long-running agents](https://www.anthropic
 - `RemoteSessionManager`와 `SessionsWebSocket`은 remote session attach의 owner다.
 - `src/utils/conversationRecovery.ts`와 `src/utils/sessionRestore.ts`는 resume control plane의 owner다.
 
-따라서 이 장은 "전체 구조를 다시 요약"하는 대신, 네 개의 end-to-end scenario를 ownership handoff 중심으로 다시 쓴다.
+따라서 이 장은 "전체 구조를 다시 요약"하는 대신, 다섯 개의 end-to-end scenario를 ownership handoff 중심으로 다시 쓴다. 독서 순서상으로도 이 장은 단순 마무리 사례가 아니라, 앞선 장들을 실제 시스템 시간축으로 다시 묶는 bridge chapter에 가깝다.
 
 ## 이 장의 근거와 범위
 
@@ -63,6 +63,8 @@ Anthropic의 [Effective harnesses for long-running agents](https://www.anthropic
 | control-surface intervention | `src/query.ts` or remote session client | permission layer / remote control branch | approval request, denial reason, interrupt/reconnect signal |
 
 이 표는 scenario를 "기능"이 아니라 "owner와 artifact의 조합"으로 읽게 해 준다. `src/QueryEngine.ts`는 별도 scenario라기보다 local/tool-rich scenario와 비교하기 위한 ownership contrast 지점으로 읽으면 된다.
+
+평가 관점에서는 이 표가 곧 scenario review scaffold다. 각 행마다 owner shift, handoff artifact, boundary crossing, evidence pack을 적어 두면 end-to-end 비교가 훨씬 쉬워진다.
 
 ## 시나리오 1: local interactive prompt 1턴
 

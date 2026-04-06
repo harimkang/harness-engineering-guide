@@ -148,6 +148,8 @@ constructor(config: QueryEngineConfig) {
 
 이 다섯 질문을 통과하면, 그 하네스는 단지 "동작하는 데모"가 아니라 benchmark 가능한 시스템으로 읽힌다.
 
+여기에 minimum reproducibility bundle을 붙이면 framework가 더 실무적이 된다. dataset/task version, trial condition, transcript/trace, outcome packet, grader/rule version, config snapshot, flaky-dependency note가 최소 묶음이다. 이 bundle이 없으면 `benchmark-ready` 판정은 쉽게 과장된다.
+
 ## 무엇을 절대 잊지 말아야 하는가
 
 이 framework는 Claude Code를 정답 아키텍처로 선언하지 않는다. 오히려 반대로, Claude Code가 공개 사본만으로도 benchmark 질문을 많이 불러일으키는 사례라는 점이 중요하다. 다른 하네스가 이 질문에 더 좋은 답을 줄 수도 있고, 일부 축에서는 훨씬 단순한 구조가 더 낫기도 하다.
@@ -167,6 +169,7 @@ constructor(config: QueryEngineConfig) {
 - benchmark framework는 점수표보다 질문지에 가까워야 한다.
 - 각 axis는 설명 가능성, 운영 가능성, 측정 가능성을 함께 평가해야 한다.
 - weakest dimension을 먼저 찾고, 그 dimension의 귀속점을 분리해야 한다.
+- `benchmark-ready` 등급은 reproducibility bundle과 재실행 제어가 있을 때만 붙이는 편이 안전하다.
 
 해석:
 

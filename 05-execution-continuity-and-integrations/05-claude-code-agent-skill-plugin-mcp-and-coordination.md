@@ -280,6 +280,8 @@ if (supportsResources && !resourceToolsAdded) {
 
 여기서 중요한 것은 두 가지다. 첫째, MCP는 tool만이 아니라 command와 skill, resource surface까지 조건적으로 끌어올 수 있다. 둘째, 이 모든 것이 항상 발생하는 것은 아니다. `MCP_SKILLS`가 켜져 있고 server가 resources를 지원할 때만 skill/resource 쪽이 활성화된다. 따라서 MCP는 protocol-backed capability 축이지만, 그 내부 동작은 feature와 server capability에 따라 달라진다.
 
+최신 MCP 문서를 붙이면 여기서 끝나지 않는다. roots, sampling, elicitation, authorization은 capability를 "가져오는" 문제를 넘어, client와 server가 세션 책임을 어떻게 나누는지까지 정한다. 즉 coordination stack을 설명할 때는 skills/plugins/MCP/subagents가 capability acquisition만이 아니라 delegation semantics와 approval semantics를 어디서 다시 쓰는지도 함께 적어야 한다.
+
 ## coordinator mode는 capability를 추가하기보다 worker 해석을 다시 쓴다
 
 `src/coordinator/coordinatorMode.ts`는 새 도구를 직접 추가하기보다, worker에게 어떤 도구와 역할을 설명할지를 바꾼다.
@@ -335,6 +337,8 @@ You are a **coordinator**. Your job is to:
    coordinator mode가 worker 도구 설명과 역할 규칙을 다시 쓰는 방식
 
 마지막 종합에서는 첫째와 둘째를 함께 "guidance capability"로 볼 수 있다. 하지만 provenance 차이가 실제 코드에서 중요하므로 본문에서는 둘을 분리해 읽는 편이 더 정확하다.
+
+실무적으로는 이것을 coordination stack으로 다시 묶는 편이 좋다. skills와 bundled guidance는 instruction provenance를, plugin은 bundle provenance를, MCP는 protocol-backed capability와 auth volatility를, coordinator mode는 delegation semantics를, subagent/worker path는 context partitioning을 담당한다. 같은 "확장"이라는 말로 뭉개면 각 층의 실패 모드가 사라진다.
 
 ## 점검 질문
 

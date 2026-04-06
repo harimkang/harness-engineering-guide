@@ -282,6 +282,8 @@ enqueuePendingNotification({
 
 이 구조는 notification이 단순 UI toast가 아니라는 점을 보여준다. task completion은 summary와 output path를 포함한 structured artifact로 다시 message queue에 들어간다. 이게 REPL과 다른 runtime path에서 다시 소비될 수 있게 만든다.
 
+따라서 cancellation과 orphan semantics도 artifact 관점으로 읽어야 한다. 어떤 task가 foreground owner를 잃었을 때 언제 background로 남고, 언제 kill 또는 eviction 후보가 되며, 그 사실이 어떤 artifact로 남는지가 명확해야 long-running execution을 다시 판단할 수 있다.
+
 ## 대표 시나리오: tool 실행이 task artifact로 바뀌어 REPL로 되돌아오는 흐름
 
 앞 절까지의 taxonomy를 실제 동작으로 묶으면 다음과 같다.
@@ -345,6 +347,8 @@ const notificationMessages = notificationAttachments.map(createAttachmentMessage
 
 이렇게 읽으면 task는 tool과 UI 사이의 부속 레이어가 아니라, long-running execution을 세션 안에서 살아 있게 만드는 중간 artifact model에 가깝다.
 
+여기에 scheduler/orphan/cancel semantics를 더하면 문서가 완성된다. 어떤 family는 자동 backgrounding을 하고, 어떤 family는 stall detection 뒤에 human intervention을 요구하며, 어떤 family는 remote identity만 남긴 채 poll loop로 전환된다. 이 차이를 task artifact와 연결해 적어야 long-running execution이 "계속 돌고 있다"는 말의 의미가 분명해진다.
+
 ## 점검 질문
 
 - 이 긴 실행은 단순 tool result인가, 아니면 task artifact로 승격돼야 하는가?
@@ -352,6 +356,7 @@ const notificationMessages = notificationAttachments.map(createAttachmentMessage
 - foreground/background 전환은 family마다 같은 방식으로 구현되는가?
 - 완료 신호는 단순 문자열인가, 아니면 output path와 status를 담은 artifact인가?
 - REPL은 task를 표시만 하는가, 아니면 transcript/view/forwarding 경로에서 실제로 소비하는가?
+- orphan cleanup과 cancellation이 어떤 artifact로 남는가?
 
 ## 마무리
 

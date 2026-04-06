@@ -1,6 +1,6 @@
 # Part 7 Guide: Evaluation And Synthesis
 
-이 Part는 harness를 측정 가능한 시스템으로 읽는 방법과, 앞선 모든 축을 다시 종합하는 방법을 다룹니다. 먼저 model eval과 harness eval의 차이, task/trial/transcript/grader vocabulary, benchmark frame, production trace loop, skeptical evaluator를 읽고, 이어서 eval hygiene를 독립 축으로 끌어올립니다. 그 다음 Claude Code end-to-end scenario와 code reading guide를 통해 전체 구조를 다시 묶습니다.
+이 Part는 harness를 측정 가능한 시스템으로 읽는 방법과, 앞선 모든 축을 다시 종합하는 방법을 다룹니다. 먼저 model eval과 harness eval의 차이, task/trial/transcript/grader vocabulary, benchmark frame, production trace loop, skeptical evaluator를 읽고, 이어서 eval hygiene를 독립 축으로 끌어올립니다. 그 다음 Claude Code end-to-end scenario와 code reading guide를 통해 전체 구조를 다시 묶습니다. 이번 개정에서는 dataset/version contamination hygiene, reproducibility bundle, flaky-dependency policy, grader disagreement와 retirement, scenario/code-reading 장의 위치를 더 분명하게 정리합니다.
 
 ## 이 Part의 핵심 질문
 
@@ -9,6 +9,7 @@
 - production trace와 feedback loop는 optimization에 어떤 입력을 제공하는가
 - dataset versioning, contamination, evidence pack은 eval 신뢰성을 어떻게 바꾸는가
 - 종합 장에서 ownership handoff와 benchmark question을 어떻게 다시 결합하는가
+- code-reading guide는 왜 본문 마지막 장이면서도 reference-adjacent하게 써야 하는가
 
 ## 먼저 읽을 원칙 장
 
@@ -27,5 +28,6 @@
 
 ## 필요할 때 함께 볼 곳
 
+- [../06-boundaries-deployment-and-safety/07-governance-risk-and-compliance-mapping.md](../06-boundaries-deployment-and-safety/07-governance-risk-and-compliance-mapping.md)
 - [../08-reference/02-key-file-index.md](../08-reference/02-key-file-index.md)
 - [../08-reference/01-glossary.md](../08-reference/01-glossary.md)

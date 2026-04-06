@@ -52,6 +52,8 @@
 
 이 셋을 구분하지 않으면 capability exposure와 operator fatigue를 같은 문제로 오해하게 된다.
 
+최신 MCP 문맥에서는 여기에 authorization/privacy 질문도 붙는다. roots나 resource advertisement는 coordination signal일 수 있지만, 그 자체가 보안 경계나 privacy guarantee는 아니다. 어떤 capability를 노출했는가와, 누가 호출을 승인하는가와, 어떤 데이터가 실제로 전송되는가는 분리해서 서술해야 한다.
+
 ## 위험한 allow rule은 authoring 단계에서 막아야 한다
 
 `src/utils/permissions/permissionSetup.ts`는 auto mode에서 dangerous Bash/PowerShell permission을 따로 판정한다. 예를 들어 tool-level allow, wildcard, interpreter prefix는 classifier 안전장치를 우회할 수 있어 위험 규칙으로 간주된다.
@@ -142,6 +144,8 @@ logEvent('tengu_tool_use_show_permission_request', {
 
 즉 permission fatigue는 call-time 경험일 뿐 아니라, later tuning을 위한 measurement surface이기도 하다. 너무 많은 ask를 줄이려면 shaping, authoring guardrail, analytics 세 층을 함께 봐야 한다.
 
+따라서 fatigue 대응은 단순히 prompt 수를 줄이는 문제가 아니다. 반복 승인 감소, 민감 action의 bypass-resistant 유지, explanation quality, masking/redaction, revoke 가능성을 함께 설계해야 한다. approval burden은 operator UX 지표이면서 safety 지표다.
+
 ## 관찰, 원칙, 해석, 권고
 
 관찰:
@@ -153,6 +157,7 @@ logEvent('tengu_tool_use_show_permission_request', {
 원칙:
 
 - capability exposure와 permission decision은 분리해서 설계해야 한다.
+- capability exposure, authorization, privacy는 서로 다른 심사 질문이다.
 - 위험한 allow rule은 authoring 단계에서 막아야 한다.
 - permission 시스템은 decision engine일 뿐 아니라 explanation engine이기도 해야 한다.
 
@@ -166,6 +171,12 @@ logEvent('tengu_tool_use_show_permission_request', {
 - 새 harness를 설계할 때는 permission 설계를 `authoring`, `exposure`, `call-time` 세 층으로 나눠 문서화하라.
 - bypass mode를 도입하더라도 bypass-immune edge를 명시하라.
 - decision reason을 operator가 읽을 수 있는 언어로 바꾸는 surface를 별도로 두라.
+
+## Review scaffold
+
+- 어떤 capability가 숨겨지는지, 어떤 capability가 보이지만 `ask` 상태인지, 어떤 capability가 허용되더라도 데이터는 마스킹되는지 구분해서 적어 보라.
+- MCP나 remote surface를 쓴다면 advertised roots와 실제 authorization boundary를 같은 것으로 설명하고 있지 않은지 점검하라.
+- approval fatigue를 측정하는 지표가 없다면 permission UX를 아직 설계했다고 보기 어렵다.
 
 ## benchmark 질문
 

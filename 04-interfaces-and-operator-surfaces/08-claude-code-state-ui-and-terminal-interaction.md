@@ -269,6 +269,8 @@ const mainReturn = <KeybindingSetup>
 
 즉, Claude Code의 UI는 "메시지 리스트 + 입력창"보다 훨씬 두껍다. operator가 어떤 상태를 보고 있는지, 어떤 modal이 떠 있는지, 지금 prompt mode인지 transcript mode인지가 모두 한 shell 안에서 관리된다.
 
+여기에는 transcript와 trace의 구분도 숨어 있다. 화면은 transcript를 먼저 보여 주지만, 실제 세션 제어에는 background task artifact, notification, approval queue, diagnostic state가 함께 작동한다. 따라서 UI/state chapter는 run-artifact adjacency를 빼면 절반만 설명한 셈이 된다.
+
 ## terminal wrapper도 하네스 구조의 일부다
 
 `src/ink.ts`는 Ink를 그대로 노출하지 않고 공통 wrapper를 씌운다.
@@ -291,9 +293,11 @@ export async function createRoot(options?: RenderOptions): Promise<Root> {
 
 이건 사소해 보이지만 중요하다. 같은 terminal UI라도 render root를 어떻게 감싸느냐에 따라 theme, component contract, layout behavior가 세션 전체에서 일관되게 유지된다.
 
+또한 wrapper는 masking과 redaction의 마지막 사용자 노출 지점이기도 하다. terminal transcript에 민감한 input/output을 그대로 흘릴지, operator action은 유지한 채 일부 필드만 가릴지 같은 정책이 여기서 사용자 경험으로 드러난다.
+
 ## 이 구조가 지원하는 감독 기능
 
-이 장의 로컬 코드가 직접 보여주는 감독 기능은 네 가지다.
+이 장의 로컬 코드가 직접 보여주는 감독 기능은 다섯 가지다.
 
 1. 상태 관찰  
    `src/state/AppStateStore.ts`의 unified state를 통해 permission, remote connection, tasks, notifications 같은 상태를 한 표면에서 읽을 수 있다.
@@ -303,6 +307,8 @@ export async function createRoot(options?: RenderOptions): Promise<Root> {
    `toolPermissionOverlay` 같은 overlay가 shell 내부에 통합되어, 위험한 행동을 UI 바깥이 아니라 session flow 안에서 제어한다.
 4. 컨텍스트 전환  
    `viewingAgentTaskId`와 viewed task 분기가 leader view와 teammate transcript view 사이 전환을 가능하게 한다.
+5. artifact-aware intervention
+   notification, permission queue, transcript branch, diagnostic state가 함께 있어 resume, cancel, redact, diagnose가 같은 shell 안에서 이어진다.
 
 이 네 기능을 함께 보면, Claude Code의 UI/state 층은 cosmetic shell이 아니라 operator oversight surface에 가깝다.
 

@@ -148,6 +148,8 @@ onPermissionRequest: (request, requestId) => {
 
 이것이 의미하는 바는, deployment family가 바뀌면 boundary도 같이 재배치된다는 점이다. 같은 approval surface라도 local tool-use prompt와 remote permission relay는 다른 경계다.
 
+최신 MCP 문서를 함께 읽으면 한 층이 더 드러난다. roots나 advertised scope는 useful coordination signal일 수 있지만, 그 자체가 sandbox나 authorization boundary는 아니다. boundary engineering 문서가 roots를 enforcement layer처럼 설명하면 trust language와 auth language를 동시에 흐리게 만든다.
+
 ## boundary engineering의 목적은 “무조건 막기”가 아니다
 
 좋은 boundary engineering은 다음을 동시에 만족해야 한다.
@@ -172,6 +174,7 @@ onPermissionRequest: (request, requestId) => {
 - autonomy를 키울수록 boundary를 줄이기보다 층을 나눠야 한다.
 - trust boundary는 action approval과 분리돼야 한다.
 - deployment family가 달라지면 boundary placement도 달라져야 한다.
+- coordination signal과 enforcement boundary를 같은 것으로 설명하면 안 된다.
 
 해석:
 
@@ -183,6 +186,7 @@ onPermissionRequest: (request, requestId) => {
 - 새 하네스를 설계할 때 boundary map을 먼저 그리고, 각 층의 bypass-immune edge를 명시하라.
 - settings-time guardrail과 runtime prompt를 같은 층으로 설명하지 말라.
 - remote/MCP path가 있다면 local path와 다른 boundary placement를 별도 섹션으로 문서화하라.
+- governance review를 염두에 둔다면 각 boundary가 어떤 evidence artifact를 남기는지도 같이 적어라.
 
 ## benchmark 질문
 

@@ -88,6 +88,8 @@ yield {
 
 model eval만으로는 이 차이를 거의 잡아내지 못한다.
 
+그래서 harness eval 문서는 eval hygiene와 바로 인접해야 한다. workflow-level trace, state continuity, human approval, dataset version, grader version을 함께 남기지 않으면 "하네스가 나빴다"는 주장도 금방 contamination이나 configuration drift와 섞여 버린다.
+
 ## transcript와 logging이 evaluation surface를 넓힌다
 
 REPL path는 `useLogMessages()`를 통해 transcript를 append-only chain으로 기록한다. 이 hook은 매 render마다 full array를 다시 쓰지 않고, incrementally tail만 `recordTranscript()`에 넘기며 compaction과 rewind까지 고려한다.
@@ -206,6 +208,7 @@ Anthropic의 2026-03-24 글이 보여 주는 중요한 비교는 single-agent ru
 - 재현성 control 없이 측정만 늘리면 결과는 해석 불가능해진다.
 - 비용, denial, latency, turn count는 부가 지표가 아니라 harness outcome의 일부다.
 - evaluator separation 여부도 harness condition의 일부로 기록해야 한다.
+- dataset version과 evidence pack completeness도 harness condition의 일부로 기록해야 한다.
 
 해석:
 
@@ -219,6 +222,12 @@ Anthropic의 2026-03-24 글이 보여 주는 중요한 비교는 single-agent ru
 - feature flag, sandbox, transcript policy처럼 runtime 조건이 흔들리는 surface를 deterministic override 없이 평가하지 말라.
 - single-agent baseline과 evaluator-separated harness를 비교할 때는 성공률뿐 아니라 cost, duration, bug 발견률을 함께 적어라.
 - harness eval을 기록할 때는 dataset version, grader version, evidence pack completeness를 함께 적어라.
+
+## Review scaffold
+
+- model capability 문제와 harness condition 문제를 같은 표에 섞고 있지 않은지 확인하라.
+- workflow trace, state continuity, approval burden이 eval 대상에 들어가는지 점검하라.
+- dataset/grader/evidence pack 정보 없이 harness regression을 주장하지 말라.
 
 ## benchmark 질문
 

@@ -114,6 +114,8 @@ const localMcpPromise = isNonInteractiveSession ? Promise.resolve({
 
 이 sequencing은 service layer가 단순 fetch wrapper가 아니라, startup contract와 trust boundary에 따라 기동 순서가 달라지는 계층임을 보여준다.
 
+동시에 service dependency volatility도 여기서 읽힌다. remote managed settings, policy polling, model capability refresh, MCP prefetch는 모두 외부 상태 변화에 영향을 받는다. 따라서 service chapter는 "무엇을 연결하는가"와 함께 "어떤 외부 의존성이 자주 변하고, 실패 시 fail-open인지 fail-closed인지"를 적어 두는 편이 좋다.
+
 ## API family는 외부 호출이면서도 policy gate를 먼저 본다
 
 `src/services/api/bootstrap.ts`는 좋은 예다.
@@ -181,6 +183,8 @@ export function initializeRemoteManagedSettingsLoadingPromise(): void {
 ```
 
 이 service는 managed settings를 가져오되, 로딩 약속 자체에 timeout을 넣고 실패 시에도 runtime을 멈추지 않도록 설계돼 있다. 즉, service layer는 여기서 "정책을 적용하는 통로"이면서 동시에 "정책 실패가 런타임 전체를 멈추지 않게 하는 완충 계층" 역할을 한다.
+
+이 점은 service layer를 운영 artifact와도 붙여 읽게 만든다. timeout, fallback, stale policy, remote auth failure 같은 상태가 trace나 diagnostics에 남지 않으면 service volatility는 단순 "가끔 느리다"로만 보이게 된다.
 
 ## MCP는 service layer 안의 하위 플랫폼이다
 
@@ -259,6 +263,8 @@ export function getInitializationStatus():
 
 이렇게 읽으면 `services/`의 이질성은 설명된다. 같은 이름 아래에 adapter, gate, manager, polling, shell seam이 섞여 있는 것은 폴더가 대충 설계돼서만이 아니라, runtime이 기대는 공통 infra seam이 그만큼 넓기 때문이다.
 
+여기에 하나를 더 붙이면 service layer는 volatility registry이기도 하다. gateway, policy service, remote MCP, OAuth, LSP, analytics sink는 각각 다른 cadence로 변하고 서로 다른 실패 모드를 만든다. 따라서 "서비스가 있다"보다 "어떤 의존성이 얼마나 자주 drift하고, 실패 시 어디까지 degraded mode로 갈 수 있는가"를 적는 편이 현대적이다.
+
 ## 점검 질문
 
 - 이 service는 외부 adapter인가, policy/gating service인가, long-lived manager인가?
@@ -266,10 +272,18 @@ export function getInitializationStatus():
 - 이 service는 단순 데이터를 가져오는가, 아니면 runtime availability와 sequencing도 바꾸는가?
 - built-in runtime과 외부 integration이 만나는 seam은 `src/main.tsx`인가, `src/screens/REPL.tsx`인가, 둘 다인가?
 - 이 service family를 제거하면 단순 네트워크 기능이 빠지는가, 아니면 런타임 규칙 자체가 바뀌는가?
+- 이 의존성이 실패했을 때 fail-open, fail-closed, stale-read 중 어디로 가는가?
+- 이 서비스의 volatility가 trace나 diagnostics artifact에 남는가?
 
 ## 마무리
 
 이 장의 결론은 다음과 같다. Claude Code의 service layer는 API adapter 모음으로 환원되지 않는다. 적어도 이 장의 범위 안에서 `services/`는 외부 adapter, policy/gating service, long-lived manager, background sync/polling, shell seam이 겹쳐 있는 runtime substrate로 읽힌다. `src/main.tsx`는 startup sequencing 속에서 그중 일부를 기동하고, `src/screens/REPL.tsx`는 그 일부를 interactive shell 안에 직접 끼워 넣는다. 따라서 `services/`를 읽을 때는 네트워크 호출보다, 이 service가 runtime의 어느 판단과 연결을 대신 맡고 있는지를 함께 봐야 한다.
+
+## Review scaffold
+
+- 각 service family에 대해 dependency volatility, startup sequencing, fallback mode를 한 줄씩 적어 보라.
+- service failure가 operator-visible degraded mode로 이어지는지, 아니면 조용히 drift하는지 구분하라.
+- observability artifact 없이도 service volatility를 설명할 수 있다고 가정하지 말라.
 
 ## 대표 근거 읽기 순서
 

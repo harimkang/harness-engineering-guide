@@ -66,6 +66,8 @@
 - diagnostics와 feedback는 무엇이 잘못됐는가를 말한다.
 - tool summary는 사람이 많은 run을 빠르게 triage할 수 있게 돕는다.
 
+이 장을 production review scaffold로 읽으면 최소 bundle은 transcript, trace/span, outcome packet, diagnostics, masking policy, feedback sample이다. 여기에 없으면 optimization loop는 감각에 기대기 쉽고, 너무 많으면 privacy와 triage cost가 다시 문제로 돌아온다.
+
 ## transcript는 optimization의 원본 증거다
 
 `useLogMessages()`는 conversation 배열을 incremental하게 transcript chain으로 옮긴다. 이 설계는 UI 편의를 넘어서, 장기 세션에서도 trace write cost를 통제하면서 evaluation evidence를 보존하려는 선택이다.
@@ -229,6 +231,7 @@ offline control이 없으면 같은 현상을 재현하기 어렵고, online sig
 - offline reproducibility control과 online production signal을 함께 가져야 optimization이 안정된다.
 - diagnostics와 human feedback는 서로 대체 관계가 아니라 보완 관계다.
 - evaluator-heavy harness에서는 evaluator trace도 generator trace만큼 중요한 최적화 입력이다.
+- masking/redaction policy를 trace 설계 바깥의 후처리로 밀어내면 production review가 약해진다.
 
 해석:
 
@@ -241,6 +244,12 @@ offline control이 없으면 같은 현상을 재현하기 어렵고, online sig
 - production trace를 모은 뒤에는 반드시 offline control surface도 함께 마련해 재현 가능성을 확보하라.
 - run triage용 summary label과 최종 grading rule을 별도 층으로 문서화하라.
 - evaluator를 쓰는 시스템이라면 disagreement case를 calibration corpus로 남겨라.
+
+## Review scaffold
+
+- transcript, trace/span, diagnostics, feedback, masking policy가 같은 review bundle로 남는지 확인하라.
+- production trace가 있어도 offline 재현 control이 없으면 optimization claim을 과장하지 말라.
+- triage label과 grading rule을 같은 것으로 설명하고 있지 않은지 점검하라.
 
 ## benchmark 질문
 

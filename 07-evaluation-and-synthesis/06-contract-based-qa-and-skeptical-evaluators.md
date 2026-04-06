@@ -118,6 +118,8 @@ evaluator를 개선할 때 가장 고신호인 데이터는 disagreement case다
 
 즉 evaluator calibration은 abstract preference tuning이 아니라, 구체적인 misjudgment trace를 반복적으로 줄이는 작업에 가깝다.
 
+여기서 한 단계 더 나가면 evaluator disagreement corpus와 grader retirement도 설계 단위가 된다. disagreement가 반복되는데도 evaluator를 계속 유지할지, model/runtime이 좋아져 evaluator가 더 이상 leverage를 주지 않을 때 retire할지, threshold justification을 어떻게 남길지까지 함께 적어야 한다.
+
 ## evaluator는 언제 leverage이고 언제 overhead인가
 
 contract-based QA도 cost가 든다. writing cost, negotiation cost, browser inspection cost, extra round-trip latency가 모두 붙는다. 그래서 evaluator는 항상 정답 구조가 아니다.
@@ -143,6 +145,7 @@ contract-based QA도 cost가 든다. writing cost, negotiation cost, browser ins
 - grader 앞에 contract가 와야 한다.
 - criteria, threshold, fail rule은 서로 다른 설계 단위다.
 - skeptical evaluator는 generator와 분리된 stance를 가져야 한다.
+- disagreement corpus와 grader retirement 기준도 evaluator 설계 일부다.
 
 해석:
 
@@ -154,6 +157,12 @@ contract-based QA도 cost가 든다. writing cost, negotiation cost, browser ins
 - long-running harness 문서에는 chunk contract artifact를 별도 항목으로 넣어라.
 - evaluator를 적을 때는 input, criteria, threshold, fail rule, stance를 따로 적어라.
 - disagreement case를 calibration corpus로 축적하라.
+
+## Review scaffold
+
+- disagreement 사례를 corpus로 축적하고 있는지, 아니면 일회성 anecdote로 흘리고 있는지 확인하라.
+- evaluator가 아직 leverage인지, 아니면 retire 후보인지 설명할 수 있어야 한다.
+- threshold justification 없이 skeptical evaluator를 선언하고 있지 않은지 점검하라.
 
 ## benchmark 질문
 

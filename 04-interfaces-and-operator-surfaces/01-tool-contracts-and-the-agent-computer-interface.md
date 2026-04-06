@@ -117,6 +117,8 @@ export type ToolUseContext = {
 
 따라서 ACI를 논할 때 input/output schema만 보면 절반만 본 셈이다. 어떤 context 아래서 호출되는지도 계약의 일부다.
 
+최신 MCP 문맥을 얹으면 이 절반도 더 넓어진다. client는 tool schema만 받는 것이 아니라 roots, sampling, elicitation, authorization처럼 호출 전후 협업 규칙도 함께 다룬다. 따라서 현대적 tool contract 설명은 `무엇을 호출하는가`와 함께 `누가 작업 범위를 시사하고`, `언제 추가 입력을 요구하며`, `어떤 승인 흐름을 거치는가`까지 포함해야 한다.
+
 ## 왜 구현보다 contract가 먼저인가
 
 좋은 implementation이 항상 좋은 tool surface를 보장하지는 않는다. 모델은 함수 본문을 읽지 않고, name/description/schema/result shape를 바탕으로 선택한다. 그래서 contract quality가 낮으면 implementation quality가 높아도 실제 사용성은 낮다.
@@ -145,6 +147,8 @@ export const inputSchema = ...({
 
 즉 ACI는 현재 로드된 tool 목록만이 아니라, deferred capability를 어떻게 다시 discover하게 할 것인가까지 포함한다. production harness에서 discoverability가 중요한 이유가 여기에 있다.
 
+그리고 discoverability는 곧 provenance legibility 문제이기도 하다. 같은 기능이 built-in인지, remote MCP인지, plugin-provided surface인지 드러나지 않으면 모델도 사람도 trust 결정을 잘못 내릴 수 있다.
+
 ## ACI 관점에서 tool result를 봐야 하는 이유
 
 tool result는 "작업이 끝났다"는 신호만이 아니라 다음 turn이 consume할 artifact다. oversized result 처리, collapse summary, permission decision, re-run path 모두 이 result shape에 의존한다. 이 점을 놓치면 tool을 execution primitive로만 보게 되고, agent-computer interface라는 본질을 놓친다.
@@ -162,6 +166,7 @@ tool result는 "작업이 끝났다"는 신호만이 아니라 다음 turn이 co
 - tool surface는 implementation보다 contract부터 설계해야 한다.
 - input/output schema만이 아니라 execution semantics도 contract 일부로 드러내야 한다.
 - discoverability를 별도 문제로 다뤄야 한다.
+- modern MCP client semantics는 tool contract를 함수 호출에서 상호작용 계약으로 넓힌다.
 
 해석:
 
@@ -173,6 +178,12 @@ tool result는 "작업이 끝났다"는 신호만이 아니라 다음 turn이 co
 - 새 tool을 만들 때는 함수 본문보다 먼저 `이름`, `언제 써야 하는지`, `실패 시 어떻게 보일지`, `중단 시 어떻게 처리할지`를 적어라.
 - tool review checklist에 aliases/search hint/interrupt behavior를 포함하라.
 - deferred capability가 있다면 discoverability surface를 별도 설계하라.
+
+## Review scaffold
+
+- 각 tool surface에 대해 schema, context, result/error shape, discoverability, provenance를 한 줄씩 설명할 수 있어야 한다.
+- MCP integration을 쓴다면 tool calling 외에 roots, sampling, elicitation, authorization 중 무엇을 실제로 채택했는지 적어 보라.
+- operator review에서는 "이 tool을 agent가 언제 찾고, 왜 믿고, 실패 시 무엇을 남기는가"를 확인하라.
 
 ## benchmark 질문
 
