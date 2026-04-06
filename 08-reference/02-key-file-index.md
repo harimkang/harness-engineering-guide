@@ -1,7 +1,7 @@
 # Appendix. Key File Index
 
 > Why this chapter exists: 핵심 구현 단면을 benchmark question과 provenance 기준으로 가장 빨리 다시 찾게 만든다.
-> Reader path tags: `source-first` / `advanced` / `reference`
+> Reader path tags: `source-first` / `reviewer`
 > Last verified: 2026-04-06
 > Freshness class: medium
 > Source tier focus: Tier 6 observed artifact index
@@ -17,62 +17,61 @@ appendix를 하나만 먼저 연다면 이 파일이 가장 실용적이다. `Di
 ## Reader-path suggestions
 
 - `source-first`: benchmark question을 먼저 정하고, 이 appendix에서 첫 provenance label을 잡는다.
-- `advanced`: Part guide나 synthesis 장에서 언급한 load-bearing seam을 다시 찾을 때 연다.
-- `reference`: source가 없더라도 어떤 구현 단면이 중요한지 압축해서 복기할 때 쓴다.
+- `reviewer`: Part guide나 synthesis 장에서 언급한 load-bearing seam을 다시 찾을 때 연다.
 
 ## Entry tags
 
-이 표는 proposal이 요구한 per-entry reader tag를 한곳에 모은 lookup map이다.
+이 표는 proposal이 요구한 per-entry tag를 reader path와 structural hint로 나눠 정리한 lookup map이다.
 
-| 경로 | 태그 |
-| --- | --- |
-| `src/entrypoints/cli.tsx` | `first-pass`, `source-of-truth`, `bridge chapter` |
-| `src/main.tsx` | `first-pass`, `advanced`, `source-of-truth` |
-| `src/setup.ts` | `advanced`, `bridge chapter` |
-| `src/interactiveHelpers.tsx` | `advanced`, `volatile`, `source-of-truth` |
-| `src/screens/REPL.tsx` | `first-pass`, `advanced`, `case-study`, `source-of-truth` |
-| `src/context.ts` | `first-pass`, `advanced`, `source-of-truth` |
-| `src/query.ts` | `first-pass`, `advanced`, `case-study`, `source-of-truth` |
-| `src/query/config.ts` | `advanced`, `source-of-truth` |
-| `src/query/tokenBudget.ts` | `advanced`, `volatile`, `bridge chapter` |
-| `src/query/stopHooks.ts` | `advanced`, `volatile`, `bridge chapter` |
-| `src/QueryEngine.ts` | `advanced`, `case-study`, `source-of-truth` |
-| `src/commands.ts` | `advanced`, `bridge chapter`, `source-of-truth` |
-| `src/Tool.ts` | `advanced`, `source-of-truth` |
-| `src/tools.ts` | `advanced`, `volatile`, `source-of-truth` |
-| `src/state/AppState.tsx` | `advanced`, `bridge chapter` |
-| `src/state/AppStateStore.ts` | `advanced`, `source-of-truth` |
-| `src/ink.ts` | `advanced`, `bridge chapter` |
-| `src/keybindings/KeybindingProviderSetup.tsx` | `advanced`, `bridge chapter` |
-| `vim/` | `advanced`, `case-study` |
-| `src/voice/voiceModeEnabled.ts` | `advanced`, `volatile` |
-| `src/outputStyles/loadOutputStylesDir.ts` | `advanced`, `bridge chapter` |
-| `src/services/api/client.ts` | `advanced`, `bridge chapter` |
-| `src/services/mcp/client.ts` | `advanced`, `volatile`, `source-of-truth` |
-| `src/services/oauth/index.ts` | `advanced`, `volatile` |
-| `src/services/compact/autoCompact.ts` | `advanced`, `bridge chapter` |
-| `src/services/lsp/manager.ts` | `advanced`, `volatile` |
-| `src/services/plugins/PluginInstallationManager.ts` | `advanced`, `volatile` |
-| `src/skills/loadSkillsDir.ts` | `advanced`, `volatile`, `source-of-truth` |
-| `src/skills/bundledSkills.ts` | `advanced`, `bridge chapter` |
-| `src/plugins/builtinPlugins.ts` | `advanced`, `bridge chapter` |
-| `src/coordinator/coordinatorMode.ts` | `advanced`, `volatile`, `case-study` |
-| `src/Task.ts` | `first-pass`, `advanced`, `source-of-truth` |
-| `src/tasks.ts` | `advanced`, `bridge chapter` |
-| `src/entrypoints/agentSdkTypes.ts` | `advanced`, `volatile` |
-| `src/utils/settings/settings.ts` | `advanced`, `volatile`, `source-of-truth` |
-| `src/utils/config.ts` | `advanced`, `source-of-truth` |
-| `src/utils/sessionStorage.ts` | `advanced`, `case-study`, `source-of-truth` |
-| `src/history.ts` | `advanced`, `bridge chapter` |
-| `src/projectOnboardingState.ts` | `advanced`, `bridge chapter` |
-| `src/cost-tracker.ts` | `advanced`, `volatile`, `source-of-truth` |
-| `src/costHook.ts` | `advanced`, `bridge chapter` |
-| `src/memdir/memdir.ts` | `advanced`, `source-of-truth` |
-| `src/remote/RemoteSessionManager.ts` | `advanced`, `volatile`, `source-of-truth` |
-| `src/remote/SessionsWebSocket.ts` | `advanced`, `volatile` |
-| `src/bridge/bridgeMain.ts` | `advanced`, `volatile`, `case-study` |
-| `src/server/createDirectConnectSession.ts` | `advanced`, `volatile`, `source-of-truth` |
-| `src/upstreamproxy/relay.ts` | `advanced`, `volatile` |
+| 경로 | Reader path tags | Structural hints |
+| --- | --- | --- |
+| `src/entrypoints/cli.tsx` | `first-pass`, `source-first` | `source-of-truth`, `bridge chapter` |
+| `src/main.tsx` | `first-pass`, `builder`, `reviewer` | `source-of-truth` |
+| `src/setup.ts` | `builder` | `bridge chapter` |
+| `src/interactiveHelpers.tsx` | `builder`, `volatile re-check` | `source-of-truth` |
+| `src/screens/REPL.tsx` | `first-pass`, `source-first` | `case-study`, `source-of-truth` |
+| `src/context.ts` | `first-pass`, `source-first` | `source-of-truth` |
+| `src/query.ts` | `first-pass`, `source-first` | `case-study`, `source-of-truth` |
+| `src/query/config.ts` | `builder` | `source-of-truth` |
+| `src/query/tokenBudget.ts` | `builder`, `volatile re-check` | `bridge chapter` |
+| `src/query/stopHooks.ts` | `builder`, `volatile re-check` | `bridge chapter` |
+| `src/QueryEngine.ts` | `builder`, `source-first` | `case-study`, `source-of-truth` |
+| `src/commands.ts` | `builder`, `source-first` | `bridge chapter`, `source-of-truth` |
+| `src/Tool.ts` | `builder`, `source-first` | `source-of-truth` |
+| `src/tools.ts` | `builder`, `volatile re-check` | `source-of-truth` |
+| `src/state/AppState.tsx` | `builder` | `bridge chapter` |
+| `src/state/AppStateStore.ts` | `builder`, `reviewer` | `source-of-truth` |
+| `src/ink.ts` | `builder` | `bridge chapter` |
+| `src/keybindings/KeybindingProviderSetup.tsx` | `builder` | `bridge chapter` |
+| `vim/` | `builder` | `case-study` |
+| `src/voice/voiceModeEnabled.ts` | `builder`, `volatile re-check` | - |
+| `src/outputStyles/loadOutputStylesDir.ts` | `builder` | `bridge chapter` |
+| `src/services/api/client.ts` | `builder` | `bridge chapter` |
+| `src/services/mcp/client.ts` | `builder`, `volatile re-check` | `source-of-truth` |
+| `src/services/oauth/index.ts` | `builder`, `volatile re-check` | - |
+| `src/services/compact/autoCompact.ts` | `builder` | `bridge chapter` |
+| `src/services/lsp/manager.ts` | `builder`, `volatile re-check` | - |
+| `src/services/plugins/PluginInstallationManager.ts` | `builder`, `volatile re-check` | - |
+| `src/skills/loadSkillsDir.ts` | `builder`, `volatile re-check` | `source-of-truth` |
+| `src/skills/bundledSkills.ts` | `builder` | `bridge chapter` |
+| `src/plugins/builtinPlugins.ts` | `builder` | `bridge chapter` |
+| `src/coordinator/coordinatorMode.ts` | `builder`, `volatile re-check` | `case-study` |
+| `src/Task.ts` | `first-pass`, `source-first` | `source-of-truth` |
+| `src/tasks.ts` | `builder` | `bridge chapter` |
+| `src/entrypoints/agentSdkTypes.ts` | `builder`, `volatile re-check` | - |
+| `src/utils/settings/settings.ts` | `builder`, `volatile re-check` | `source-of-truth` |
+| `src/utils/config.ts` | `builder`, `reviewer` | `source-of-truth` |
+| `src/utils/sessionStorage.ts` | `builder`, `source-first` | `case-study`, `source-of-truth` |
+| `src/history.ts` | `builder` | `bridge chapter` |
+| `src/projectOnboardingState.ts` | `builder` | `bridge chapter` |
+| `src/cost-tracker.ts` | `builder`, `volatile re-check` | `source-of-truth` |
+| `src/costHook.ts` | `builder` | `bridge chapter` |
+| `src/memdir/memdir.ts` | `builder`, `reviewer` | `source-of-truth` |
+| `src/remote/RemoteSessionManager.ts` | `builder`, `volatile re-check` | `source-of-truth` |
+| `src/remote/SessionsWebSocket.ts` | `builder`, `volatile re-check` | - |
+| `src/bridge/bridgeMain.ts` | `builder`, `volatile re-check` | `case-study` |
+| `src/server/createDirectConnectSession.ts` | `builder`, `volatile re-check` | `source-of-truth` |
+| `src/upstreamproxy/relay.ts` | `builder`, `volatile re-check` | - |
 
 ## 대표 코드 발췌
 

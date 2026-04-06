@@ -1,7 +1,7 @@
 # Appendix. Glossary
 
 > Why this chapter exists: 본문 전반의 핵심 용어를 독서용 정의, 차이, provenance 메모와 함께 고정한다.
-> Reader path tags: `first-pass` / `advanced` / `reference`
+> Reader path tags: `first-pass` / `reviewer`
 > Last verified: 2026-04-06
 > Freshness class: stable
 > Source tier focus: Tier 6 local terminology index, backed by Tier 1-2 conceptual framing when needed
@@ -15,8 +15,8 @@
 ## Reader-path suggestions
 
 - `first-pass`: 정의와 `비슷한 용어와 차이`만 먼저 읽고, provenance label은 나중에 봐도 된다.
-- `advanced`: Part guide나 사례 장에서 헷갈린 용어를 다시 닫을 때 연다.
-- `reference`: source-free 독해 중 개념 경계를 잃었을 때 가장 먼저 여는 appendix다.
+- `builder`: Part guide나 사례 장에서 헷갈린 용어를 다시 닫을 때 연다.
+- `reviewer`: source-free 독해 중 개념 경계를 잃었을 때 가장 먼저 여는 appendix다.
 
 ## 이 용어집을 읽는 법
 

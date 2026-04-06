@@ -1,7 +1,7 @@
 # 07. Claude Code end-to-end scenario와 state-owner handoff
 
 > Why this chapter exists: 앞선 장의 subsystem 설명을 실제 시간축과 ownership handoff 언어로 다시 묶는다.
-> Reader path tags: `first-pass-late` / `advanced` / `case-study` / `bridge-chapter`
+> Reader path tags: `builder` / `reviewer`
 > Last verified: 2026-04-06
 > Freshness class: medium
 > Source tier focus: Tier 2 synthesis framing, Tier 6 observed runtime cuts

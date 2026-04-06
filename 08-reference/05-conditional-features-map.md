@@ -1,7 +1,7 @@
 # Appendix. Conditional Features Map
 
 > Why this chapter exists: feature-gated path와 conditional branch를 별도로 고정해 "코드에 보임"과 "항상 활성"을 구분하게 만든다.
-> Reader path tags: `advanced` / `reference` / `volatile`
+> Reader path tags: `reviewer` / `volatile re-check`
 > Last verified: 2026-04-06
 > Freshness class: volatile
 > Source tier focus: Tier 6 observed artifact map, with Tier 1 release-note and product-doc re-check for drift-prone features
@@ -21,8 +21,7 @@
 
 ## Reader-path suggestions
 
-- `advanced`: Part 2, Part 5, Part 6을 읽다가 "이 코드가 항상 켜져 있는가"가 궁금해질 때 연다.
-- `reference`: 특정 feature flag가 어느 장 서사를 흔드는지 빠르게 확인할 때 쓴다.
+- `reviewer`: Part 2, Part 5, Part 6을 읽다가 "이 코드가 항상 켜져 있는가"가 궁금해질 때 연다.
 - `volatile re-check`: default state나 product availability를 reader-facing 문장으로 확정할 때는 release notes와 관련 product docs를 먼저 다시 연다.
 
 ## 대표 코드 발췌
