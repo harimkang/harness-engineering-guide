@@ -3,7 +3,7 @@
 > Last verified against official docs: 2026-04-06
 > Volatile topics: Claude Code settings, skills, CLI flags, MCP client semantics, remote/bridge behavior, tracing and eval tooling
 > Source policy: proposal `S*` IDs are immutable canonical references; supplemental research and observed artifacts use separate IDs
-> Reader paths: `first-pass`, `builder/reviewer`, `source-first`, `volatile re-check`
+> Reader paths: `first-pass`, `builder`, `reviewer`, `source-first`, `volatile re-check`
 > Freshness baseline: reader-entry and reference scaffolds were normalized on 2026-04-06; watchlist and evidence-pack practice live in [00-front-matter/03-references.md](./00-front-matter/03-references.md) and [00-front-matter/02-source-analysis-method.md](./00-front-matter/02-source-analysis-method.md)
 
 장기 실행형 에이전트 하네스를 설계, 분석, 평가하기 위한 책형 문서 세트입니다. 이 책은 일반적인 harness engineering 원칙을 먼저 세우고, Claude Code를 반복 사례로 사용해 그 원칙이 실제 product runtime에 어떻게 드러나는지 보여 줍니다.
@@ -46,8 +46,9 @@
 
 ## Canonical Reader Paths
 
-- `first-pass`: [README.md](./README.md) -> [00-front-matter/01-how-to-read-this-book.md](./00-front-matter/01-how-to-read-this-book.md) -> [01-foundations/01-why-harness-engineering-matters.md](./01-foundations/01-why-harness-engineering-matters.md) -> 관심 있는 `00-part-guide.md`
-- `builder/reviewer`: foundations 핵심 장 뒤에 관련 Part guide와 synthesis 장을 붙여 읽는다.
+- `first-pass`: [README.md](./README.md) -> [00-front-matter/01-how-to-read-this-book.md](./00-front-matter/01-how-to-read-this-book.md) -> [00-front-matter/02-source-analysis-method.md](./00-front-matter/02-source-analysis-method.md) -> [00-front-matter/03-references.md](./00-front-matter/03-references.md) -> [01-foundations/01-why-harness-engineering-matters.md](./01-foundations/01-why-harness-engineering-matters.md) -> 관심 있는 `00-part-guide.md`
+- `builder`: foundations 핵심 장 뒤에 관련 Part guide와 synthesis 장을 붙여 읽는다.
+- `reviewer`: references, glossary, key-file index를 옆에 두고 claim tier와 provenance를 같이 본다.
 - `source-first`: [07-evaluation-and-synthesis/08-benchmark-oriented-code-reading-guide.md](./07-evaluation-and-synthesis/08-benchmark-oriented-code-reading-guide.md)와 [08-reference/02-key-file-index.md](./08-reference/02-key-file-index.md)에서 provenance를 잡고 본문으로 되돌아간다.
 - `volatile re-check`: settings, MCP, tracing, remote, eval tooling처럼 drift 가능성이 큰 주제를 만질 때는 [00-front-matter/03-references.md](./00-front-matter/03-references.md)의 watchlist와 `S*` IDs를 먼저 다시 연다.
 

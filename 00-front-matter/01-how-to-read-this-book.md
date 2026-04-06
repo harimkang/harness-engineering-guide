@@ -4,7 +4,7 @@
 > Reader level: beginner / advanced / reviewer
 > Last verified: 2026-04-06
 > Freshness class: medium
-> Reader path tags: `first-pass` / `builder` / `reviewer` / `source-first`
+> Reader path tags: `first-pass` / `builder` / `reviewer` / `source-first` / `volatile re-check`
 > Source tier focus: Tier 1-3 external sources로 claim 무게를 잡고, Tier 6 observed artifact로 사례를 닫는다.
 > Reference scaffolds: [README.md](../README.md), [02-source-analysis-method.md](02-source-analysis-method.md), [03-references.md](03-references.md), [../08-reference/](../08-reference/)
 
@@ -20,6 +20,7 @@
 - `builder`: foundations 핵심 장 뒤에 관련 Part guide와 Claude Code 사례 장을 바로 붙여 읽는다.
 - `reviewer`: [03-references.md](03-references.md), [../08-reference/01-glossary.md](../08-reference/01-glossary.md), [../08-reference/02-key-file-index.md](../08-reference/02-key-file-index.md)를 옆에 두고 claim tier와 provenance를 같이 본다.
 - `source-first`: [../07-evaluation-and-synthesis/08-benchmark-oriented-code-reading-guide.md](../07-evaluation-and-synthesis/08-benchmark-oriented-code-reading-guide.md)에서 질문을 고르고, 필요한 appendix와 사례 장으로 들어간다.
+- `volatile re-check`: settings, MCP, tracing, remote, eval tooling처럼 drift 가능성이 큰 주제를 만질 때는 [03-references.md](03-references.md)의 watchlist와 proposal `S*` IDs를 먼저 다시 확인한다.
 
 ## 5분 멘탈 모델
 

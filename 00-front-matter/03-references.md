@@ -6,7 +6,7 @@
 > Reader level: beginner / advanced / reviewer
 > Last verified: 2026-04-06
 > Freshness class: volatile
-> Reader path tags: `first-pass` / `advanced` / `reviewer` / `maintenance`
+> Reader path tags: `first-pass` / `builder` / `reviewer` / `source-first` / `volatile re-check`
 > Source tier focus: Tier 1-5 외부 registry와 Tier 6 observed artifact entry를 함께 다룬다.
 > Reference scaffolds: proposal `S*` IDs, freshness watchlist, evidence-pack practice, chapter re-entry
 

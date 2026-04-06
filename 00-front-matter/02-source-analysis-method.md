@@ -4,7 +4,7 @@
 > Reader level: beginner / advanced / reviewer
 > Last verified: 2026-04-06
 > Freshness class: medium
-> Reader path tags: `first-pass` / `advanced` / `reviewer` / `maintenance`
+> Reader path tags: `first-pass` / `builder` / `reviewer` / `source-first` / `volatile re-check`
 > Source tier focus: Tier 1-6 전체 규칙을 정의한다.
 > Reference scaffolds: chapter metadata, `Sources / evidence notes`, freshness watchlist, evidence-pack practice
 
