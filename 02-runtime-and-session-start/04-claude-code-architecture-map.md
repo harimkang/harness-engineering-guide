@@ -41,7 +41,7 @@
 이 장의 모든 관찰은 2026-04-01 기준 현재 공개 사본에 한정한다. 커밋 해시가 제공되지 않았으므로, 파일 경로와 재검증 가능한 코드 절단면을 근거의 기본 단위로 사용한다.
 
 Sources / evidence notes:
-이 장의 reader-facing 외부 근거 표시는 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 `S1`, `S6`을 따른다. `P1`은 보조 비교 프레임으로만 사용한다.
+이 장의 reader-facing 외부 근거 표시는 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 `S6`, `S8`, `S10`, `S13`, `S14`, `S15`, `S24`를 따른다. `P1`은 보조 비교 프레임으로만 사용한다.
 
 ### 이 장에서 다루지 않는 것
 

@@ -56,7 +56,7 @@
 - [../appendix/references.md](../00-front-matter/03-references.md)
 
 Sources / evidence notes:
-이 장의 reader-facing 외부 검증 축은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 `S4`, `S6`, `S8`, `S26`, `S27`을 따른다.
+이 장의 reader-facing 외부 검증 축은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 `S4`, `S6`, `S26`, `S27`를 따른다.
 
 ## 다섯 가지 시간축 답변
 

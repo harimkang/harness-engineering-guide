@@ -47,7 +47,7 @@
 - [../appendix/references.md](../00-front-matter/03-references.md)
 
 Sources / evidence notes:
-이 장의 reader-facing 외부 검증 축은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 `S4`, `S33`을 따른다. `S8`은 reset-vs-scaffold 비교의 보조 프레임이다.
+이 장의 reader-facing 외부 검증 축은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 `S4`, `S6`, `S33`을 따른다.
 
 ## 왜 "운영 자원"이라고 불러야 하는가
 

@@ -47,7 +47,7 @@
 - [../12-task-model-and-background-execution.md](../05-execution-continuity-and-integrations/06-claude-code-task-model-and-background-execution.md)
 
 Sources / evidence notes:
-이 장의 reader-facing 외부 검증 축은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 `S4`, `S13`을 따른다.
+이 장의 reader-facing 외부 검증 축은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 `S4`, `S6`, `S22`, `S29`를 따른다.
 
 ## 다섯 가지 class를 먼저 구분하라
 
