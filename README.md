@@ -47,6 +47,7 @@
 - [appendix/references.md](./appendix/references.md)
 
 역할:
+
 - 이 책의 목적, 독서 리듬, 주장 층위, 출처 규칙을 고정한다.
 
 ### Part I. Foundations of Harness Engineering
@@ -57,6 +58,7 @@
 - [foundations/04-core-design-axes-context-control-tools-memory-safety-evals.md](./foundations/04-core-design-axes-context-control-tools-memory-safety-evals.md)
 
 역할:
+
 - workflow, agent, runtime, harness, eval harness를 구분한다.
 - 하네스를 독립된 설계 영역으로 읽는 기본 축을 세운다.
 
@@ -68,6 +70,7 @@
 - [context/04-turn-loops-stop-hooks-and-recovery.md](./context/04-turn-loops-stop-hooks-and-recovery.md)
 
 역할:
+
 - context를 prompt가 아니라 운영 자원으로 읽는다.
 - compaction, handoff artifact, recovery를 control 문제로 묶어 설명한다.
 
@@ -79,6 +82,7 @@
 - [interfaces/04-benchmarking-tool-surfaces.md](./interfaces/04-benchmarking-tool-surfaces.md)
 
 역할:
+
 - tool을 함수 모음이 아니라 agent-computer interface로 설명한다.
 - capability exposure와 permission boundary를 분리해 읽게 한다.
 
@@ -90,6 +94,7 @@
 - [execution/04-human-oversight-trust-and-approval.md](./execution/04-human-oversight-trust-and-approval.md)
 
 역할:
+
 - UI, transcript, resumability, task artifact, human oversight를 하나의 실행 표면으로 묶는다.
 
 ### Part V. Safety, Boundaries, and Deployment Constraints
@@ -100,6 +105,7 @@
 - [safety/04-safety-autonomy-benchmark.md](./safety/04-safety-autonomy-benchmark.md)
 
 역할:
+
 - sandbox, approval, trust, remote boundary를 한데 묶어 비교한다.
 
 ### Part VI. Evaluation, Optimization, and Benchmarking
@@ -111,6 +117,7 @@
 - [evaluation/05-claude-code-benchmark-framework.md](./evaluation/05-claude-code-benchmark-framework.md)
 
 역할:
+
 - model eval과 harness eval을 분리한다.
 - production trace, grader, optimization loop를 하나의 benchmark language로 묶는다.
 
@@ -123,6 +130,7 @@
 - synthesis: [15-code-reading-guide.md](./15-code-reading-guide.md), [16-risks-debt-and-observations.md](./16-risks-debt-and-observations.md), [17-end-to-end-scenarios.md](./17-end-to-end-scenarios.md)
 
 역할:
+
 - 원칙 spine에서 세운 개념을 사례 구조에 다시 연결한다.
 
 ### Part VIII. Workbook and Reference
@@ -134,6 +142,7 @@
 - [appendix/conditional-features-map.md](./appendix/conditional-features-map.md)
 
 역할:
+
 - 용어 확인, file lookup, feature gate 추적, source re-entry를 돕는다.
 
 ## 독자별 권장 경로

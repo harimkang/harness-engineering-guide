@@ -1,3 +1,4 @@
 # ignore superpowers
 
 superpowers/*
+node_modules/
