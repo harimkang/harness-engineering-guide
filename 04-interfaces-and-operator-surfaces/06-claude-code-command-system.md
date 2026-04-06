@@ -28,6 +28,9 @@ Anthropic Platform Docs의 [Agent SDK overview](https://platform.claude.com/docs
 - Anthropic, [Writing effective tools for AI agents](https://www.anthropic.com/engineering/writing-tools-for-agents), 2025-09-11
 - Anthropic Platform Docs, [Agent SDK overview](https://platform.claude.com/docs/en/agent-sdk/overview), 접근 시점 2026-04-01
 
+Sources / evidence notes:
+이 장의 reader-facing 외부 검증 축은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 Part 4 cluster를 따른다. command provenance, skill surface, instruction provenance, plugin/MCP adjacency는 `S3`, `S10`, `S11`, `S12`, `S14`, `S15`, `S24`를 우선 사용하고, safety-adjacent 설명은 `S25`를 보조적으로 참조한다.
+
 이 장은 다음을 다룬다.
 
 - `src/commands.ts`가 command provenance를 어떻게 합치는지

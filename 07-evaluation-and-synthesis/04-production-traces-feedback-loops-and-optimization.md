@@ -40,6 +40,9 @@
 - Anthropic, [Effective harnesses for long-running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents), 2025-11-26
 - Lee et al., [Meta-Harness: End-to-End Optimization of Model Harnesses](https://arxiv.org/abs/2603.28052), 2026-03-30
 
+Sources / evidence notes:
+이 장의 reader-facing 외부 검증 축은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 Part 7 cluster를 따른다. production trace, masking, observability, feedback loop, infra noise 설명에는 `S7`, `S22`, `S23`, `S28`, `S29`, `S32`를 우선 사용하고, `S6`은 long-running operations framing의 보조 source로만 사용한다.
+
 함께 읽으면 좋은 장:
 
 - [02-tasks-trials-transcripts-and-graders.md](02-tasks-trials-transcripts-and-graders.md)

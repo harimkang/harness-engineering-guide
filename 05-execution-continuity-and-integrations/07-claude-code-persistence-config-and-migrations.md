@@ -27,6 +27,9 @@ Anthropic의 [Harness design for long-running application development](https://w
 - Anthropic, [Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents), 2025-09-29
 - Anthropic, [Harness design for long-running application development](https://www.anthropic.com/engineering/harness-design-long-running-apps), 2026-03-24
 
+Sources / evidence notes:
+이 장의 reader-facing 외부 검증 축은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 Part 5 cluster를 따른다. persistence/config/migration과 settings precedence는 `S4`, `S6`, `S8`, `S10`, `S13`, `S15`, `S26`, `S27`, `S28`, `S33`을 우선 사용하고, migration risk와 artifact volatility는 `S32`를 보조적으로 참조한다.
+
 이 장은 다음을 다룬다.
 
 - settings의 source merge와 precedence

@@ -25,6 +25,9 @@ Anthropic Platform Docs의 [Agent SDK overview](https://platform.claude.com/docs
 - Anthropic, [How we built our multi-agent research system](https://www.anthropic.com/engineering/multi-agent-research-system), 2025-06-13
 - Anthropic Platform Docs, [Agent SDK overview](https://platform.claude.com/docs/en/agent-sdk/overview), 접근 시점 2026-04-02
 
+Sources / evidence notes:
+이 장의 reader-facing 외부 검증 축은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 Part 5 cluster를 따른다. service substrate와 dependency volatility는 `S2`, `S6`, `S8`, `S10`, `S13`, `S15`, `S26`, `S27`, `S28`, `S32`, `S33`을 우선 사용한다.
+
 이 장은 다음을 다룬다.
 
 - startup assembly에서 service가 어떤 식으로 기동되는지

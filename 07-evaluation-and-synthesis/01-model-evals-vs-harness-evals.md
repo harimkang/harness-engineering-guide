@@ -40,6 +40,9 @@
 - Anthropic, [Harness design for long-running application development](https://www.anthropic.com/engineering/harness-design-long-running-apps), 2026-03-24
 - Lee et al., [Meta-Harness: End-to-End Optimization of Model Harnesses](https://arxiv.org/abs/2603.28052), 2026-03-30
 
+Sources / evidence notes:
+이 장의 reader-facing 외부 검증 축은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 Part 7 cluster를 따른다. 핵심 source ID는 `S7`, `S21`, `S22`, `S23`, `S28`, `S29`, `S32`다. `P2`는 harness optimization을 설명하는 보조 비교 프레임으로만 사용한다.
+
 함께 읽으면 좋은 장:
 
 - [01-context-as-an-operational-resource.md](../03-context-and-control/01-context-as-an-operational-resource.md)

@@ -28,6 +28,9 @@ Anthropic Platform Docs의 [Agent SDK overview](https://platform.claude.com/docs
 - Anthropic, [Making Claude Code more secure and autonomous with sandboxing](https://www.anthropic.com/engineering/claude-code-sandboxing), 2025-10-20
 - Anthropic Platform Docs, [Agent SDK overview](https://platform.claude.com/docs/en/agent-sdk/overview), 접근 시점 2026-04-01
 
+Sources / evidence notes:
+이 장의 reader-facing 외부 검증 축은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 Part 4 cluster를 따른다. tool contract와 capability exposure는 `S3`, `S10`, `S12`, `S14`, `S15`, `S25`를 우선 사용하고, MCP authorization/roots/elicitation과 같은 protocol-adjacent 설명은 `S16`, `S17`, `S18`, `S19`, `S20`을 함께 본다. sandboxing framing은 현재 registry의 `S5`를 보조적으로 참조한다.
+
 이 장은 다음을 다룬다.
 
 - `src/Tool.ts`가 정의하는 tool contract와 execution context
