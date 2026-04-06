@@ -25,11 +25,13 @@
 ## 이 책이 다루는 질문
 
 - 컨텍스트를 무엇으로 채우고 언제 버릴 것인가
+- context reset과 compaction을 언제 구분할 것인가
 - 여러 턴, 중단, 회복, handoff를 어떻게 운영할 것인가
 - tool, command, skill, plugin, MCP를 어떤 계약 표면으로 설계할 것인가
 - 운영자가 언제 보고 개입하고 승인해야 하는가
 - sandbox, trust, remote boundary를 어디에 둘 것인가
 - model eval이 아니라 harness eval을 어떻게 설계할 것인가
+- self-evaluation failure를 외부 evaluator, explicit criteria, contract-based QA로 어떻게 보완할 것인가
 
 ## 레포 구성
 
@@ -56,11 +58,13 @@
 - [foundations/02-workflows-agents-runtimes-and-harnesses.md](./foundations/02-workflows-agents-runtimes-and-harnesses.md)
 - [foundations/03-quality-attributes-of-agent-harnesses.md](./foundations/03-quality-attributes-of-agent-harnesses.md)
 - [foundations/04-core-design-axes-context-control-tools-memory-safety-evals.md](./foundations/04-core-design-axes-context-control-tools-memory-safety-evals.md)
+- [foundations/05-evaluator-driven-harness-design.md](./foundations/05-evaluator-driven-harness-design.md)
 
 역할:
 
 - workflow, agent, runtime, harness, eval harness를 구분한다.
 - 하네스를 독립된 설계 영역으로 읽는 기본 축을 세운다.
+- evaluator-driven loop, self-evaluation failure, model-relative scaffold pruning을 원칙 언어로 정리한다.
 
 ### Part II. Context and Cognitive Control
 
@@ -115,11 +119,13 @@
 - [evaluation/03-benchmarking-coding-harnesses.md](./evaluation/03-benchmarking-coding-harnesses.md)
 - [evaluation/04-production-traces-feedback-loops-and-optimization.md](./evaluation/04-production-traces-feedback-loops-and-optimization.md)
 - [evaluation/05-claude-code-benchmark-framework.md](./evaluation/05-claude-code-benchmark-framework.md)
+- [evaluation/06-contract-based-qa-and-skeptical-evaluators.md](./evaluation/06-contract-based-qa-and-skeptical-evaluators.md)
 
 역할:
 
 - model eval과 harness eval을 분리한다.
 - production trace, grader, optimization loop를 하나의 benchmark language로 묶는다.
+- contract-based QA, skeptical evaluator, calibration loop를 evaluation 설계 단위로 정리한다.
 
 ### Part VII. Claude Code Case Study Spine
 
@@ -151,12 +157,13 @@
 
 1. [foundations/01-why-harness-engineering-matters.md](./foundations/01-why-harness-engineering-matters.md)
 2. [foundations/04-core-design-axes-context-control-tools-memory-safety-evals.md](./foundations/04-core-design-axes-context-control-tools-memory-safety-evals.md)
-3. [context/01-context-as-an-operational-resource.md](./context/01-context-as-an-operational-resource.md)
-4. [interfaces/01-tool-contracts-and-the-agent-computer-interface.md](./interfaces/01-tool-contracts-and-the-agent-computer-interface.md)
-5. [execution/03-task-orchestration-and-long-running-execution.md](./execution/03-task-orchestration-and-long-running-execution.md)
-6. [safety/02-sandboxing-permissions-and-policy-surfaces.md](./safety/02-sandboxing-permissions-and-policy-surfaces.md)
-7. [evaluation/03-benchmarking-coding-harnesses.md](./evaluation/03-benchmarking-coding-harnesses.md)
-8. [17-end-to-end-scenarios.md](./17-end-to-end-scenarios.md)
+3. [foundations/05-evaluator-driven-harness-design.md](./foundations/05-evaluator-driven-harness-design.md)
+4. [context/01-context-as-an-operational-resource.md](./context/01-context-as-an-operational-resource.md)
+5. [interfaces/01-tool-contracts-and-the-agent-computer-interface.md](./interfaces/01-tool-contracts-and-the-agent-computer-interface.md)
+6. [execution/03-task-orchestration-and-long-running-execution.md](./execution/03-task-orchestration-and-long-running-execution.md)
+7. [evaluation/06-contract-based-qa-and-skeptical-evaluators.md](./evaluation/06-contract-based-qa-and-skeptical-evaluators.md)
+8. [evaluation/03-benchmarking-coding-harnesses.md](./evaluation/03-benchmarking-coding-harnesses.md)
+9. [17-end-to-end-scenarios.md](./17-end-to-end-scenarios.md)
 
 ### 연구자와 아키텍처 리뷰어
 

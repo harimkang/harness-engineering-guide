@@ -361,6 +361,11 @@ export async function launchResumeChooser(root: Root, appProps: {
 원칙: long-running harness는 discrete session과 context reset을 감안해야 한다.  
 해석: resume, direct connect, bridge/remote-control 같은 경로가 entrypoint나 launch 단계에서 이미 갈리는 것은 우연이 아니라 세션 수명과 운영 위치의 차이를 반영한 구조다.
 
+### 5. load-bearing scaffold는 모델 세대에 따라 바뀐다
+
+원칙: Anthropic의 2026-03-24 글은 planner, evaluator, sprint construct 같은 scaffold를 하나씩 제거해 보며 무엇이 실제로 load-bearing한지 다시 확인하는 접근을 보여 준다.
+해석: entrypoint topology 역시 비슷하게 읽을 수 있다. 어떤 family 분기나 early dispatch가 지금은 중요한 비용 절감 장치일 수 있지만, 모델과 deployment shape가 바뀌면 일부 경로는 과잉 scaffold가 될 수 있다. 반대로 새 runtime family가 생기면 기존 `main()` 단일 경로 가정이 오히려 병목이 될 수도 있다.
+
 ## 새 하네스를 설계할 때 던질 벤치마크 질문
 
 1. 모든 경로를 하나의 `main()`으로 밀어 넣고 있지는 않은가?

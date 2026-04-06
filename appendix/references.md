@@ -57,7 +57,7 @@
 
 - 링크: [anthropic.com/engineering/harness-design-long-running-apps](https://www.anthropic.com/engineering/harness-design-long-running-apps)
 - 발행일: 2026-03-24
-- 이 책에서 맡는 역할: long-running application harness, handoff artifact, feedback loop, execution scaffold
+- 이 책에서 맡는 역할: long-running application harness, handoff artifact, feedback loop, execution scaffold, planner/generator/evaluator 분리, self-evaluation failure, contract-based QA, model-relative scaffold pruning
 
 ## Anthropic Platform Docs
 

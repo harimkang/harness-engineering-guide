@@ -136,6 +136,27 @@ flowchart TD
 3. evaluation을 나중 QA로 미루는 것  
    artifact를 남기는 설계가 처음부터 없으면 evaluation readiness는 뒤늦게 붙지 않는다.
 
+## evaluation은 마지막 QA가 아니라 실행 제어 루프다
+
+Anthropic의 2026-03-24 글이 추가로 보여 주는 것은 evaluation 축이 단지 run 끝의 grading 문제가 아니라는 점이다. evaluator가 외부 feedback loop를 만들기 시작하면, evaluation은 control 축 안으로 더 깊게 들어온다.
+
+- contract가 먼저 정의되고
+- generator가 그 contract 아래서 일을 하고
+- evaluator가 criterion과 threshold로 통과 여부를 정하며
+- 그 결과가 다음 build round의 입력으로 다시 돌아온다
+
+이 구조에서는 evaluation이 사후 판정기가 아니라 execution scaffold의 일부다. 따라서 evaluation 축을 설계할 때는 transcript, outcome, grader input뿐 아니라 contract, threshold, failure routing까지 함께 적는 편이 맞다.
+
+## subjective quality를 gradable criteria로 바꾸는 법
+
+하네스가 다루는 일이 모두 binary correctness로 닫히는 것은 아니다. design quality, originality, product depth처럼 인간적 판단이 들어가는 영역에서는 "좋은가?"라는 질문을 그대로 던지면 grader가 쉽게 흔들린다. 더 나은 방법은 subjective judgment를 criteria 묶음으로 다시 적는 것이다.
+
+- 무엇을 보는가: design quality, originality, craft, functionality
+- 무엇을 더 중요하게 보는가: 기본 craft보다 originality를 더 세게 본다
+- 무엇을 실패로 볼 것인가: generic template, default-heavy output, shallow interaction
+
+즉 evaluation 축은 pass/fail artifact를 남기는 축이면서, 동시에 taste와 quality judgment를 gradable language로 바꾸는 축이기도 하다. 이런 criteria가 있어야 skeptical evaluator도 drift를 줄일 수 있다.
+
 ## 관찰, 원칙, 해석, 권고
 
 관찰:
@@ -143,23 +164,27 @@ flowchart TD
 - Claude Code의 주요 artifact는 여섯 축 중 하나 이상에 동시에 걸쳐 있다.
 - evaluation은 별도 벤치마크 파트에만 있는 주제가 아니라, 전체 설계 축을 다시 읽는 방법이다.
 - safety와 control, context와 memory는 특히 자주 얽힌다.
+- evaluator-heavy harness에서는 evaluation과 control이 특히 강하게 얽힌다.
 
 원칙:
 
 - 축은 taxonomy가 아니라 reading guide로 써야 한다.
 - 각 축은 local artifact와 함께 설명해야 한다.
 - 설계할 때는 중심 축과 충돌 축을 함께 선택해야 한다.
+- evaluation 축에는 grader input뿐 아니라 criteria와 threshold도 포함된다.
 
 해석:
 
 - 이 여섯 축은 임의의 분류표가 아니라, Claude Code와 같은 coding harness에서 반복적으로 나타나는 seam을 압축한 좌표계다.
 - Anthropic의 context, long-running harness, eval 글을 함께 읽으면 이 축들이 서로 어떻게 이어지는지 더 분명해진다.
+- evaluator-driven harness는 evaluation 축이 control 축을 어떻게 재형성하는지 보여 주는 좋은 사례다.
 
 권고:
 
 - 새 harness를 읽을 때 먼저 여섯 축 표를 그리고, 각 칸에 evidence file을 하나씩 채워 보라.
 - 특정 기능을 설명할 때 "이 기능은 어느 축의 load-bearing part인가"를 먼저 적어라.
 - evaluation 축을 마지막 QA가 아니라 설계 초기부터 고려해 artifact를 남겨라.
+- subjective task를 다룬다면 criteria language와 weighting을 축 설명에 명시하라.
 
 ## benchmark 질문
 

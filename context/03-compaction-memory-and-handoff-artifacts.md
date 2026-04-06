@@ -107,6 +107,27 @@ export function buildPostCompactMessages(result: CompactionResult): Message[] {
 
 즉 compaction의 산출물은 단순 summary가 아니다. boundary marker, summary, keep segment, attachment, hook result까지 포함한 "재시작 가능한 새 working set"이다.
 
+## context reset과 compaction은 같은 기술이 아니다
+
+Anthropic의 [Harness design for long-running application development](https://www.anthropic.com/engineering/harness-design-long-running-apps) (2026-03-24)는 여기서 한 걸음 더 나아간다. 그 글은 compaction과 context reset을 서로 다른 문제를 푸는 기술로 구분한다.
+
+- compaction은 같은 owner가 같은 session을 줄여서 계속 가게 한다.
+- context reset은 fresh agent와 structured handoff artifact를 통해 clean slate를 만든다.
+
+둘 다 continuity를 돕지만, trade-off가 다르다. compaction은 continuity를 더 자연스럽게 보존하지만 이전 session psychology를 완전히 지우지는 못한다. reset은 clean slate를 주지만, handoff artifact의 품질과 orchestration cost에 더 많이 의존한다.
+
+이 구분은 이 장의 local code 사실을 바꾸지 않는다. 현재 Claude Code 공개 사본은 compaction, transcript, restore artifact를 강하게 드러내는 사례다. 다만 장기 실행 하네스를 일반화해 읽을 때는 "window를 줄인다"와 "새 owner로 넘긴다"를 같은 것으로 취급하면 안 된다.
+
+## clean-slate reset이 필요한 경우와 compaction으로 충분한 경우
+
+위 글은 특히 일부 모델에서 나타나는 `context anxiety`를 예로 든다. 모델이 context 한계에 가까워졌다고 느낄 때 prematurely wrap up하거나 coherence를 잃는다면, compaction alone으로는 충분하지 않을 수 있다. 이 경우 reset은 단순 성능 튜닝이 아니라 failure mode 대응이 된다.
+
+반대로 모델의 long-context behavior가 좋아지면, 이전에 필수였던 reset scaffold가 과잉 복잡도가 될 수 있다. 따라서 여기서 중요한 일반 원칙은 하나다.
+
+- compaction과 reset의 선택은 ideology가 아니라 model-relative 판단이다.
+
+즉 어떤 하네스가 reset을 쓴다고 해서 항상 더 진보적이라고 볼 수 없고, reset을 쓰지 않는다고 해서 항상 단순한 것도 아니다. 핵심은 현재 모델과 작업 길이, handoff artifact 품질을 함께 보고 어느 쪽이 더 load-bearing한지 판단하는 일이다.
+
 ## memory는 transcript보다 더 선택적인 durable layer다
 
 `memdir`와 `extractMemories` 계층은 transcript 전체를 보존하는 대신, future turn에 가치가 있는 사실만 남기려는 장치다. `MEMORY.md`는 live index이고, typed memory file은 별도 topic file로 저장되며, `autoDream`은 background consolidation으로 이것을 다시 정리한다.
@@ -253,16 +274,19 @@ flowchart LR
 - 현재 turn을 살리는 artifact와 다음 session을 돕는 artifact를 분리해야 한다.
 - memory는 transcript의 축약본이 아니라 selection layer여야 한다.
 - handoff artifact는 단순 저장보다 "같은 semantics로 재개 가능한가"를 기준으로 설계해야 한다.
+- compaction과 reset은 같은 계열의 continuity 기술처럼 보여도 다른 failure mode를 푼다.
 
 해석:
 
 - Anthropic이 long-running harness에서 강조하는 clean state와 structured artifact 개념은 이 코드베이스에서 transcript, content replacement, restore state로 구체화된다.
 - Natural-Language Agent Harnesses가 말하는 durable artifact도 결국 이런 owner-transfer surface를 뜻한다.
+- Anthropic의 2026-03-24 글을 함께 읽으면, continuity 설계는 compaction vs reset의 선택 문제까지 포함한다는 점이 더 분명해진다.
 
 권고:
 
 - 새 하네스를 설계할 때는 compaction, memory, handoff artifact를 같은 팀이 관리하더라도 별도의 설계 문서와 failure budget으로 다뤄라.
 - transcript는 "디버깅용 로그"라고만 쓰지 말고 resume contract 관점에서 필요한 metadata를 함께 적어라.
+- reset을 쓸지 말지는 model-relative load-bearing 판단으로 기록하라.
 - memory layer를 도입한다면 transcript를 지우는 대신, transcript 위에 selective recall layer를 추가하는 식으로 접근하라.
 
 ## benchmark 질문

@@ -144,6 +144,28 @@ export type TaskStateBase = {
 
 이 실패들은 모델 eval 점수만으로는 거의 보이지 않는다. 하네스 엔지니어링을 별도 설계 영역으로 봐야 하는 이유가 바로 여기에 있다.
 
+## self-evaluation은 별도 하네스 문제다
+
+Anthropic의 [Harness design for long-running application development](https://www.anthropic.com/engineering/harness-design-long-running-apps) (2026-03-24)는 long-running coding harness의 실패를 단순한 base model capability 부족으로만 읽지 않는다. 특히 agent가 자기 산출물을 스스로 평가할 때 나타나는 관대함은 별도 failure mode로 취급된다. subjective task에서는 이 문제가 더 쉽게 드러나지만, verifiable task에서도 "문제가 있긴 하지만 승인해도 되겠다"는 식의 lenient judgment가 남을 수 있다.
+
+이 관점이 중요한 이유는, 여기서 실패의 귀속점이 다시 바뀌기 때문이다.
+
+- generator는 산출물을 만든다.
+- evaluator는 산출물과 실행 과정을 판정한다.
+- 둘을 같은 persona에 맡기면 self-grading leniency가 생기기 쉽다.
+
+즉 evaluation은 결과를 나중에 채점하는 부속 절차가 아니라, 실행 도중의 judgment quality를 보정하는 scaffold가 될 수 있다.
+
+## 외부 evaluator는 왜 load-bearing scaffold가 되는가
+
+위 글의 핵심 교훈 중 하나는 evaluator가 항상 필요한 것은 아니지만, 필요한 순간에는 매우 load-bearing하다는 점이다. planner, generator, evaluator를 분리하면 각각 다른 실패를 줄일 수 있다.
+
+- planner는 under-scoping과 premature implementation을 줄인다.
+- generator는 실제 build를 수행한다.
+- evaluator는 spec drift, self-justification, shallow QA를 줄인다.
+
+여기서 중요한 것은 evaluator를 단순 reviewer avatar로 두는 것이 아니라, criteria, threshold, contract를 가진 별도 실행 surface로 다루는 일이다. 특히 모델이 raw capability만으로는 안정적으로 넘지 못하는 경계 근처에서는, skeptical evaluator가 cost 이상의 lift를 주는 경우가 있다. 반대로 모델이 충분히 좋아져 그 경계가 이동하면, evaluator나 sprint scaffold 일부는 과잉 복잡도가 될 수 있다.
+
 ## 관찰, 원칙, 해석, 권고
 
 관찰:
@@ -157,17 +179,20 @@ export type TaskStateBase = {
 - 모델 호출 바깥의 load-bearing decision을 별도 설계 대상으로 다뤄야 한다.
 - continuity와 oversight가 중요한 제품일수록 harness engineering 비중이 커진다.
 - evaluation artifact는 구현 마지막에 덧붙이는 것이 아니라, 설계 초반부터 함께 계획해야 한다.
+- self-evaluation failure는 별도 harness failure mode로 취급하는 편이 낫다.
 
 해석:
 
 - Anthropic의 agent/harness 글이 말하는 workflow, scaffold, handoff, eval 문제는 Claude Code에서 하나의 운영 시스템으로 만나고 있다.
 - 하네스 엔지니어링을 별도 분야로 보지 않으면, 실제 제품 문제의 절반 이상이 "모델이 왜 이랬지?"로 잘못 번역된다.
+- evaluator-driven loop는 evaluation을 사후 판정이 아니라 실행 제어 구조로 끌어올린다.
 
 권고:
 
 - 새로운 coding harness를 설계할 때는 모델 호출 diagram보다 먼저 operator surface, permission boundary, transcript/resume, task artifact를 그려 보라.
 - 모델 품질 개선과 harness 구조 개선을 같은 backlog에 섞지 말고 귀속점을 따로 적어라.
 - "이 기능은 모델 바깥에서만 해결 가능하다"는 질문을 설계 초기에 명시적으로 던져라.
+- self-grading failure 사례를 따로 수집하고, generator와 evaluator의 artifact를 섞지 말라.
 
 ## benchmark 질문
 

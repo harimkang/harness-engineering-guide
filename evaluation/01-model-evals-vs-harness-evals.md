@@ -178,6 +178,19 @@ export function saveCurrentSessionCosts(...): void {
 
 이 순서를 지키면 "모델만 바꾸면 해결될까?"와 "하네스 구조를 바꾸는 편이 맞을까?"를 구분할 수 있다.
 
+## evaluator separation도 harness eval 대상이다
+
+Anthropic의 2026-03-24 글이 보여 주는 중요한 비교는 single-agent run과 planner/generator/evaluator harness run의 차이다. 이 비교가 중요한 이유는, 같은 base model family 아래에서도 외부 evaluator의 존재 여부가 outcome, cost, duration, bug rate를 함께 바꿀 수 있기 때문이다.
+
+즉 harness eval은 단지 tool surface와 permission policy만 측정하는 것이 아니다.
+
+- self-grading을 허용할지
+- separate evaluator를 둘지
+- criteria와 threshold를 얼마나 explicit하게 둘지
+- evaluator feedback를 다음 round 입력으로 다시 넣을지
+
+이런 scaffold choice도 harness eval의 대상이다. 특히 subjective quality나 edge-heavy QA가 중요한 작업에서는 evaluator separation이 model eval보다 더 큰 차이를 만들 수 있다.
+
 ## 관찰, 원칙, 해석, 권고
 
 관찰:
@@ -191,6 +204,7 @@ export function saveCurrentSessionCosts(...): void {
 - run-level artifact가 없다면 harness eval은 구호에 그친다.
 - 재현성 control 없이 측정만 늘리면 결과는 해석 불가능해진다.
 - 비용, denial, latency, turn count는 부가 지표가 아니라 harness outcome의 일부다.
+- evaluator separation 여부도 harness condition의 일부로 기록해야 한다.
 
 해석:
 
@@ -202,6 +216,7 @@ export function saveCurrentSessionCosts(...): void {
 - 새로운 coding harness를 평가할 때는 최소한 result packet, transcript, cost/usage, flag control 네 층을 함께 설계하라.
 - model eval 결과와 harness eval 결과를 같은 표에 섞지 말고, 귀속점 열을 별도로 두어라.
 - feature flag, sandbox, transcript policy처럼 runtime 조건이 흔들리는 surface를 deterministic override 없이 평가하지 말라.
+- single-agent baseline과 evaluator-separated harness를 비교할 때는 성공률뿐 아니라 cost, duration, bug 발견률을 함께 적어라.
 
 ## benchmark 질문
 

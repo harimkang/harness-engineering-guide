@@ -171,6 +171,37 @@ const TOOL_USE_SUMMARY_SYSTEM_PROMPT = `Write a short summary label describing w
 
 따라서 Claude Code 사례를 통해 배워야 할 것은 "grader가 이미 구현돼 있다"가 아니라, "grader를 붙일 수 있는 structured input이 충분히 드러나 있다"는 점이다.
 
+## grader input, grading rule, evaluator persona를 분리하라
+
+publication-grade evaluation 설명에서 자주 빠지는 것이 하나 더 있다. grader를 하나의 블랙박스로 적어 버리면, 실제로 무엇이 input이고 무엇이 rule이며 무엇이 persona인지 구분되지 않는다. Anthropic의 2026-03-24 글은 이 셋을 분리해 적는 편이 왜 중요한지 잘 보여 준다.
+
+- grader input: transcript, diagnostics, 실행 중 생성된 artifact, live app inspection 결과
+- grading rule: criteria, threshold, fail condition, contract
+- evaluator persona: skeptical QA인지, forgiving reviewer인지, design critic인지
+
+이 셋이 분리돼야 grader drift의 원인을 추적할 수 있다. input이 부족한지, rule이 흐린지, evaluator persona가 너무 관대한지 서로 다른 문제를 따로 고칠 수 있기 때문이다.
+
+## skeptical evaluator와 self-grading의 차이
+
+같은 모델이 generator와 evaluator 역할을 모두 수행할 수는 있다. 그러나 self-grading은 구조적으로 lenient해지기 쉽다. agent는 자기가 방금 만든 산출물의 맥락을 가장 잘 알고 있지만, 동시에 그 산출물을 변호할 유인도 강하게 갖는다.
+
+Anthropic의 글은 바로 이 점을 harness problem으로 읽는다.
+
+- generator가 자기 worklog를 설명하는 일
+- evaluator가 skeptical하게 fail condition을 적용하는 일
+
+이 둘은 겉보기에는 가까워 보여도 운영상 다른 역할이다. 따라서 grader 설명에서는 "누가 채점하는가"만이 아니라 "그 evaluator가 generator와 어떤 관계인가"를 함께 적는 편이 맞다.
+
+## criteria, threshold, sprint contract는 grader 설계 단위다
+
+grader를 모델 하나로 환원하면 contract와 threshold가 문서에서 사라지기 쉽다. 그러나 실제 long-running harness에서는 grading unit이 더 잘게 나뉜다.
+
+- criteria: 무엇을 볼 것인가
+- threshold: 얼마나 잘해야 통과인가
+- sprint contract: 이번 chunk에서 무엇을 done으로 볼 것인가
+
+즉 grading은 run이 끝난 뒤 transcript만 읽는 일이 아니라, 그 전에 contract를 세우고 그 contract를 기준으로 통과 여부를 판정하는 구조일 수 있다. grader vocabulary를 문서화할 때는 이 upstream layer도 함께 적는 편이 정확하다.
+
 ## 왜 이 구분이 중요한가
 
 평가 문서를 쓸 때 가장 흔한 오류는 다음이다.
@@ -194,6 +225,7 @@ const TOOL_USE_SUMMARY_SYSTEM_PROMPT = `Write a short summary label describing w
 - evaluation vocabulary는 반드시 local artifact로 다시 매핑돼야 한다.
 - grader가 명시적 객체로 없더라도 grading input과 grading rule은 분리해서 적어야 한다.
 - outcome은 pass/fail보다 friction, cost, diagnostic delta, human judgment를 함께 가져야 한다.
+- evaluator persona와 grading rule을 같은 것으로 취급하지 말아야 한다.
 
 해석:
 
@@ -205,6 +237,7 @@ const TOOL_USE_SUMMARY_SYSTEM_PROMPT = `Write a short summary label describing w
 - 새로운 harness를 문서화할 때는 `task -> trial -> transcript -> outcome -> grader` 표를 먼저 만든 뒤, 각 칸에 실제 artifact를 채워 넣어라.
 - `grader`가 없으면 없다고 적고, 무엇이 grading input 후보인지 정직하게 분리하라.
 - transcript와 outcome을 같은 JSON blob에 넣더라도 독자에게는 서로 다른 역할로 설명하라.
+- grader를 적을 때는 input, rule, persona, contract를 최소한 따로 적어라.
 
 ## benchmark 질문
 

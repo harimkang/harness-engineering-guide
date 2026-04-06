@@ -96,6 +96,7 @@
 | --- | --- | --- |
 | context와 control | [context/01-context-as-an-operational-resource.md](./context/01-context-as-an-operational-resource.md) | [05-context-assembly-and-query-pipeline.md](./05-context-assembly-and-query-pipeline.md), [06-query-engine-and-turn-lifecycle.md](./06-query-engine-and-turn-lifecycle.md) |
 | tool과 permission | [interfaces/01-tool-contracts-and-the-agent-computer-interface.md](./interfaces/01-tool-contracts-and-the-agent-computer-interface.md), [interfaces/02-tool-shaping-permissions-and-capability-exposure.md](./interfaces/02-tool-shaping-permissions-and-capability-exposure.md) | [08-tool-system-and-permissions.md](./08-tool-system-and-permissions.md) |
+| evaluator-driven harness | [foundations/05-evaluator-driven-harness-design.md](./foundations/05-evaluator-driven-harness-design.md), [evaluation/06-contract-based-qa-and-skeptical-evaluators.md](./evaluation/06-contract-based-qa-and-skeptical-evaluators.md) | [17-end-to-end-scenarios.md](./17-end-to-end-scenarios.md), [15-code-reading-guide.md](./15-code-reading-guide.md) |
 | end-to-end synthesis | [evaluation/03-benchmarking-coding-harnesses.md](./evaluation/03-benchmarking-coding-harnesses.md) | [17-end-to-end-scenarios.md](./17-end-to-end-scenarios.md) |
 
 Part 지도와 reader-facing 범위는 항상 [README.md](./README.md)를 우선 기준으로 본다.
@@ -263,12 +264,13 @@ Anthropic engineering 글이나 공식 문서가 직접 설명하는 원칙이�
 
 ### 비교 독서 모드
 
-원칙 장 하나와 대응하는 사례 장 하나를 짝지어 읽는다.
+원칙 장 하나 또는 관련 장 묶음과 대응하는 사례 장 하나를 짝지어 읽는다.
 
 - context: [context/01-context-as-an-operational-resource.md](./context/01-context-as-an-operational-resource.md) -> [05-context-assembly-and-query-pipeline.md](./05-context-assembly-and-query-pipeline.md)
 - tools: [interfaces/01-tool-contracts-and-the-agent-computer-interface.md](./interfaces/01-tool-contracts-and-the-agent-computer-interface.md) -> [08-tool-system-and-permissions.md](./08-tool-system-and-permissions.md)
 - long-running execution: [execution/03-task-orchestration-and-long-running-execution.md](./execution/03-task-orchestration-and-long-running-execution.md) -> [12-task-model-and-background-execution.md](./12-task-model-and-background-execution.md)
-- eval: [evaluation/01-model-evals-vs-harness-evals.md](./evaluation/01-model-evals-vs-harness-evals.md) -> [17-end-to-end-scenarios.md](./17-end-to-end-scenarios.md)
+- eval artifact: [evaluation/01-model-evals-vs-harness-evals.md](./evaluation/01-model-evals-vs-harness-evals.md) -> [17-end-to-end-scenarios.md](./17-end-to-end-scenarios.md)
+- evaluator-driven harness: [foundations/05-evaluator-driven-harness-design.md](./foundations/05-evaluator-driven-harness-design.md), [evaluation/06-contract-based-qa-and-skeptical-evaluators.md](./evaluation/06-contract-based-qa-and-skeptical-evaluators.md) -> [17-end-to-end-scenarios.md](./17-end-to-end-scenarios.md)
 
 ### source-first 모드
 
@@ -544,6 +546,16 @@ sequenceDiagram
 5. [05-context-assembly-and-query-pipeline.md](./05-context-assembly-and-query-pipeline.md)
 6. [08-tool-system-and-permissions.md](./08-tool-system-and-permissions.md)
 7. [12-task-model-and-background-execution.md](./12-task-model-and-background-execution.md)
+
+### evaluator-heavy harness를 읽고 싶을 때
+
+1. [README.md](./README.md)
+2. [appendix/references.md](./appendix/references.md)
+3. [foundations/05-evaluator-driven-harness-design.md](./foundations/05-evaluator-driven-harness-design.md)
+4. [context/03-compaction-memory-and-handoff-artifacts.md](./context/03-compaction-memory-and-handoff-artifacts.md)
+5. [evaluation/02-tasks-trials-transcripts-and-graders.md](./evaluation/02-tasks-trials-transcripts-and-graders.md)
+6. [evaluation/06-contract-based-qa-and-skeptical-evaluators.md](./evaluation/06-contract-based-qa-and-skeptical-evaluators.md)
+7. [evaluation/03-benchmarking-coding-harnesses.md](./evaluation/03-benchmarking-coding-harnesses.md)
 
 ### 실제 코드 독해를 빨리 시작하고 싶을 때
 

@@ -167,6 +167,30 @@ const memorySurvey = useMemorySurvey(messages, isLoading, hasActivePrompt, ...)
 
 이 조합은 중요하다. diagnostics만 보면 syntactic correctness는 보이지만 UX pain은 안 보이고, feedback만 보면 감정은 보이지만 structural cause는 안 보인다. 둘을 함께 봐야 scaffold change가 실제로 무엇을 개선했는지 설명할 수 있다.
 
+## generator만이 아니라 evaluator도 tuning 대상이다
+
+Anthropic의 2026-03-24 글은 optimization loop가 generator prompt만 고치는 절차가 아니라는 점을 분명히 보여 준다. evaluator가 너무 관대하면 legitimate issue를 발견하고도 승인해 버리고, evaluator가 shallow하면 edge case를 놓친다. 이 경우 generator보다 evaluator 쪽 tuning이 더 큰 lift를 줄 수 있다.
+
+즉 production trace를 읽을 때는 다음 질문을 함께 던져야 한다.
+
+- generator가 못한 것인가
+- evaluator가 봤지만 승인한 것인가
+- evaluator가 애초에 보지 못한 것인가
+
+이 셋은 서로 다른 개선 행동으로 이어진다.
+
+## disagreement case는 evaluator calibration 데이터다
+
+좋은 evaluator를 만드는 가장 빠른 재료는 disagreement case다. evaluator 로그를 읽고 "여기서는 fail이어야 했는데 pass로 갔다"거나 "여기서는 surface만 보고 깊이 있는 검증을 생략했다"는 사례를 모으면, 그것이 곧 evaluator calibration 세트가 된다.
+
+이런 사례는 단순 에러 로그와 다르다.
+
+- evaluator가 무엇을 봤는지
+- 무엇을 놓쳤는지
+- 인간 판단과 어디서 갈라졌는지
+
+를 함께 보여 주기 때문이다. 따라서 optimization loop 문서에는 generator failure trace뿐 아니라 evaluator misjudgment trace도 별도 범주로 남기는 편이 좋다.
+
 ## tool summary와 prompt suggestion은 triage 속도를 높인다
 
 모든 production trace를 사람이 처음부터 끝까지 읽는 것은 비효율적이다. `src/services/toolUseSummary/toolUseSummaryGenerator.ts`는 tool batch를 짧은 label로 요약하고, prompt suggestion은 세션 안에서 개선 후보를 다시 노출한다.
@@ -204,6 +228,7 @@ offline control이 없으면 같은 현상을 재현하기 어렵고, online sig
 - trace stack은 한 층으로 충분하지 않다.
 - offline reproducibility control과 online production signal을 함께 가져야 optimization이 안정된다.
 - diagnostics와 human feedback는 서로 대체 관계가 아니라 보완 관계다.
+- evaluator-heavy harness에서는 evaluator trace도 generator trace만큼 중요한 최적화 입력이다.
 
 해석:
 
@@ -215,6 +240,7 @@ offline control이 없으면 같은 현상을 재현하기 어렵고, online sig
 - 새 harness를 만들 때 transcript, outcome, timing, economics, feedback 중 세 층 이상을 동시에 설계하라.
 - production trace를 모은 뒤에는 반드시 offline control surface도 함께 마련해 재현 가능성을 확보하라.
 - run triage용 summary label과 최종 grading rule을 별도 층으로 문서화하라.
+- evaluator를 쓰는 시스템이라면 disagreement case를 calibration corpus로 남겨라.
 
 ## benchmark 질문
 

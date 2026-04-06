@@ -69,6 +69,17 @@ Claude Code 같은 사례에서는 "어느 폴더에 무엇이 있는가"보다 
 
 이 다섯 렌즈는 eval 기사에서 말하는 task, transcript, outcome, harness 구분을 코드 읽기로 옮긴 것이다. `transport artifact`는 cross-boundary contract를, `persistence artifact`는 saved state reload path를 뜻한다. task를 보고 싶으면 turn loop와 entrypoint를, transcript와 restore를 보고 싶으면 ownership과 persistence artifact를, harness를 보고 싶으면 분기와 adapter를 잡아야 한다.
 
+## evaluator-heavy harness를 읽을 때는 contract와 criteria부터 고정하라
+
+Anthropic의 2026-03-24 글 같은 evaluator-heavy harness를 읽을 때는 giant file의 위치보다 먼저 질문을 바꾸는 편이 낫다.
+
+- grading input이 무엇인가
+- grading rule과 threshold가 어디에 적히는가
+- generator와 evaluator가 같은 persona인가
+- contract가 build 이전에 정의되는가, 사후 QA로만 남는가
+
+현재 공개 Claude Code 스냅샷에는 generic evaluator module이 first-class로 드러나지 않는다. 따라서 이 경우에는 source file hop보다 reader-facing 문서의 비교 프레임이 더 중요해진다. 먼저 [evaluation/02-tasks-trials-transcripts-and-graders.md](./evaluation/02-tasks-trials-transcripts-and-graders.md), [foundations/05-evaluator-driven-harness-design.md](./foundations/05-evaluator-driven-harness-design.md), [evaluation/06-contract-based-qa-and-skeptical-evaluators.md](./evaluation/06-contract-based-qa-and-skeptical-evaluators.md)를 읽고, 그 다음 local artifact가 어디까지 있는지 확인하는 편이 효율적이다.
+
 ## reading-route map
 
 ```mermaid

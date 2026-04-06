@@ -59,8 +59,30 @@ coding harness를 비교할 때 모델 스펙만 보면 거의 항상 중요한 
 | observability | result packet, transcript, telemetry, diagnostics | failure analysis와 optimization이 가능해진다 |
 | reproducibility | GrowthBook override, VCR fixture | 동일 조건 비교가 가능해야 benchmark가 drift하지 않는다 |
 | economics | cost/usage/duration | 같은 성공이라도 production feasibility가 달라진다 |
+| evaluator separation | separate QA persona, explicit criteria, contract artifact | self-grading leniency를 줄일 수 있는가 |
 
 이 표를 보면 benchmark가 "기능 목록"이 아니라 failure surface 목록이라는 점이 분명해진다. 어떤 harness가 어느 축에서 약한지 알면, 같은 모델인데 왜 결과가 다른지도 더 빨리 설명할 수 있다.
+
+## evaluator 분리와 contract explicitness도 측정하라
+
+Anthropic의 2026-03-24 글이 추가해 주는 benchmark 차원은 두 가지다.
+
+1. evaluator separation
+   generator가 자기 산출물을 직접 승인하는가, 아니면 skeptical external evaluator가 있는가
+2. contract explicitness
+   각 chunk나 sprint가 무엇을 done으로 보는지, 어떤 behavior를 확인할지 미리 합의하는가
+
+이 두 차원은 especially long-running coding harness에서 중요하다. 많은 시스템이 transcript와 cost는 남기지만, self-grading leniency와 verification ambiguity는 따로 측정하지 않는다. 그러나 실제 failure는 여기서 자주 생긴다.
+
+## evaluator가 overhead인지 leverage인지 판정하라
+
+evaluator는 무조건 좋은 것이 아니다. evaluator가 value인지 overhead인지는 현재 모델과 task 난도 경계에 따라 달라진다. 모델이 solo로도 안정적으로 넘는 작업이라면 evaluator는 비용과 latency만 늘릴 수 있다. 반대로 모델이 경계 근처에서 stub feature, shallow QA, premature approval을 보인다면 evaluator는 실제 lift를 줄 수 있다.
+
+따라서 benchmark에서는 evaluator를 고정된 정답 구조로 보지 말고, 다음 질문으로 판정하는 편이 좋다.
+
+- evaluator가 발견한 failure가 generator solo run에서는 반복되는가
+- evaluator가 고친 문제 수가 추가 cost와 duration을 정당화하는가
+- model upgrade 이후에도 같은 evaluator scaffold가 여전히 load-bearing한가
 
 ## context discipline과 boundary management는 항상 함께 봐야 한다
 
@@ -142,7 +164,7 @@ if (env.isCI && !isEnvTruthy(process.env.VCR_RECORD)) {
 2. 각 task를 여러 trial로 실행한다.  
    REPL과 SDK, permission mode 차이, flag 고정 여부를 포함한다.
 3. transcript, outcome, cost/usage, diagnostics를 수집한다.
-4. 위의 일곱 차원으로 채점하고 variance를 기록한다.
+4. 위의 차원으로 채점하고 variance를 기록한다.
 5. weakest dimension이 구조 문제인지 운영 문제인지 판정한다.
 
 이 절차를 따르면 "누가 더 똑똑한가"보다 "누가 더 production coding harness에 가깝게 동작하는가"를 평가하게 된다.
@@ -180,6 +202,7 @@ if (env.isCI && !isEnvTruthy(process.env.VCR_RECORD)) {
 - coding harness benchmark는 failure surface 중심으로 설계해야 한다.
 - 각 차원은 artifact와 explanation을 함께 요구해야 한다.
 - variance가 큰 harness는 평균 점수보다 recovery와 reproducibility를 먼저 본다.
+- evaluator separation과 contract explicitness도 benchmark 차원으로 기록하는 편이 낫다.
 
 해석:
 
@@ -191,6 +214,7 @@ if (env.isCI && !isEnvTruthy(process.env.VCR_RECORD)) {
 - 새 harness를 비교할 때는 최소 6개 이상 차원을 함께 보되, 그중 하나는 반드시 reproducibility로 두어라.
 - point estimate보다 variance와 failure signature를 함께 기록하라.
 - 약한 차원을 찾았으면 먼저 그 차원이 모델 문제인지 harness 구조 문제인지 분리해라.
+- evaluator를 붙였다면, 그 evaluator가 overhead인지 leverage인지 별도 열로 적어라.
 
 ## benchmark 질문
 
