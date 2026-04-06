@@ -17,6 +17,8 @@
 - sandboxing 세부 메커니즘 전부
 - 개별 permission request UI 컴포넌트의 모든 시각적 차이
 - 조직 정책과 제품 정책의 비기술적 운영 세부
+- trace privacy와 evidence pack retention 세부
+- prompt caching과 infrastructure noise 세부
 
 이 장은 [01-boundary-engineering-and-autonomy.md](../06-boundaries-deployment-and-safety/01-boundary-engineering-and-autonomy.md), [02-sandboxing-permissions-and-policy-surfaces.md](../06-boundaries-deployment-and-safety/02-sandboxing-permissions-and-policy-surfaces.md), [05-ui-transcripts-and-operator-control.md](../04-interfaces-and-operator-surfaces/05-ui-transcripts-and-operator-control.md)와 밀접하게 연결된다.
 
@@ -44,6 +46,7 @@
 - [07-claude-code-tool-system-and-permissions.md](../04-interfaces-and-operator-surfaces/07-claude-code-tool-system-and-permissions.md)
 - [05-ui-transcripts-and-operator-control.md](../04-interfaces-and-operator-surfaces/05-ui-transcripts-and-operator-control.md)
 - [02-task-orchestration-and-long-running-execution.md](02-task-orchestration-and-long-running-execution.md)
+- [08-observability-traces-and-run-artifacts.md](08-observability-traces-and-run-artifacts.md)
 
 ## trust boundary는 session 시작에서 열린다
 
@@ -199,6 +202,7 @@ logEvent('tengu_tool_use_show_permission_request', {
 - 새 하네스를 설계할 때는 반드시 `trust`, `action approval`, `fatigue management`를 별도 표로 정리하라.
 - bypass mode가 있더라도 bypass-immune edge를 최소 하나 이상 명시하라.
 - permission prompt의 개수만 세지 말고, 어떤 decision reason이 반복되는지도 함께 계측하라.
+- approval fatigue 측정값을 trace/diagnostic artifact와 연결해 두어야 나중에 원인을 다시 분해할 수 있다.
 
 ## benchmark 질문
 

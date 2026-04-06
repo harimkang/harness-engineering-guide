@@ -117,7 +117,7 @@
 ### Part 5. Execution, Continuity, And Integrations
 
 - [05-execution-continuity-and-integrations/00-part-guide.md](./05-execution-continuity-and-integrations/00-part-guide.md)
-- 일반론: resumability, task orchestration, human oversight
+- 일반론: resumability, task orchestration, human oversight, observability, cost/economics
 - 사례: Claude Code의 services/integrations, MCP/skills/plugins, task model, persistence
 
 ### Part 6. Boundaries, Deployment, And Safety

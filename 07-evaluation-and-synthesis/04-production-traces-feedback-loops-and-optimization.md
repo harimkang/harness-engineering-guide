@@ -18,7 +18,7 @@
 - privacy/compliance policy의 법적 세부
 - product analytics dashboard의 UX 설계
 
-이 장은 [01-model-evals-vs-harness-evals.md](01-model-evals-vs-harness-evals.md), [02-tasks-trials-transcripts-and-graders.md](02-tasks-trials-transcripts-and-graders.md), [03-benchmarking-coding-harnesses.md](03-benchmarking-long-running-agent-harnesses.md)를 잇는 synthesis 장이다.
+이 장은 [01-model-evals-vs-harness-evals.md](01-model-evals-vs-harness-evals.md), [02-tasks-trials-transcripts-and-graders.md](02-tasks-trials-transcripts-and-graders.md), [03-benchmarking-coding-harnesses.md](03-benchmarking-long-running-agent-harnesses.md)를 잇는 synthesis 장이다. operations 관점에서 transcript, trace, checkpoint, evidence pack을 더 직접적으로 설명하는 장은 [08-observability-traces-and-run-artifacts.md](../05-execution-continuity-and-integrations/08-observability-traces-and-run-artifacts.md)이고, cost/latency/headroom 축은 [09-cost-latency-headroom-and-prompt-caching.md](../05-execution-continuity-and-integrations/09-cost-latency-headroom-and-prompt-caching.md)에서 따로 다룬다.
 
 ## 자료와 독서 기준
 
