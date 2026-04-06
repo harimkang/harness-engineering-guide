@@ -123,13 +123,13 @@
 ### Part 6. Boundaries, Deployment, And Safety
 
 - [06-boundaries-deployment-and-safety/00-part-guide.md](./06-boundaries-deployment-and-safety/00-part-guide.md)
-- 일반론: boundary engineering, sandboxing/policy surfaces, local/remote family, safety-autonomy benchmark
+- 일반론: boundary engineering, sandboxing/policy surfaces, local/remote family, safety-autonomy benchmark, governance mapping
 - 사례: Claude Code의 remote/bridge/direct-connect/upstream proxy, risks/debt/failure modes
 
 ### Part 7. Evaluation And Synthesis
 
 - [07-evaluation-and-synthesis/00-part-guide.md](./07-evaluation-and-synthesis/00-part-guide.md)
-- 일반론: model eval vs harness eval, tasks/trials/transcripts/graders, benchmark framework, production traces, skeptical evaluator
+- 일반론: model eval vs harness eval, tasks/trials/transcripts/graders, benchmark framework, production traces, skeptical evaluator, eval hygiene
 - 사례/종합: Claude Code end-to-end scenarios, benchmark-oriented code reading guide
 
 ### Part 8. Reference

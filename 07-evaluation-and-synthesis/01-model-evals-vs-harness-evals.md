@@ -17,8 +17,9 @@
 - 구체적인 외부 benchmark suite의 구현법 전부
 - 모델 자체의 학습 데이터, preference tuning, base capability 분석
 - 평가 자동화 파이프라인의 CI wiring 세부
+- dataset versioning과 contamination guardrail 세부
 
-이 내용은 [03-benchmarking-coding-harnesses.md](03-benchmarking-long-running-agent-harnesses.md), [04-production-traces-feedback-loops-and-optimization.md](04-production-traces-feedback-loops-and-optimization.md), [03-references.md](../00-front-matter/03-references.md)에서 이어서 확장한다.
+이 내용은 [03-benchmarking-coding-harnesses.md](03-benchmarking-long-running-agent-harnesses.md), [04-production-traces-feedback-loops-and-optimization.md](04-production-traces-feedback-loops-and-optimization.md), [09-eval-hygiene-dataset-versioning-and-contamination.md](09-eval-hygiene-dataset-versioning-and-contamination.md), [03-references.md](../00-front-matter/03-references.md)에서 이어서 확장한다.
 
 ## 자료와 독서 기준
 
@@ -217,6 +218,7 @@ Anthropic의 2026-03-24 글이 보여 주는 중요한 비교는 single-agent ru
 - model eval 결과와 harness eval 결과를 같은 표에 섞지 말고, 귀속점 열을 별도로 두어라.
 - feature flag, sandbox, transcript policy처럼 runtime 조건이 흔들리는 surface를 deterministic override 없이 평가하지 말라.
 - single-agent baseline과 evaluator-separated harness를 비교할 때는 성공률뿐 아니라 cost, duration, bug 발견률을 함께 적어라.
+- harness eval을 기록할 때는 dataset version, grader version, evidence pack completeness를 함께 적어라.
 
 ## benchmark 질문
 
