@@ -40,6 +40,9 @@
 - Anthropic, [Effective harnesses for long-running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents), 2025-11-26
 - Anthropic, [Harness design for long-running application development](https://www.anthropic.com/engineering/harness-design-long-running-apps), 2026-03-24
 
+Sources / evidence notes:
+이 장의 reader-facing 외부 검증 축은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 Part 5 cluster를 따른다. 핵심 source ID는 `S5`, `S6`, `S8`, `S10`, `S15`, `S28`이다.
+
 함께 읽으면 좋은 장:
 
 - [04-safety-autonomy-benchmark.md](../06-boundaries-deployment-and-safety/04-safety-autonomy-benchmark.md)

@@ -42,6 +42,9 @@
 - Anthropic, [Harness design for long-running application development](https://www.anthropic.com/engineering/harness-design-long-running-apps), 2026-03-24
 - Pan et al., [Natural-Language Agent Harnesses](https://arxiv.org/abs/2603.25723), 2026-03-26, under review
 
+Sources / evidence notes:
+이 장의 reader-facing 외부 검증 축은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 Part 5 cluster를 따른다. 핵심 source ID는 `S2`, `S6`, `S8`, `S26`, `S27`, `S32`, `S33`이며, `P1`은 artifact durability 비교의 보조 프레임으로만 사용한다.
+
 함께 읽으면 좋은 장:
 
 - [03-compaction-memory-and-handoff-artifacts.md](../03-context-and-control/03-compaction-memory-and-handoff-artifacts.md)

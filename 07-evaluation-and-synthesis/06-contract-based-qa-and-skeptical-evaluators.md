@@ -39,6 +39,9 @@ long-running coding harness에서 QA를 마지막 단계의 smoke test로만 두
 - Anthropic, [Harness design for long-running application development](https://www.anthropic.com/engineering/harness-design-long-running-apps), 2026-03-24
 - Anthropic, [Demystifying evals for AI agents](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents), 2026-01-09
 
+Sources / evidence notes:
+이 장의 reader-facing 외부 검증 축은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 Part 7 cluster를 따른다. 핵심 source ID는 `S7`, `S21`, `S22`, `S23`, `S28`, `S29`, `S32`이며, `S8`은 contract-first scaffold의 보조 운영 프레임으로 사용한다.
+
 함께 읽으면 좋은 장:
 
 - [../foundations/05-evaluator-driven-harness-design.md](../01-foundations/05-evaluator-driven-harness-design.md)
