@@ -113,7 +113,7 @@
 - [01-glossary.md](../08-reference/01-glossary.md)
   반복되는 핵심 용어를 정의와 차이, confusable terms와 함께 모은다.
 
-즉, `README`는 길 안내를 하고, `01`은 읽는 법을 가르치며, `02`는 근거 규칙을 설명하고, `03`은 source를 고정하며, glossary는 용어를 정리한다.
+즉, `README`는 길 안내를 하고, `01-how-to-read-this-book.md`는 읽는 법을 가르치며, `02-source-analysis-method.md`는 근거 규칙을 설명하고, `03-references.md`는 source를 고정하며, glossary는 용어를 정리한다.
 
 ## 원칙 spine과 사례 spine을 함께 읽는 법
 
@@ -558,7 +558,7 @@ sequenceDiagram
 
 이 책은 새 Part I-VI 원칙 장과 기존 Part VII 사례 연구 장을 함께 갖는다. 현재 공개 사본 기준으로는 사례 연구 장이 먼저 더 많이 읽히고, 원칙 장은 뒤에서 보강된다. 따라서 다음 방식으로 읽는 것이 가장 안전하다.
 
-1. `README`와 `00`, source-analysis-method를 먼저 읽는다.
+1. `README`와 front matter, `02-source-analysis-method.md`를 먼저 읽는다.
 2. 그다음 사례 장을 읽되, 장마다 "이 구조가 어떤 하네스 문제를 다루는가"를 메모한다.
 3. 이후 해당 주제의 원칙 장을 읽으면서, 같은 사례 장을 다시 읽으며 자신의 메모를 수정한다.
 
@@ -597,7 +597,7 @@ sequenceDiagram
 
 주의:
 
-- 이 경로는 이미 `README`, `00`, source-analysis-method를 읽어 근거 층위 규칙을 이해한 독자에게 더 적합하다.
+- 이 경로는 이미 `README`, front matter, `02-source-analysis-method.md`를 읽어 근거 층위 규칙을 이해한 독자에게 더 적합하다.
 
 1. [08-benchmark-oriented-code-reading-guide.md](../07-evaluation-and-synthesis/08-benchmark-oriented-code-reading-guide.md)
 2. [02-key-file-index.md](../08-reference/02-key-file-index.md)
@@ -608,15 +608,15 @@ sequenceDiagram
 
 이 문서 세트는 같은 파일을 여러 번 다루더라도 장마다 다른 설계 문제를 설명하는 방식으로 중복을 통제한다.
 
-- `03`은 실행 분기와 runtime family를 다룬다.
-- `04`는 startup, trust, approval gate를 다룬다.
-- `05`는 context assembly와 query preparation을 다룬다.
-- `06`은 turn lifecycle과 control loop를 다룬다.
-- `08`은 tool contract와 permission boundary를 다룬다.
-- `10`은 service composition을 다룬다.
-- `11`은 extension/delegation/MCP를 다룬다.
-- `12`는 task와 long-running execution을 다룬다.
-- `14`는 remote/network/deployment boundary를 다룬다.
+- `runtime-modes`는 실행 분기와 runtime family를 다룬다.
+- `startup-trust`는 startup, trust, approval gate를 다룬다.
+- `context-assembly`는 context assembly와 query preparation을 다룬다.
+- `turn-lifecycle`은 turn lifecycle과 control loop를 다룬다.
+- `tool-system`은 tool contract와 permission boundary를 다룬다.
+- `services-integrations`는 service composition을 다룬다.
+- `extension-coordination`은 extension/delegation/MCP를 다룬다.
+- `task-model`은 task와 long-running execution을 다룬다.
+- `remote-bridge`는 remote/network/deployment boundary를 다룬다.
 
 이 규칙을 이해하면 같은 source file이 다시 나와도 "중복 설명"이 아니라 "다른 질문으로 다시 읽는 것"임을 더 쉽게 납득할 수 있다.
 

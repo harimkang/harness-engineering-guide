@@ -19,6 +19,8 @@
 
 이 부록은 feature gate와 conditional path만 따로 추적하는 지도다. 일반 구조는 [directory-map.md](03-directory-map.md), 핵심 파일 탐색은 [key-file-index.md](02-key-file-index.md)와 역할이 다르다.
 
+이 부록의 `영향받는 장` 표기는 현재 장 구조 기준 shorthand를 쓴다. `reference`는 narrative chapter보다 reference appendix에서 같이 봐야 의미가 닫히는 항목이라는 뜻이다.
+
 ## Reader-path suggestions
 
 - `reviewer`: Part 2, Part 5, Part 6을 읽다가 "이 코드가 항상 켜져 있는가"가 궁금해질 때 연다.
@@ -41,21 +43,21 @@ if (feature('BRIDGE_MODE') && (args[0] === 'remote-control' || args[0] === 'rc' 
 
 | 기능/flag | 활성화 지점 | 영향받는 장 | 추적 시 주의점 | 대표 근거 파일 |
 | --- | --- | --- | --- | --- |
-| `BRIDGE_MODE` | `src/entrypoints/cli.tsx`의 `remote-control` fast-path | `03`, `14`, `16` | build-time `feature()`와 runtime gate를 함께 봐야 한다 | `src/entrypoints/cli.tsx`, `src/bridge/bridgeEnabled.ts`, `src/bridge/bridgeMain.ts` |
-| `DAEMON` | daemon fast-path와 `--daemon-worker` 분기 | `03`, `12`, `16` | 실제 daemon 구현 모듈은 현재 snapshot에 포함되지 않으므로, 이 문서에서는 entrypoint call site 기준으로만 추적한다 | `src/entrypoints/cli.tsx` |
-| `BG_SESSIONS` | `ps`, `logs`, `attach`, `kill`, `--bg` 경로 | `03`, `12`, `17` | session-level background path와 개별 task를 혼동하기 쉽다 | `src/entrypoints/cli.tsx`, `src/query.ts` |
-| `TEMPLATES` | template job command, stop hook classifier | `03`, `05`, appendix | job command와 stop hook 양쪽에 걸친다 | `src/entrypoints/cli.tsx`, `src/query/stopHooks.ts` |
-| `VOICE_MODE` | voice UI, command, input enablement | `09`, `16` | UI에 코드가 보여도 항상 활성이라고 보면 안 된다 | `src/voice/voiceModeEnabled.ts`, `src/services/voice.ts` |
-| `WEB_BROWSER_TOOL` | browser panel/tool surface | `08`, `09`, `16` | tool surface와 UI surface를 같이 따라가야 한다 | `tools/`, `src/screens/REPL.tsx` |
-| `COORDINATOR_MODE` | coordinator prompt/user context helper | `11`, `16` | `src/QueryEngine.ts`에서 lazy import로 들어오는 점이 중요하다 | `src/coordinator/coordinatorMode.ts`, `src/QueryEngine.ts`, `src/main.tsx` |
-| `KAIROS` | assistant mode, channels, related UX | `03`, `09`, `11`, `16` | assistant 관련 코드가 `src/main.tsx`와 dialog/startup에 넓게 퍼져 있다 | `src/main.tsx`, `assistant/`, `components/` |
-| `CONTEXT_COLLAPSE` | query loop의 context collapse recovery path | `05`, `16` | 세부 구현 모듈은 현재 snapshot에 없으므로, `feature('CONTEXT_COLLAPSE')`가 query loop에 끼어드는 지점만 추적한다 | `src/query.ts` |
-| `HISTORY_SNIP` | transcript/history snip path | `05`, `06`, `16` | REPL과 SDK/headless 경로의 차이를 같이 봐야 한다 | `src/query.ts`, `src/QueryEngine.ts` |
-| `WORKFLOW_SCRIPTS` | workflow command/tool/task 계열 | `07`, `12`, appendix | command surface와 task surface에 걸친다 | `commands/`, `tasks/` |
-| `AGENT_TRIGGERS` | scheduled task/cron 관련 path | `12`, `16` | task 모델과 background execution 장에서 함께 봐야 한다 | `tasks/`, `src/query.ts` |
-| `MONITOR_TOOL` | monitor tool/task path | `08`, `12` | tool과 task 두 장의 경계에 걸친다 | `tools/`, `tasks/` |
-| `UDS_INBOX` | peer/bridge messaging variants | `11`, `14` | messaging 변형이 bridge/network 설명 없이 나오면 맥락을 놓치기 쉽다 | `bridge/`, `src/tools/SendMessageTool/` |
-| `FORK_SUBAGENT` | forked subagent path | `11`, appendix | agent flow와 tool/prompt가 동시에 바뀔 수 있다 | `src/tools/AgentTool/`, `commands/` |
+| `BRIDGE_MODE` | `src/entrypoints/cli.tsx`의 `remote-control` fast-path | `runtime-modes`, `remote-bridge`, `risks-debt` | build-time `feature()`와 runtime gate를 함께 봐야 한다 | `src/entrypoints/cli.tsx`, `src/bridge/bridgeEnabled.ts`, `src/bridge/bridgeMain.ts` |
+| `DAEMON` | daemon fast-path와 `--daemon-worker` 분기 | `runtime-modes`, `task-model`, `risks-debt` | 실제 daemon 구현 모듈은 현재 snapshot에 포함되지 않으므로, 이 문서에서는 entrypoint call site 기준으로만 추적한다 | `src/entrypoints/cli.tsx` |
+| `BG_SESSIONS` | `ps`, `logs`, `attach`, `kill`, `--bg` 경로 | `runtime-modes`, `task-model`, `end-to-end` | session-level background path와 개별 task를 혼동하기 쉽다 | `src/entrypoints/cli.tsx`, `src/query.ts` |
+| `TEMPLATES` | template job command, stop hook classifier | `runtime-modes`, `context-assembly`, `reference` | job command와 stop hook 양쪽에 걸친다 | `src/entrypoints/cli.tsx`, `src/query/stopHooks.ts` |
+| `VOICE_MODE` | voice UI, command, input enablement | `state-ui-terminal`, `risks-debt` | UI에 코드가 보여도 항상 활성이라고 보면 안 된다 | `src/voice/voiceModeEnabled.ts`, `src/services/voice.ts` |
+| `WEB_BROWSER_TOOL` | browser panel/tool surface | `tool-system`, `state-ui-terminal`, `risks-debt` | tool surface와 UI surface를 같이 따라가야 한다 | `tools/`, `src/screens/REPL.tsx` |
+| `COORDINATOR_MODE` | coordinator prompt/user context helper | `extension-coordination`, `risks-debt` | `src/QueryEngine.ts`에서 lazy import로 들어오는 점이 중요하다 | `src/coordinator/coordinatorMode.ts`, `src/QueryEngine.ts`, `src/main.tsx` |
+| `KAIROS` | assistant mode, channels, related UX | `runtime-modes`, `state-ui-terminal`, `extension-coordination`, `risks-debt` | assistant 관련 코드가 `src/main.tsx`와 dialog/startup에 넓게 퍼져 있다 | `src/main.tsx`, `assistant/`, `components/` |
+| `CONTEXT_COLLAPSE` | query loop의 context collapse recovery path | `context-assembly`, `risks-debt` | 세부 구현 모듈은 현재 snapshot에 없으므로, `feature('CONTEXT_COLLAPSE')`가 query loop에 끼어드는 지점만 추적한다 | `src/query.ts` |
+| `HISTORY_SNIP` | transcript/history snip path | `context-assembly`, `turn-lifecycle`, `risks-debt` | REPL과 SDK/headless 경로의 차이를 같이 봐야 한다 | `src/query.ts`, `src/QueryEngine.ts` |
+| `WORKFLOW_SCRIPTS` | workflow command/tool/task 계열 | `command-system`, `task-model`, `reference` | command surface와 task surface에 걸친다 | `commands/`, `tasks/` |
+| `AGENT_TRIGGERS` | scheduled task/cron 관련 path | `task-model`, `risks-debt` | task 모델과 background execution 장에서 함께 봐야 한다 | `tasks/`, `src/query.ts` |
+| `MONITOR_TOOL` | monitor tool/task path | `tool-system`, `task-model` | tool과 task 두 장의 경계에 걸친다 | `tools/`, `tasks/` |
+| `UDS_INBOX` | peer/bridge messaging variants | `extension-coordination`, `remote-bridge` | messaging 변형이 bridge/network 설명 없이 나오면 맥락을 놓치기 쉽다 | `bridge/`, `src/tools/SendMessageTool/` |
+| `FORK_SUBAGENT` | forked subagent path | `extension-coordination`, `reference` | agent flow와 tool/prompt가 동시에 바뀔 수 있다 | `src/tools/AgentTool/`, `commands/` |
 
 ## 구조 해석 팁
 

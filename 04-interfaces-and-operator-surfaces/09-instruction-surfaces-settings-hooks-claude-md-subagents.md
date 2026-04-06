@@ -53,7 +53,7 @@ flowchart TB
 - 모든 hook payload와 plugin manifest 세부
 - MCP transport 전체 세부와 remote auth 구현
 
-이 장은 [03-commands-skills-plugins-and-mcp.md](03-commands-skills-plugins-and-mcp.md)와 [06-claude-code-session-startup-trust-and-initialization.md](../02-runtime-and-session-start/06-claude-code-session-startup-trust-and-initialization.md) 사이의 간극을 메운다. `03`이 capability ingress 문법을 설명한다면, 이 장은 그 위에 어떤 instruction stack과 policy stack이 얹히는지 설명한다.
+이 장은 [03-commands-skills-plugins-and-mcp.md](03-commands-skills-plugins-and-mcp.md)와 [06-claude-code-session-startup-trust-and-initialization.md](../02-runtime-and-session-start/06-claude-code-session-startup-trust-and-initialization.md) 사이의 간극을 메운다. 전자가 capability ingress 문법을 설명한다면, 이 장은 그 위에 어떤 instruction stack과 policy stack이 얹히는지 설명한다.
 
 ## 자료와 독서 기준
 

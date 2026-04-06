@@ -348,7 +348,7 @@ for await (const update of toolUpdates) {
 
 ## 05-09를 함께 읽는 mini walkthrough
 
-이 장 하나만 읽으면 context와 query path의 내부 규칙은 보이지만, 사용자가 실제로 무엇을 체감하는지는 아직 흐릴 수 있다. 그래서 `05`는 `07`~`09`와 함께 다음 mini walkthrough로 읽는 편이 좋다.
+이 장 하나만 읽으면 context와 query path의 내부 규칙은 보이지만, 사용자가 실제로 무엇을 체감하는지는 아직 흐릴 수 있다. 그래서 이 장은 command surface, tool/permission surface, state/UI surface와 함께 다음 mini walkthrough로 읽는 편이 좋다.
 
 1. 사용자가 REPL에 prompt를 입력한다.
 2. `src/screens/REPL.tsx`가 submit을 받아 `query()`를 호출할 준비를 한다. 이때 사용자가 `/resume` 같은 command를 쳤다면 [06-claude-code-command-system.md](../04-interfaces-and-operator-surfaces/06-claude-code-command-system.md)의 command surface가 먼저 작동하고, 일반 prompt라면 바로 query path로 들어간다.
@@ -357,7 +357,7 @@ for await (const update of toolUpdates) {
 5. tool이 실제로 실행되려면 [07-claude-code-tool-system-and-permissions.md](../04-interfaces-and-operator-surfaces/07-claude-code-tool-system-and-permissions.md)의 capability exposure와 call-time permission이 통과되어야 한다.
 6. 최종 assistant/tool/system event는 [08-claude-code-state-ui-and-terminal-interaction.md](../04-interfaces-and-operator-surfaces/08-claude-code-state-ui-and-terminal-interaction.md)의 UI state와 transcript 표면으로 다시 돌아온다.
 
-이 walkthrough의 요점은 단순하다. `05`는 독립된 알고리즘 장이 아니라, `07`~`09` 사이에 낀 runtime core다. 따라서 처음 읽는 독자는 이 장의 topology를 "한 요청이 operator surface를 떠나 model loop로 들어갔다가 다시 UI로 돌아오는 길"로 상상하는 편이 이해에 도움이 된다.
+이 walkthrough의 요점은 단순하다. 이 장은 독립된 알고리즘 장이 아니라, command surface와 tool/permission surface, state/UI surface 사이에 낀 runtime core다. 따라서 처음 읽는 독자는 이 장의 topology를 "한 요청이 operator surface를 떠나 model loop로 들어갔다가 다시 UI로 돌아오는 길"로 상상하는 편이 이해에 도움이 된다.
 
 ## 검토 질문
 

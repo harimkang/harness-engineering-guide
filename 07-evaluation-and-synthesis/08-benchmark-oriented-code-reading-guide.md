@@ -379,7 +379,7 @@ bridge는 giant supervisor 파일이므로 아래 앵커로만 접근하는 편�
 
 ### 신규 독자
 
-1. [00-how-to-read-this-book.md](../00-front-matter/01-how-to-read-this-book.md)
+1. [01-how-to-read-this-book.md](../00-front-matter/01-how-to-read-this-book.md)
 2. [03-claude-code-project-overview.md](../02-runtime-and-session-start/03-claude-code-project-overview.md)
 3. [04-claude-code-architecture-map.md](../02-runtime-and-session-start/04-claude-code-architecture-map.md)
 4. 이 장

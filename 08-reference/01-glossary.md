@@ -8,7 +8,7 @@
 
 ## 장 요약
 
-이 부록은 본문 전반에서 반복해서 등장하는 핵심 용어를 정리한다. 각 항목은 단순 번역보다 "어디서 등장하는지", "비슷한 개념과 무엇이 다른지", "어떤 발췌 provenance가 이 용어를 대표하는지"까지 함께 제공한다. 독자는 이 부록을 단독 사전처럼 읽어도 되지만, 실제로는 [00-how-to-read-this-book.md](../00-front-matter/01-how-to-read-this-book.md), [02-source-analysis-method.md](../00-front-matter/02-source-analysis-method.md), [03-references.md](../00-front-matter/03-references.md)와 함께 보면 가장 유용하다.
+이 부록은 본문 전반에서 반복해서 등장하는 핵심 용어를 정리한다. 각 항목은 단순 번역보다 "어디서 등장하는지", "비슷한 개념과 무엇이 다른지", "어떤 발췌 provenance가 이 용어를 대표하는지"까지 함께 제공한다. 독자는 이 부록을 단독 사전처럼 읽어도 되지만, 실제로는 [01-how-to-read-this-book.md](../00-front-matter/01-how-to-read-this-book.md), [02-source-analysis-method.md](../00-front-matter/02-source-analysis-method.md), [03-references.md](../00-front-matter/03-references.md)와 함께 보면 가장 유용하다.
 
 여기서 가장 중요한 것은 파일명이 아니라 `정의`와 `비슷한 용어와 차이`다. `대표 근거 라벨`은 용어를 다시 source provenance와 연결하기 위한 메모일 뿐, 독자에게 별도 파일 접근을 요구하는 항목이 아니다.
 

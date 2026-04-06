@@ -93,7 +93,10 @@ if [[ "$?" -ne 0 ]]; then
 fi
 
 legacy_patterns=(
+  '00-how-to-read-this-book\.md'
   'appendix/'
+  '`[0-9]{2}`(?:,\s*`[0-9]{2}`)*(?:,\s*appendix)?'
+  '\|[^|\n]*\|\s*appendix\s*\|'
   '\[(15-code-reading-guide|17-end-to-end-scenarios)\.md\]'
   '\[(03-runtime-modes-and-entrypoints|04-session-startup-trust-and-initialization|07-command-system|08-tool-system-and-permissions|09-state-ui-and-terminal-interaction|10-services-and-integrations|11-agent-skill-plugin-mcp-and-coordination|12-task-model-and-background-execution|13-persistence-config-and-migrations|14-remote-bridge-server-and-upstreamproxy|16-risks-debt-and-observations)\.md\]'
   '\[\.\./(execution|interfaces|safety|evaluation)/'
