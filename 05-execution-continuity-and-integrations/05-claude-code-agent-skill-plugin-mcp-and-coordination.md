@@ -30,6 +30,9 @@ Anthropic Platform Docs의 [Agent SDK overview](https://platform.claude.com/docs
 - Anthropic, [Writing effective tools for AI agents](https://www.anthropic.com/engineering/writing-tools-for-agents), 2025-09-11
 - Anthropic Platform Docs, [Agent SDK overview](https://platform.claude.com/docs/en/agent-sdk/overview), 접근 시점 2026-04-02
 
+Sources / evidence notes:
+이 장의 reader-facing 외부 검증 축은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 Part 5 cluster를 따른다. coordination stack 설명에는 `S2`, `S3`, `S10`, `S11`, `S12`, `S13`, `S15`를 우선 사용한다.
+
 이 장은 다음을 다룬다.
 
 - file-based skill과 bundled skill이 어떻게 prompt capability로 노출되는지

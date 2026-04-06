@@ -36,6 +36,9 @@
 - Anthropic, [Beyond permission prompts: making Claude Code more secure and autonomous](https://www.anthropic.com/engineering/claude-code-sandboxing), 2025-10-20
 - Anthropic Platform Docs, [Agent SDK overview](https://platform.claude.com/docs/en/agent-sdk/overview), 확인 2026-04-02
 
+Sources / evidence notes:
+이 장의 reader-facing 외부 검증 축은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 Part 4 cluster를 따른다. 핵심 source ID는 `S3`, `S10`, `S13`, `S15`, `S20`, `S25`이며, sandboxing framing은 현재 registry의 `S5`를 보조적으로 참조한다.
+
 함께 읽으면 좋은 장:
 
 - [01-tool-contracts-and-the-agent-computer-interface.md](01-tool-contracts-and-the-agent-computer-interface.md)

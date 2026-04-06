@@ -26,6 +26,9 @@ Pan et al.의 [Natural-Language Agent Harnesses](https://arxiv.org/abs/2603.2572
 - Anthropic, [Harness design for long-running application development](https://www.anthropic.com/engineering/harness-design-long-running-apps), 2026-03-24
 - Pan et al., [Natural-Language Agent Harnesses](https://arxiv.org/abs/2603.25723), submitted 2026-03-26
 
+Sources / evidence notes:
+이 장의 reader-facing 외부 검증 축은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 Part 5 cluster를 따른다. task artifact, background execution, retention, completion signaling 설명에는 `S6`, `S8`, `S26`, `S27`을 우선 사용하고, `P1`은 task artifact 비교의 보조 프레임으로만 사용한다.
+
 이 장은 다음을 다룬다.
 
 - `src/Task.ts`의 공통 상태 어휘와 base artifact

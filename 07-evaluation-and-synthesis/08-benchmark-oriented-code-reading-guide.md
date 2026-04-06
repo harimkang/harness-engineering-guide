@@ -42,6 +42,9 @@ Claude Code 같은 사례에서는 "어느 폴더에 무엇이 있는가"보다 
 - `src/history.ts`
 - `src/cost-tracker.ts`
 
+Sources / evidence notes:
+이 장의 reader-facing 외부 검증 축은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 Part 7 cluster를 따른다. benchmark-oriented reading과 evidence triage에는 `S7`, `S21`, `S22`, `S23`, `S28`, `S29`, `S32`를 우선 사용한다.
+
 외부 프레이밍에는 다음 자료를 사용한다.
 
 - Anthropic, [Demystifying evals for AI agents](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents), 2026-01-09
