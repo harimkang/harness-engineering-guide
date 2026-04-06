@@ -111,7 +111,7 @@
 ### Part 4. Interfaces And Operator Surfaces
 
 - [04-interfaces-and-operator-surfaces/00-part-guide.md](./04-interfaces-and-operator-surfaces/00-part-guide.md)
-- 일반론: tool contract, permission shaping, extension surfaces, tool benchmark
+- 일반론: tool contract, permission shaping, extension surfaces, instruction surfaces, tool benchmark
 - 사례: Claude Code의 command system, tool system/permissions, state/UI/terminal
 
 ### Part 5. Execution, Continuity, And Integrations
