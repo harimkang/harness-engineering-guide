@@ -4,12 +4,22 @@
 > Reader level: beginner / advanced / reviewer
 > Last verified: 2026-04-06
 > Freshness class: medium
+> Reader path tags: `first-pass` / `builder` / `reviewer` / `source-first`
+> Source tier focus: Tier 1-3 external sources로 claim 무게를 잡고, Tier 6 observed artifact로 사례를 닫는다.
+> Reference scaffolds: [README.md](../README.md), [02-source-analysis-method.md](02-source-analysis-method.md), [03-references.md](03-references.md), [../08-reference/](../08-reference/)
 
 ## 장 요약
 
 이 문서는 이 문서 세트를 책으로 읽기 위한 서문이자 독서 규칙집이다. 이 책은 Claude Code를 대표 사례로 삼지만, 궁극적으로는 장기 실행형 에이전트 하네스를 설계하고 평가하는 언어를 독자에게 넘기는 것을 목표로 한다. 따라서 독자는 각 장을 읽을 때 "이 파일이 무엇을 하는가"만 묻지 않고, "이 구조가 어떤 운영 문제를 해결하는가", "이 문제를 일반적인 하네스 설계 언어로 어떻게 바꿔 읽을 수 있는가", "내 시스템과 비교할 때 어떤 benchmark 질문을 던져야 하는가"까지 함께 물어야 한다.
 
 이 장은 다섯 가지를 먼저 고정한다. 첫째, 독자용 출판 범위와 내부 작업 문서의 경계를 나눈다. 둘째, `README`, 이 문서, 방법론 문서, references, glossary의 역할을 구분한다. 셋째, 이 책이 사용하는 주장 층위와 출처 규칙을 설명한다. 넷째, 원칙 spine과 사례 spine을 어떻게 왕복할지 정리한다. 다섯째, 코드 블록과 Mermaid를 어떤 증거 규칙 아래 읽어야 하는지 짚는다.
+
+## Reader-path baseline
+
+- `first-pass`: [README.md](../README.md) -> 이 장 -> [02-source-analysis-method.md](02-source-analysis-method.md) -> [03-references.md](03-references.md) -> foundations -> 관심 있는 Part guide
+- `builder`: foundations 핵심 장 뒤에 관련 Part guide와 Claude Code 사례 장을 바로 붙여 읽는다.
+- `reviewer`: [03-references.md](03-references.md), [../08-reference/01-glossary.md](../08-reference/01-glossary.md), [../08-reference/02-key-file-index.md](../08-reference/02-key-file-index.md)를 옆에 두고 claim tier와 provenance를 같이 본다.
+- `source-first`: [../07-evaluation-and-synthesis/08-benchmark-oriented-code-reading-guide.md](../07-evaluation-and-synthesis/08-benchmark-oriented-code-reading-guide.md)에서 질문을 고르고, 필요한 appendix와 사례 장으로 들어간다.
 
 ## 5분 멘탈 모델
 
@@ -43,6 +53,12 @@
 - `superpowers/**`
 
 즉, 이 문서는 "무슨 파일이 문서 루트 아래에 존재하는가"를 다루는 것이 아니라, "어떤 문서가 이 책의 출판 범위를 이루는가"를 먼저 고정한다.
+
+## Freshness baseline
+
+- reader-entry layer는 `README`, 이 장, [02-source-analysis-method.md](02-source-analysis-method.md), [03-references.md](03-references.md), 각 `00-part-guide.md`, `08-reference/**`가 함께 맡는다.
+- volatile topic은 Part guide에서 먼저 경고하고, 장별 세부 확인 내역은 `Sources / evidence notes`에 남긴다.
+- major edit에서는 checked docs list, checked release notes window, observed artifact snapshot identifiers, changed chapters를 evidence-pack 메모로 남긴다.
 
 ## 왜 이 장이 필요한가
 

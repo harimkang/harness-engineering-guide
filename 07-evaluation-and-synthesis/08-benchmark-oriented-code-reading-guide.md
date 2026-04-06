@@ -1,5 +1,11 @@
 # 08. benchmark-oriented 코드 독해 가이드
 
+> Why this chapter exists: giant codebase를 읽는 일을 benchmark question, provenance, evidence bundle 언어로 다시 바꾼다.
+> Reader path tags: `source-first` / `advanced` / `reference-adjacent`
+> Last verified: 2026-04-06
+> Freshness class: medium
+> Source tier focus: Tier 2 eval framing, Tier 6 observed runtime cuts, Tier 5 provisional comparison papers
+
 ## 장 요약
 
 큰 agent harness 코드를 읽을 때의 일반 원칙은 두 가지다. 먼저 질문 유형을 고르고, 그다음 지금 열려는 파일이 source of truth인지 integration seam인지 판별한다. 이 원칙이 없으면 독자는 giant file의 표면을 훑다가도 정작 어떤 계약, 어떤 state owner, 어떤 artifact를 확인해야 하는지 놓치기 쉽다.
@@ -7,6 +13,12 @@
 Claude Code 같은 사례에서는 "어느 폴더에 무엇이 있는가"보다 "내가 지금 어떤 설계 질문을 검증하려는가"를 먼저 정해야 한다. interactive turn의 state owner를 알고 싶은지, remote boundary의 adapter를 보고 싶은지, headless path가 어디서 interactive path와 갈라지는지, resume control plane이 어디에 있는지에 따라 첫 파일이 달라진다.
 
 이 장의 목적은 바로 그 질문-선택 규칙을 주는 것이다. Anthropic의 [Demystifying evals for AI agents](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents) (2026-01-09)는 task, trial, transcript, outcome, evaluation harness를 분리해서 생각해야 한다고 설명한다. Anthropic의 [Harness design for long-running application development](https://www.anthropic.com/engineering/harness-design-long-running-apps) (2026-03-24)는 long-running harness 성능이 clean state, handoff artifact, evaluator feedback 같은 scaffold 선택에 크게 좌우된다고 말한다. Lee et al., [Meta-Harness](https://arxiv.org/abs/2603.28052) (2026-03-30)은 harness 자체가 source code, scores, execution traces를 대상으로 최적화될 수 있는 객체라고 본다. 이 세 관점을 합치면, 코드 독해는 단순한 구조 탐색이 아니라 "어떤 benchmark 질문을 어느 artifact와 state owner를 통해 답할 것인가"를 정하는 작업이 된다. 그래서 이 장은 본문 마지막에 있지만 실질적으로는 reference-adjacent guide로 읽는 편이 맞다.
+
+## Reader path and evidence focus
+
+- 이 장은 `source-first` 경로의 입구다. 먼저 질문을 고르고, 그다음 provenance label과 appendix를 따라간다.
+- `first-pass` 독자는 전체를 다 읽을 필요가 없다. reading-route map과 source-free fallback map만 먼저 봐도 충분하다.
+- reviewer는 source hop만 적지 말고 transcript, trace, config/policy snapshot까지 어떤 evidence bundle이 필요한지 함께 적어야 한다.
 
 ## 왜 benchmark-oriented reading guide가 필요한가
 
@@ -22,7 +34,7 @@ Claude Code 같은 사례에서는 "어느 폴더에 무엇이 있는가"보다 
 
 이 장은 이런 질문마다 첫 파일, 두 번째 파일, 멈춰야 할 지점을 지정한다. 즉, 전체를 다 읽는 법보다 "지금 필요한 비교를 가장 적은 hop으로 닫는 법"을 가르친다.
 
-## 이 장의 근거와 범위
+## Source posture and scope
 
 이 장의 관찰은 2026-04-02 기준 현재 공개 사본의 다음 대표 발췌 출처에 한정한다.
 
@@ -42,9 +54,6 @@ Claude Code 같은 사례에서는 "어느 폴더에 무엇이 있는가"보다 
 - `src/history.ts`
 - `src/cost-tracker.ts`
 
-Sources / evidence notes:
-이 장의 reader-facing 외부 검증 축은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 Part 7 cluster를 따른다. benchmark-oriented reading과 evidence triage에는 `S7`, `S21`, `S22`, `S23`, `S28`, `S29`, `S32`를 우선 사용한다.
-
 외부 프레이밍에는 다음 자료를 사용한다.
 
 - Anthropic, [Demystifying evals for AI agents](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents), 2026-01-09
@@ -59,6 +68,12 @@ Sources / evidence notes:
 - interactive, headless, remote, resume path를 비교하는 독해 루트
 
 각 서브시스템의 구현 세부나 버그 원인 분석은 이 장의 범위를 벗어난다.
+
+## Sources / evidence notes
+
+- 이 장의 reader-facing 외부 검증 축은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 Part 7 cluster를 따른다.
+- benchmark-oriented reading과 evidence triage에는 `S7`, `S21`, `S22`, `S23`, `S28`, `S29`, `S32`를 우선 사용했다.
+- `P2`는 provisional comparison framing으로만 사용하며 canonical `S*` verification을 대체하지 않는다.
 
 ## 코드 독해를 benchmark 작업으로 바꾸는 다섯 가지 렌즈
 

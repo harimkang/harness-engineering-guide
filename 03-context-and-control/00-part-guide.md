@@ -1,6 +1,19 @@
 # Part 3 Guide: Context And Control
 
+> Why this chapter exists: context를 운영 자원으로 읽고 control loop와 recovery를 상태 기계 언어로 다시 묶는다.
+> Reader path tags: `first-pass` / `builder` / `advanced`
+> Last verified: 2026-04-06
+> Freshness class: medium
+> Source tier focus: Tier 2 framing, Tier 4 comparative implementation docs, Tier 6 Claude Code case-study cuts
+> Volatile topics: prompt caching economics, trace schema naming, interrupt/resume conventions
+
 이 Part는 context를 프롬프트 텍스트가 아니라 운영 자원이자 경제 자원으로 읽고, turn loop와 recovery를 상태 기계로 해석합니다. 먼저 context class, compaction, checkpoint, handoff, stop hook 같은 일반 원리를 잡고, 이어서 Claude Code의 query pipeline과 QueryEngine이 그 원리를 어떻게 구현하는지 봅니다. 마지막에는 어떤 turn lifecycle 지점을 trace schema와 replay point로 관찰할 수 있는지도 함께 봅니다.
+
+## Reader-path suggestions
+
+- `first-pass`: [./01-context-as-an-operational-resource.md](./01-context-as-an-operational-resource.md)와 [./04-turn-loops-stop-hooks-and-recovery.md](./04-turn-loops-stop-hooks-and-recovery.md)를 먼저 읽고, 사례 장은 [./06-claude-code-query-engine-and-turn-lifecycle.md](./06-claude-code-query-engine-and-turn-lifecycle.md)로 닫는다.
+- `builder`: Part 5의 observability 장과 함께 읽어 trace, replay, resume artifact를 연결한다.
+- `advanced`: comparative framing이 필요하면 LangGraph persistence / interrupts / observability와 OpenTelemetry naming drift를 같이 본다.
 
 ## 이 Part의 핵심 질문
 
@@ -36,3 +49,4 @@
 ## Sources / evidence notes
 
 - 이 Part의 외부 검증 축은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 `S4`, `S6`, `S22`, `S26`, `S27`, `S29`, `S33`를 따른다.
+- source tier는 Tier 2 원칙과 Tier 4 comparative docs를 우선하고, Claude Code 구현 관찰은 Tier 6로 닫는다.

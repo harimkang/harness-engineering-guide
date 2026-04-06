@@ -1,10 +1,22 @@
 # 07. Claude Code end-to-end scenario와 state-owner handoff
 
+> Why this chapter exists: 앞선 장의 subsystem 설명을 실제 시간축과 ownership handoff 언어로 다시 묶는다.
+> Reader path tags: `first-pass-late` / `advanced` / `case-study` / `bridge-chapter`
+> Last verified: 2026-04-06
+> Freshness class: medium
+> Source tier focus: Tier 2 synthesis framing, Tier 6 observed runtime cuts
+
 ## 장 요약
 
 앞선 장들은 실행 모드, startup, query, remote, permissions, persistence를 각각 따로 분석했다. 이 장은 그 축들을 다시 시간 순서로 결합한다. 핵심 질문은 단순히 "무슨 일이 일어나는가"가 아니다. 더 중요한 질문은 "누가 지금 state owner인가", "어떤 artifact가 다음 단계로 넘겨지는가", "policy gate는 어느 시점에 개입하는가"다.
 
 Anthropic의 [Effective harnesses for long-running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents) (2025-11-26)는 장기 작업이 discrete session 사이를 오가므로 clean state와 structured artifact가 중요하다고 설명한다. Anthropic의 [Harness design for long-running application development](https://www.anthropic.com/engineering/harness-design-long-running-apps) (2026-03-24)는 planner, generator, evaluator 같은 분리뿐 아니라, 세션 간 feedback loop와 handoff artifact 설계가 성능을 좌우한다고 말한다. Pan et al., [Natural-Language Agent Harnesses](https://arxiv.org/abs/2603.25723) (2026-03-26, under review)는 harness behavior를 explicit contracts, durable artifacts, lightweight adapters로 설명한다. 이 장은 이 프레임을 Claude Code 공개 사본에 대입해, 각 scenario를 "owner shift + artifact handoff + boundary crossing"으로 읽는다.
+
+## Reader path and handoff focus
+
+- 이 장은 `first-pass`에서 바로 열기보다 Part 2-6의 주요 seam을 본 뒤에 여는 bridge chapter다.
+- 그래도 첫 종합 그림이 필요하면 local interactive turn, remote attach family, resume/continue flow 세 scenario만 먼저 읽어도 충분하다.
+- reviewer는 각 scenario마다 owner shift, handoff artifact, boundary crossing, evidence pack을 같은 템플릿으로 적어 두는 편이 좋다.
 
 ## 왜 scenario synthesis가 필요한가
 
@@ -18,7 +30,7 @@ Anthropic의 [Effective harnesses for long-running agents](https://www.anthropic
 
 따라서 이 장은 "전체 구조를 다시 요약"하는 대신, 다섯 개의 end-to-end scenario를 ownership handoff 중심으로 다시 쓴다. 독서 순서상으로도 이 장은 단순 마무리 사례가 아니라, 앞선 장들을 실제 시스템 시간축으로 다시 묶는 bridge chapter에 가깝다.
 
-## 이 장의 근거와 범위
+## Source posture and scope
 
 이 장의 관찰은 2026-04-02 기준 현재 공개 사본의 다음 대표 발췌 출처에 한정한다.
 
@@ -38,9 +50,6 @@ Anthropic의 [Effective harnesses for long-running agents](https://www.anthropic
 
 외부 프레이밍에는 다음 자료를 사용한다.
 
-Sources / evidence notes:
-이 장의 reader-facing 외부 검증 축은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 Part 7 cluster를 따른다. end-to-end scenario의 synthesis framing에는 `S7`, `S21`, `S22`, `S23`, `S28`, `S29`, `S32`를 우선 사용한다.
-
 - Anthropic, [Effective harnesses for long-running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents), 2025-11-26
 - Anthropic, [Harness design for long-running application development](https://www.anthropic.com/engineering/harness-design-long-running-apps), 2026-03-24
 - Pan et al., [Natural-Language Agent Harnesses](https://arxiv.org/abs/2603.25723), 2026-03-26, under review
@@ -54,6 +63,12 @@ Sources / evidence notes:
 - control-surface intervention
 
 각 서브시스템의 완전한 구현 설명과 모든 edge case는 이 장의 범위를 벗어난다.
+
+## Sources / evidence notes
+
+- 이 장의 reader-facing 외부 검증 축은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 Part 7 cluster를 따른다.
+- end-to-end scenario synthesis framing에는 `S7`, `S21`, `S22`, `S23`, `S28`, `S29`, `S32`를 우선 사용했다.
+- local runtime cut은 2026-04-02 기준 공개 사본의 observed artifact provenance를 따른다.
 
 ## 다섯 가지 scenario와 handoff artifact
 

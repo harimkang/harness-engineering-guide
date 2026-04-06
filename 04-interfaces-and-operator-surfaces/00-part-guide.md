@@ -1,6 +1,19 @@
 # Part 4 Guide: Interfaces And Operator Surfaces
 
+> Why this chapter exists: capability surface, instruction surface, operator surface를 한 Part 안에서 분리해 읽게 만든다.
+> Reader path tags: `first-pass` / `builder` / `volatile`
+> Last verified: 2026-04-06
+> Freshness class: volatile
+> Source tier focus: Tier 2 tool and workflow framing, Tier 1/3 product and protocol docs, Tier 6 Claude Code case-study cuts
+> Volatile topics: settings, hooks, `CLAUDE.md`, subagents, MCP client semantics, release-note-heavy extension behavior
+
 이 Part는 모델과 사람이 시스템을 만나는 표면을 함께 다룹니다. 먼저 tool contract, permission shaping, extension ingress를 읽고, 이어서 instruction surface와 operator-facing transcript/UI를 분리해서 설명합니다. 그 다음 Claude Code의 command system, tool system, state/UI shell을 사례로 따라갑니다. 이번 개정에서는 MCP를 단순 tool bridge가 아니라 client-server coordination protocol로 읽고, capability exposure를 authorization, privacy, observability와 분리해서 보는 관점을 더 앞단에 둡니다.
+
+## Reader-path suggestions
+
+- `first-pass`: [./01-tool-contracts-and-the-agent-computer-interface.md](./01-tool-contracts-and-the-agent-computer-interface.md), [./03-commands-skills-plugins-and-mcp.md](./03-commands-skills-plugins-and-mcp.md), [./05-ui-transcripts-and-operator-control.md](./05-ui-transcripts-and-operator-control.md)를 먼저 읽는다.
+- `builder`: instruction surface 장과 Claude Code command/tool 사례 장을 붙여 precedence, permission, operator control을 비교한다.
+- `volatile re-check`: settings, MCP, hooks, subagents, remote extension behavior를 고칠 때는 `S10`-`S20`, `S25`를 먼저 다시 연다.
 
 ## 이 Part의 핵심 질문
 
@@ -34,3 +47,8 @@
 - [../06-boundaries-deployment-and-safety/00-part-guide.md](../06-boundaries-deployment-and-safety/00-part-guide.md)
 - [../02-runtime-and-session-start/06-claude-code-session-startup-trust-and-initialization.md](../02-runtime-and-session-start/06-claude-code-session-startup-trust-and-initialization.md)
 - [../08-reference/01-glossary.md](../08-reference/01-glossary.md)
+
+## Sources / evidence notes
+
+- 이 Part의 외부 검증 축은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 `S3`, `S9`, `S10`, `S11`, `S12`, `S14`, `S15`, `S16`, `S17`, `S18`, `S19`, `S20`, `S25`를 따른다.
+- source tier는 Tier 2 framing과 Tier 1/3 contract를 우선하고, Claude Code 사례 관찰은 Tier 6로 닫는다.

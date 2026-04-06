@@ -1,6 +1,19 @@
 # Part 2 Guide: Runtime And Session Start
 
+> Why this chapter exists: runtime family, startup contract, trust boundary를 먼저 고정해 이후 사례 장의 진입면을 정렬한다.
+> Reader path tags: `first-pass` / `builder` / `volatile`
+> Last verified: 2026-04-06
+> Freshness class: volatile
+> Source tier focus: Tier 2 framing, Tier 1 product docs, Tier 6 Claude Code case-study cuts
+> Volatile topics: settings precedence, hooks, CLI flags, runtime modes, remote/bridge entry surface
+
 이 Part는 long-running agent harness가 어떤 runtime family를 가지며, 세션이 어떤 startup contract와 trust boundary 아래에서 열리는지를 다룹니다. 여기서 startup contract란 단순 온보딩 흐름이 아니라, entrypoint 분기, settings/hooks/CLI prompt flags 같은 선행 입력면, 그리고 trust 확인 뒤에만 열리는 capability가 함께 고정되는 세션 개시 계약을 뜻합니다. 먼저 일반론으로 runtime 분기와 session start를 읽고, 바로 이어서 Claude Code가 그 문제를 실제 product shell 안에서 어떻게 구현하는지 확인합니다.
+
+## Reader-path suggestions
+
+- `first-pass`: 원칙 장 둘을 먼저 읽고, 사례 장에서는 [./04-claude-code-architecture-map.md](./04-claude-code-architecture-map.md)와 [./06-claude-code-session-startup-trust-and-initialization.md](./06-claude-code-session-startup-trust-and-initialization.md)를 우선 본다.
+- `builder`: runtime modes, startup trust, Part 4 instruction surface 장을 묶어 startup contract를 비교한다.
+- `volatile re-check`: runtime mode나 startup policy 설명을 고칠 때는 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 `S10`, `S13`, `S14`, `S15`, `S24`를 먼저 다시 연다.
 
 ## 이 Part의 핵심 질문
 
@@ -36,3 +49,4 @@
 ## Sources / evidence notes
 
 - 이 Part의 외부 검증 축은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 `S6`, `S8`, `S10`, `S13`, `S14`, `S15`, `S24`를 따른다.
+- source tier는 Tier 2 framing과 Tier 1 product contract를 우선하고, local case-study fact는 Tier 6 observed artifact로 닫는다.

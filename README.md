@@ -3,6 +3,8 @@
 > Last verified against official docs: 2026-04-06
 > Volatile topics: Claude Code settings, skills, CLI flags, MCP client semantics, remote/bridge behavior, tracing and eval tooling
 > Source policy: proposal `S*` IDs are immutable canonical references; supplemental research and observed artifacts use separate IDs
+> Reader paths: `first-pass`, `builder/reviewer`, `source-first`, `volatile re-check`
+> Freshness baseline: reader-entry and reference scaffolds were normalized on 2026-04-06; watchlist and evidence-pack practice live in [00-front-matter/03-references.md](./00-front-matter/03-references.md) and [00-front-matter/02-source-analysis-method.md](./00-front-matter/02-source-analysis-method.md)
 
 장기 실행형 에이전트 하네스를 설계, 분석, 평가하기 위한 책형 문서 세트입니다. 이 책은 일반적인 harness engineering 원칙을 먼저 세우고, Claude Code를 반복 사례로 사용해 그 원칙이 실제 product runtime에 어떻게 드러나는지 보여 줍니다.
 
@@ -41,6 +43,13 @@
 6. [02-runtime-and-session-start/00-part-guide.md](./02-runtime-and-session-start/00-part-guide.md)
 
 이 여섯 문서를 먼저 읽으면 독서 규칙, 근거 체계, 기본 개념, 그리고 paired-parts 독서 흐름이 한 번에 고정됩니다.
+
+## Canonical Reader Paths
+
+- `first-pass`: [README.md](./README.md) -> [00-front-matter/01-how-to-read-this-book.md](./00-front-matter/01-how-to-read-this-book.md) -> [01-foundations/01-why-harness-engineering-matters.md](./01-foundations/01-why-harness-engineering-matters.md) -> 관심 있는 `00-part-guide.md`
+- `builder/reviewer`: foundations 핵심 장 뒤에 관련 Part guide와 synthesis 장을 붙여 읽는다.
+- `source-first`: [07-evaluation-and-synthesis/08-benchmark-oriented-code-reading-guide.md](./07-evaluation-and-synthesis/08-benchmark-oriented-code-reading-guide.md)와 [08-reference/02-key-file-index.md](./08-reference/02-key-file-index.md)에서 provenance를 잡고 본문으로 되돌아간다.
+- `volatile re-check`: settings, MCP, tracing, remote, eval tooling처럼 drift 가능성이 큰 주제를 만질 때는 [00-front-matter/03-references.md](./00-front-matter/03-references.md)의 watchlist와 `S*` IDs를 먼저 다시 연다.
 
 ## 초심자 90분 코스
 
@@ -191,6 +200,12 @@
   핵심 용어의 정의, 차이, confusable terms를 모아 둡니다.
 - [08-reference/02-key-file-index.md](./08-reference/02-key-file-index.md)
   benchmark question 중심으로 어떤 발췌와 provenance label을 다시 볼지 정리할 때 씁니다.
+
+## Freshness Baseline
+
+- entry path는 `README -> 00-front-matter -> foundations -> part guide -> chapter -> 08-reference` 순서로 통일한다.
+- volatile chapter를 고칠 때는 `Last verified`, `Freshness class`, `Sources / evidence notes`를 함께 갱신한다.
+- 주요 개정 시에는 checked docs list, checked release notes window, observed artifact snapshot identifiers, changed chapters를 evidence-pack 메모로 남긴다.
 
 ## 이 레포를 갱신할 때
 

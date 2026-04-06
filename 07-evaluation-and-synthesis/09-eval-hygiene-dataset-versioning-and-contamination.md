@@ -4,6 +4,8 @@
 > Reader level: advanced / reviewer
 > Last verified: 2026-04-06
 > Freshness class: volatile
+> Reader path tags: `advanced` / `reviewer` / `volatile`
+> Source tier focus: Tier 1 official eval guidance, Tier 2 Anthropic framing, Tier 6 retained evidence artifacts
 
 ## Core claim
 
@@ -111,6 +113,19 @@ score만 남으면 나중에 할 수 있는 일은 거의 없다. 최소 evidenc
 
 이 bundle이 있어야 disagreement case를 다시 열고, contamination suspicion을 검토하고, grader retirement 여부를 결정할 수 있다.
 
+## Minimum reproducibility bundle
+
+Part 7에서 말하는 reproducibility bundle의 중심은 결국 아래 minimum bundle이다.
+
+- task spec와 dataset identifier
+- dataset version과 grader version
+- transcript와 trace
+- config/policy snapshot
+- failure logs, retry context, flaky dependency notes
+
+이 장은 evidence pack을 "있으면 좋은 부록"이 아니라, score와 판단을 다시
+열기 위한 load-bearing artifact로 다룬다. [00-front-matter/03-references.md](../00-front-matter/03-references.md)의 evidence-pack practice와 함께 읽으면 maintenance loop가 닫힌다.
+
 ## Design implications
 
 - eval 문서에는 dataset version과 grader version을 항상 함께 적어라.
@@ -144,3 +159,4 @@ score만 남으면 나중에 할 수 있는 일은 거의 없다. 최소 evidenc
 
 - Anthropic의 evals 글은 task clarity, reference solution, balanced problem sets를 강조한다.
 - OpenAI eval docs는 reproducible evals, datasets, trace grading을 공식적으로 연결한다.
+- 이 장의 external verification 축은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 `S7`, `S21`, `S22`, `S23`을 우선 사용한다.

@@ -1,5 +1,12 @@
 # Appendix. Conditional Features Map
 
+> Why this chapter exists: feature-gated path와 conditional branch를 별도로 고정해 "코드에 보임"과 "항상 활성"을 구분하게 만든다.
+> Reader path tags: `advanced` / `reference` / `volatile`
+> Last verified: 2026-04-06
+> Freshness class: volatile
+> Source tier focus: Tier 6 observed artifact map, with Tier 1 release-note and product-doc re-check for drift-prone features
+> Volatile topics: release-note-heavy feature gates, runtime default state, remote/bridge/auth-adjacent toggles
+
 ## 장 요약
 
 이 부록은 구조 이해에 직접 영향을 주는 주요 feature-gated 또는 conditional path를 정리한다. 목적은 "코드에 보인다고 항상 활성인 것은 아니다"라는 점을 본문 전체에서 일관되게 유지하는 것이다.
@@ -11,6 +18,12 @@
 3. 본문 장에서는 "존재한다"와 "항상 켜진다"를 구분해서 서술해야 한다.
 
 이 부록은 feature gate와 conditional path만 따로 추적하는 지도다. 일반 구조는 [directory-map.md](03-directory-map.md), 핵심 파일 탐색은 [key-file-index.md](02-key-file-index.md)와 역할이 다르다.
+
+## Reader-path suggestions
+
+- `advanced`: Part 2, Part 5, Part 6을 읽다가 "이 코드가 항상 켜져 있는가"가 궁금해질 때 연다.
+- `reference`: 특정 feature flag가 어느 장 서사를 흔드는지 빠르게 확인할 때 쓴다.
+- `volatile re-check`: default state나 product availability를 reader-facing 문장으로 확정할 때는 release notes와 관련 product docs를 먼저 다시 연다.
 
 ## 대표 코드 발췌
 
@@ -61,3 +74,8 @@ if (feature('BRIDGE_MODE') && (args[0] === 'remote-control' || args[0] === 'rc' 
 - startup/trust 관점: [04-session-startup-trust-and-initialization.md](../02-runtime-and-session-start/06-claude-code-session-startup-trust-and-initialization.md)
 - extension/coordination 관점: [11-agent-skill-plugin-mcp-and-coordination.md](../05-execution-continuity-and-integrations/05-claude-code-agent-skill-plugin-mcp-and-coordination.md)
 - 구조 리스크 관점: [16-risks-debt-and-observations.md](../06-boundaries-deployment-and-safety/06-claude-code-risks-debt-and-failure-modes.md)
+
+## Sources / evidence notes
+
+- 이 appendix는 Tier 6 observed artifact map이지만, feature availability나 default-state claim은 release notes와 product docs를 다시 확인한 뒤 적는 편이 맞다.
+- drift 가능성이 큰 항목은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 `S10`, `S12`, `S14`, `S15`와 함께 다시 본다.

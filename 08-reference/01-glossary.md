@@ -1,10 +1,22 @@
 # Appendix. Glossary
 
+> Why this chapter exists: 본문 전반의 핵심 용어를 독서용 정의, 차이, provenance 메모와 함께 고정한다.
+> Reader path tags: `first-pass` / `advanced` / `reference`
+> Last verified: 2026-04-06
+> Freshness class: stable
+> Source tier focus: Tier 6 local terminology index, backed by Tier 1-2 conceptual framing when needed
+
 ## 장 요약
 
 이 부록은 본문 전반에서 반복해서 등장하는 핵심 용어를 정리한다. 각 항목은 단순 번역보다 "어디서 등장하는지", "비슷한 개념과 무엇이 다른지", "어떤 발췌 provenance가 이 용어를 대표하는지"까지 함께 제공한다. 독자는 이 부록을 단독 사전처럼 읽어도 되지만, 실제로는 [00-how-to-read-this-book.md](../00-front-matter/01-how-to-read-this-book.md), [source-analysis-method.md](../00-front-matter/02-source-analysis-method.md), [references.md](../00-front-matter/03-references.md)와 함께 보면 가장 유용하다.
 
 여기서 가장 중요한 것은 파일명이 아니라 `정의`와 `비슷한 용어와 차이`다. `대표 근거 라벨`은 용어를 다시 source provenance와 연결하기 위한 메모일 뿐, 독자에게 별도 파일 접근을 요구하는 항목이 아니다.
+
+## Reader-path suggestions
+
+- `first-pass`: 정의와 `비슷한 용어와 차이`만 먼저 읽고, provenance label은 나중에 봐도 된다.
+- `advanced`: Part guide나 사례 장에서 헷갈린 용어를 다시 닫을 때 연다.
+- `reference`: source-free 독해 중 개념 경계를 잃었을 때 가장 먼저 여는 appendix다.
 
 ## 이 용어집을 읽는 법
 
@@ -218,6 +230,11 @@ for await (const event of query({
 - 등장 장: `14`, `17`
 - 비슷한 용어와 차이: 이미 존재하는 세션에 붙는 `session client`와 달리, bootstrapper는 attach 이전의 초기 계약을 만든다
 - 대표 근거 라벨: `src/server/createDirectConnectSession.ts`
+
+## Sources / evidence notes
+
+- glossary는 주로 Tier 6 local terminology index로 작동하지만, 용어의 바깥 framing은 [../00-front-matter/01-how-to-read-this-book.md](../00-front-matter/01-how-to-read-this-book.md)와 [../00-front-matter/02-source-analysis-method.md](../00-front-matter/02-source-analysis-method.md)의 claim/status 규칙을 따른다.
+- stable appendix이지만, 제품 고유 용어가 drift하면 관련 Part guide와 함께 다시 확인한다.
 
 ## Supervisor
 

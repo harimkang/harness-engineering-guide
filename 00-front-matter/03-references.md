@@ -6,6 +6,9 @@
 > Reader level: beginner / advanced / reviewer
 > Last verified: 2026-04-06
 > Freshness class: volatile
+> Reader path tags: `first-pass` / `advanced` / `reviewer` / `maintenance`
+> Source tier focus: Tier 1-5 외부 registry와 Tier 6 observed artifact entry를 함께 다룬다.
+> Reference scaffolds: proposal `S*` IDs, freshness watchlist, evidence-pack practice, chapter re-entry
 
 ## Core claim
 
@@ -27,6 +30,13 @@
 - proposal의 canonical source ID는 `S*` 계열만 사용한다.
 - supplemental research와 observed artifact는 `P*`, `R*` 같은 별도 계열 ID를
   사용한다.
+
+## Reader-path re-entry
+
+- `first-pass`: 이 장의 역할과 Tier 1, Tier 2, `Freshness watchlist`만 먼저 읽어도 충분하다.
+- `advanced`: 관련 Part guide에서 제시한 `S*` cluster를 따라 세부 섹션으로 들어간다.
+- `reviewer`: chapter의 `Sources / evidence notes`에 적힌 `S*`, `P*`, `R*` ID를 이 장에서 다시 확인한다.
+- `maintenance`: chapter edit 직전에 watchlist source와 release notes window를 다시 열고 evidence-pack 메모를 남긴다.
 
 ## Source tier quick guide
 
@@ -203,15 +213,34 @@ official docs 또는 spec으로 되돌아가 확인한다.
   - chapter-level observed artifact citations should additionally carry verification
     date and acquisition path
 
+## Evidence-pack practice
+
+주요 개정이나 volatile chapter update를 끝낼 때는 가능하면 아래 bundle을 함께
+남긴다.
+
+- verified date
+- checked docs list
+- checked release notes window
+- observed artifact snapshot identifiers
+- changed chapters
+
+이 bundle은 별도 파일이어도 되지만, 최소한 chapter-level `Sources / evidence
+notes`에는 어떤 source를 다시 열었는지와 어떤 drift risk를 확인했는지 남기는
+편이 좋다. Part 7의 reproducibility/evidence-pack 언어는
+[../07-evaluation-and-synthesis/09-eval-hygiene-dataset-versioning-and-contamination.md](../07-evaluation-and-synthesis/09-eval-hygiene-dataset-versioning-and-contamination.md)에서
+minimum reproducibility bundle로 다시 정리한다.
+
 ## Freshness watchlist
 
 아래 source는 chapter edit 직전에 다시 여는 것을 기본 규칙으로 둔다.
 
 - Claude Code settings / CLI reference / skills / MCP / release notes
+- Claude Agent SDK
 - OpenAI `AGENTS.md`, Agents SDK, tracing, eval docs
 - MCP specification release page and client-feature docs
 - LangGraph persistence / interrupts / observability
 - OpenTelemetry GenAI semantic conventions
+- NIST AI RMF GenAI Profile / Playbook
 
 ## Usage rules
 

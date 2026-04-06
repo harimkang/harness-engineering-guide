@@ -1,5 +1,11 @@
 # Appendix. Directory Map
 
+> Why this chapter exists: top-level 디렉터리를 semantic grouping으로 다시 묶어, 누락되기 쉬운 영역도 본문과 연결되게 만든다.
+> Reader path tags: `advanced` / `reference`
+> Last verified: 2026-04-06
+> Freshness class: medium
+> Source tier focus: Tier 6 observed artifact map
+
 ## 장 요약
 
 이 부록은 원 upstream 공개 사본 source tree의 top-level 디렉터리 35개가 어떤 책임을 가지며, 본문 문서 어디에서 주로 해설되는지 보여준다. 목적은 파일 수가 적은 디렉터리나 조건부 기능 디렉터리가 문서화 과정에서 "조용히 누락"되는 일을 막는 것이다.
@@ -9,6 +15,11 @@ top-level 루트 파일은 [root-file-map.md](04-root-file-map.md)에 따로 정
 이 부록은 원 upstream 공개 사본 source tree의 디렉터리 관점 지도다. "어느 폴더가 어떤 문제 영역과 연결되는가"를 보고 싶을 때 먼저 읽는다. 개별 구현 단면의 provenance를 다시 보고 싶다면 [key-file-index.md](02-key-file-index.md), 루트 조립 계열만 보고 싶다면 [root-file-map.md](04-root-file-map.md)가 더 빠르다.
 
 이 표 역시 파일 탐색표가 아니라 semantic grouping으로 읽는 편이 맞다. 디렉터리명은 provenance label이고, 실제 의미는 `역할 요약`과 `배정 이유`가 담당한다.
+
+## Reader-path suggestions
+
+- `advanced`: 구조 전체를 다시 그릴 때 [key-file-index.md](02-key-file-index.md)보다 넓은 지도가 필요하면 먼저 연다.
+- `reference`: top-level 폴더의 narrative impact를 빠르게 복기할 때 쓴다.
 
 ## 대표 코드 발췌
 
@@ -83,3 +94,8 @@ import { createDirectConnectSession } from './server/createDirectConnectSession.
 - 루트 조립 파일은 [root-file-map.md](04-root-file-map.md)
 - 조건부 기능은 [conditional-features-map.md](05-conditional-features-map.md)
 - 핵심 파일만 빠르게 보고 싶다면 [key-file-index.md](02-key-file-index.md)
+
+## Sources / evidence notes
+
+- 이 appendix는 Tier 6 observed artifact 기준의 semantic map이다.
+- feature-gated 디렉터리는 [conditional-features-map.md](05-conditional-features-map.md)와 함께 읽어야 drift risk를 줄일 수 있다.

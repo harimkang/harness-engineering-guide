@@ -1,5 +1,11 @@
 # Appendix. Key File Index
 
+> Why this chapter exists: 핵심 구현 단면을 benchmark question과 provenance 기준으로 가장 빨리 다시 찾게 만든다.
+> Reader path tags: `source-first` / `advanced` / `reference`
+> Last verified: 2026-04-06
+> Freshness class: medium
+> Source tier focus: Tier 6 observed artifact index
+
 ## 장 요약
 
 이 부록은 "어떤 구현 단면이 어떤 개념을 대표하는가"라는 질문에 답하기 위한 빠른 인덱스다. 각 항목은 역할 요약, 관련 장 번호, 대표 발췌 포인트, 주의할 점을 함께 적는다.
@@ -7,6 +13,12 @@
 appendix를 하나만 먼저 연다면 이 파일이 가장 실용적이다. `Directory Map`이 폴더 관점의 지도라면, 이 부록은 본문에 등장하는 핵심 발췌의 provenance label을 빠르게 다시 묶어 주는 인덱스다. `Root File Map`은 루트 조립 파일 계열만 빠르게 보고 싶을 때 참고하는 보조 표다.
 
 이 부록을 읽을 때는 파일명보다 `역할 요약`과 `대표 발췌 포인트`를 먼저 읽는 편이 좋다. 여기의 경로 라벨은 독자가 source를 열기 위한 링크가 아니라, 본문에서 이미 설명된 구현 단면의 provenance 메모다. 경로 표기는 문서 전반에서 일관된 구현 provenance 규약을 따른다.
+
+## Reader-path suggestions
+
+- `source-first`: benchmark question을 먼저 정하고, 이 appendix에서 첫 provenance label을 잡는다.
+- `advanced`: Part guide나 synthesis 장에서 언급한 load-bearing seam을 다시 찾을 때 연다.
+- `reference`: source가 없더라도 어떤 구현 단면이 중요한지 압축해서 복기할 때 쓴다.
 
 ## 대표 코드 발췌
 
@@ -386,3 +398,8 @@ for await (const event of query({
 - 관련 장 번호: `14`
 - 대표 발췌 포인트: relay transport logic
 - 주의할 점: network/transport 설명이 없으면 코드만 보고 맥락을 잡기 어렵다
+
+## Sources / evidence notes
+
+- 이 appendix는 Tier 6 observed artifact lookup map이다. chapter-level external claim은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 `S*` ID로 따로 확인한다.
+- 경로나 역할 요약이 drift하면 [../07-evaluation-and-synthesis/08-benchmark-oriented-code-reading-guide.md](../07-evaluation-and-synthesis/08-benchmark-oriented-code-reading-guide.md)와 함께 갱신하는 편이 좋다.

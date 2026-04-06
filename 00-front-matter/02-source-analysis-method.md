@@ -4,6 +4,9 @@
 > Reader level: beginner / advanced / reviewer
 > Last verified: 2026-04-06
 > Freshness class: medium
+> Reader path tags: `first-pass` / `advanced` / `reviewer` / `maintenance`
+> Source tier focus: Tier 1-6 전체 규칙을 정의한다.
+> Reference scaffolds: chapter metadata, `Sources / evidence notes`, freshness watchlist, evidence-pack practice
 
 ## Core claim
 
@@ -53,6 +56,14 @@ Task 7 착수 직전 기준으로 이 문서 세트에는 이미 다음 baseline
 - freshness class를 chapter claim과 연결하는 방법
 - observed artifact citation 규칙
 - proposal source ID 기반 verification loop
+
+2026-04-06 기준 reader-entry layer는 다음 공통 scaffold를 공유한다.
+
+- `Reader path tags`
+- `Last verified`
+- `Freshness class`
+- `Source tier focus`
+- `Sources / evidence notes`
 
 ## Source tier hierarchy
 
@@ -215,6 +226,37 @@ reader-facing 문서는 나중에 skeptical reviewer가 다시 확인할 수 있
   언급할 때는 "무엇을 review할 수 있게 해 주는가"를 함께 적는다.
 - sensitive-data-bearing trace를 다룰 때는 capture 여부, redaction 여부,
   privacy caveat를 함께 적는다.
+
+## Maintenance watchlist contract
+
+fast-moving docs를 chapter edit 직전에 다시 여는 기준은
+[03-references.md](03-references.md)의 `Freshness watchlist`를 따른다. 기본
+watchlist는 아래 cluster를 포함한다.
+
+- Claude Code settings / skills / MCP / CLI reference / release notes / SDK
+- OpenAI `AGENTS.md`, Agents SDK, tracing, evaluation docs
+- MCP specification release page와 client-concepts 문서
+- LangGraph persistence / interrupts / observability, LangSmith masking
+- OpenTelemetry GenAI semantic conventions
+- NIST AI RMF GenAI Profile / Playbook
+
+이 장의 역할은 watchlist 항목을 전부 다시 나열하는 것이 아니라, 어느 장이 왜
+watchlist 재확인을 요구하는지 설명하는 데 있다.
+
+## Evidence-pack practice
+
+major edit 또는 volatile chapter update를 마칠 때는 가능하면 아래 항목을 함께
+남긴다.
+
+- verified date
+- checked docs list
+- checked release notes window
+- observed artifact snapshot identifiers
+- changed chapters
+
+이 메모는 별도 운영 로그일 수도 있고, 장의 `Sources / evidence notes`에 짧게
+요약할 수도 있다. 중요한 것은 score나 주장만 남기지 않고, 나중에 skeptical
+reviewer가 재현 가능한 확인 흔적을 함께 남기는 것이다.
 
 ## Evidence block rules
 
