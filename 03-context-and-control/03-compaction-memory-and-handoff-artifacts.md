@@ -55,6 +55,9 @@
 - [../execution/02-state-resumability-and-session-ownership.md](../05-execution-continuity-and-integrations/01-state-resumability-and-session-ownership.md)
 - [../appendix/references.md](../00-front-matter/03-references.md)
 
+Sources / evidence notes:
+이 장의 reader-facing 외부 검증 축은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 `S4`, `S6`, `S8`, `S26`, `S27`을 따른다.
+
 ## 다섯 가지 시간축 답변
 
 | 전략 | 질문 | 대표 구조 | owner transfer 기준 |

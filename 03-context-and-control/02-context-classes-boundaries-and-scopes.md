@@ -36,7 +36,7 @@
 외부 프레이밍:
 
 - Anthropic, [Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents), 2025-09-29
-- Anthropic Platform Docs, [Agent SDK overview](https://platform.claude.com/docs/en/agent-sdk/overview), 확인 2026-04-02
+- Anthropic Docs, [Agent SDK overview](https://docs.anthropic.com/en/docs/claude-code/sdk/sdk-overview), 확인 2026-04-02
 - Pan et al., [Natural-Language Agent Harnesses](https://arxiv.org/abs/2603.25723), 2026-03-26, under review
 
 함께 읽으면 좋은 장:
@@ -45,6 +45,9 @@
 - [../execution/02-state-resumability-and-session-ownership.md](../05-execution-continuity-and-integrations/01-state-resumability-and-session-ownership.md)
 - [../interfaces/01-tool-contracts-and-the-agent-computer-interface.md](../04-interfaces-and-operator-surfaces/01-tool-contracts-and-the-agent-computer-interface.md)
 - [../12-task-model-and-background-execution.md](../05-execution-continuity-and-integrations/06-claude-code-task-model-and-background-execution.md)
+
+Sources / evidence notes:
+이 장의 reader-facing 외부 검증 축은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 `S4`, `S13`을 따른다.
 
 ## 다섯 가지 class를 먼저 구분하라
 

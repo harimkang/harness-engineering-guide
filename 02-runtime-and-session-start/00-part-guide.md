@@ -32,3 +32,7 @@
 
 - [../08-reference/02-key-file-index.md](../08-reference/02-key-file-index.md)
 - [../07-evaluation-and-synthesis/07-claude-code-end-to-end-scenarios.md](../07-evaluation-and-synthesis/07-claude-code-end-to-end-scenarios.md)
+
+## Sources / evidence notes
+
+- 이 Part의 외부 검증 축은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 `S6`, `S8`, `S10`, `S13`, `S14`, `S15`, `S24`를 따른다.

@@ -46,6 +46,9 @@
 - [../execution/03-task-orchestration-and-long-running-execution.md](../05-execution-continuity-and-integrations/02-task-orchestration-and-long-running-execution.md)
 - [../appendix/references.md](../00-front-matter/03-references.md)
 
+Sources / evidence notes:
+이 장의 reader-facing 외부 검증 축은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 `S4`, `S33`을 따른다. `S8`은 reset-vs-scaffold 비교의 보조 프레임이다.
+
 ## 왜 "운영 자원"이라고 불러야 하는가
 
 프롬프트 관점은 보통 문장 구성과 지시 품질에 초점을 둔다. 하지만 Claude Code 같은 장기 실행형 하네스에서는 context가 다음 네 질문에 동시에 답해야 한다.

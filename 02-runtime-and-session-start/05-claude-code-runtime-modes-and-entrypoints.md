@@ -13,7 +13,7 @@ runtime family를 따로 읽는 이유는 장기 실행형 harness가 하나의 
 원칙: Anthropic의 [Harness design for long-running application development](https://www.anthropic.com/engineering/harness-design-long-running-apps) (2026-03-24)는 planner, generator, evaluator 같은 구성요소를 분리해 두고, 하나씩 제거하거나 단순화하면서 어떤 요소가 실제로 load-bearing인지 점검하는 접근을 보여준다.  
 해석: 이 장은 그 원칙을 runtime topology에 적용해 읽는다. 즉, 모든 경로를 가장 두꺼운 interactive stack으로 몰기보다, 어떤 family가 정말 그 경로를 필요로 하는지 구분하는 편이 낫다.
 
-원칙: Anthropic Platform Docs의 [Agent SDK overview](https://platform.claude.com/docs/en/agent-sdk/overview) (접근 2026-04-01)는 Agent SDK가 Claude Code와 같은 agent loop, tools, context management를 라이브러리 형태로 제공한다고 설명한다. 즉, Claude Code의 runtime topology는 단일 UI 제품 구조가 아니라, interactive shell과 headless/SDK-style orchestration이 공존하는 구조로 읽을 수 있다.
+원칙: Anthropic Docs의 [Agent SDK overview](https://docs.anthropic.com/en/docs/claude-code/sdk/sdk-overview) (접근 2026-04-01)는 Agent SDK가 Claude Code와 같은 agent loop, tools, context management를 라이브러리 형태로 제공한다고 설명한다. 즉, Claude Code의 runtime topology는 단일 UI 제품 구조가 아니라, interactive shell과 headless/SDK-style orchestration이 공존하는 구조로 읽을 수 있다.
 
 해석: 좋은 runtime topology는 "어디서 실행이 시작되는가"만 보여주지 않는다. 어떤 경로가 full assembly 없이 끝나는가, 어떤 경로가 policy gate를 통과해야 하는가, 어떤 경로가 operator-facing TUI로 이어지고 어떤 경로가 worker나 runner처럼 headless로 남는가를 함께 보여줘야 한다.
 
@@ -35,10 +35,13 @@ runtime family를 따로 읽는 이유는 장기 실행형 harness가 하나의 
 
 #### 추가 자료
 
-- Anthropic Platform Docs, [Agent SDK overview](https://platform.claude.com/docs/en/agent-sdk/overview), 접근 시점 2026-04-01
+- Anthropic Docs, [Agent SDK overview](https://docs.anthropic.com/en/docs/claude-code/sdk/sdk-overview), 접근 시점 2026-04-01
 - Anthropic Docs, [Claude Code release notes](https://docs.anthropic.com/en/release-notes/claude-code), verified 2026-04-06
 
 이 장의 관찰은 2026-04-01 기준 현재 공개 사본에 한정한다. 커밋 해시가 없으므로 파일 경로와 재검증 가능한 코드 절단면을 근거 단위로 사용한다.
+
+Sources / evidence notes:
+이 장의 reader-facing 외부 검증 축은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 `S6`, `S8`, `S13`, `S15`를 따른다.
 
 ### 이 장의 범위
 

@@ -47,6 +47,9 @@ long-running harness의 query path는 단순한 `입력 -> API 호출 -> 응답`
 
 이 장의 관찰은 2026-04-01 기준 현재 공개 사본에 한정한다.
 
+Sources / evidence notes:
+이 장의 reader-facing 외부 검증 축은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 `S4`, `S6`, `S22`, `S29`, `S33`을 따른다.
+
 ### 이 장의 범위
 
 - `src/context.ts`가 어떤 정보를 system/user context로 조립하는지

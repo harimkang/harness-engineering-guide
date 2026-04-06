@@ -39,6 +39,9 @@ control loop를 읽을 때는 `한 turn 안에서 무슨 일이 일어나는가`
 
 이 장의 관찰은 2026-04-01 기준 현재 공개 사본에 한정한다.
 
+Sources / evidence notes:
+이 장의 reader-facing 외부 검증 축은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 `S6`, `S22`, `S29`를 따른다.
+
 ### 이 장의 범위
 
 - `QueryEngineConfig`와 `QueryEngine`이 conversation-global state를 어떻게 잡는지

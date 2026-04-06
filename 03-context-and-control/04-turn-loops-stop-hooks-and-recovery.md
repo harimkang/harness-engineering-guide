@@ -49,6 +49,9 @@
 - [../06-query-engine-and-turn-lifecycle.md](06-claude-code-query-engine-and-turn-lifecycle.md)
 - [../execution/02-state-resumability-and-session-ownership.md](../05-execution-continuity-and-integrations/01-state-resumability-and-session-ownership.md)
 
+Sources / evidence notes:
+이 장의 reader-facing 외부 검증 축은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 `S6`, `S26`, `S27`을 따른다.
+
 ## control loop를 상태 기계로 봐야 하는 이유
 
 `src/query.ts`는 loop 사이를 오가는 mutable state를 명시적으로 들고 있다. 여기에는 message set, tool use context, compaction tracking, max-output-token recovery count, pending tool summary, stop hook active 여부, turn count, 직전 continuation 이유가 포함된다.
