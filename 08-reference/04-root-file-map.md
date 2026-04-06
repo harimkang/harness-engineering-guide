@@ -1,7 +1,7 @@
 # Appendix. Root File Map
 
 > Why this chapter exists: 루트 조립 파일, 레지스트리 파일, 상태 파일을 directory-level 설명과 분리해 빠르게 다시 찾게 만든다.
-> Reader path tags: `advanced` / `reference`
+> Reader path tags: `builder` / `reviewer`
 > Last verified: 2026-04-06
 > Freshness class: medium
 > Source tier focus: Tier 6 observed artifact map
@@ -16,8 +16,8 @@
 
 ## Reader-path suggestions
 
-- `advanced`: runtime assembly나 registry surface를 빠르게 복기할 때 먼저 연다.
-- `reference`: directory map보다 좁고 조립 중심인 lookup이 필요할 때 쓴다.
+- `builder`: runtime assembly나 registry surface를 빠르게 복기할 때 먼저 연다.
+- `reviewer`: directory map보다 좁고 조립 중심인 lookup이 필요할 때 쓴다.
 
 ## 대표 코드 발췌
 

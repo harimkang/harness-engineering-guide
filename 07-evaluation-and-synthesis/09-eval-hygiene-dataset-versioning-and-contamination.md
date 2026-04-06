@@ -4,7 +4,7 @@
 > Reader level: advanced / reviewer
 > Last verified: 2026-04-06
 > Freshness class: volatile
-> Reader path tags: `advanced` / `reviewer` / `volatile`
+> Reader path tags: `builder` / `reviewer` / `volatile re-check`
 > Source tier focus: Tier 1 official eval guidance, Tier 2 Anthropic framing, Tier 6 retained evidence artifacts
 
 ## Core claim

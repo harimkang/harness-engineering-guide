@@ -1,7 +1,7 @@
 # Appendix. Directory Map
 
 > Why this chapter exists: top-level 디렉터리를 semantic grouping으로 다시 묶어, 누락되기 쉬운 영역도 본문과 연결되게 만든다.
-> Reader path tags: `advanced` / `reference`
+> Reader path tags: `builder` / `reviewer`
 > Last verified: 2026-04-06
 > Freshness class: medium
 > Source tier focus: Tier 6 observed artifact map
@@ -18,8 +18,8 @@ top-level 루트 파일은 [root-file-map.md](04-root-file-map.md)에 따로 정
 
 ## Reader-path suggestions
 
-- `advanced`: 구조 전체를 다시 그릴 때 [key-file-index.md](02-key-file-index.md)보다 넓은 지도가 필요하면 먼저 연다.
-- `reference`: top-level 폴더의 narrative impact를 빠르게 복기할 때 쓴다.
+- `builder`: 구조 전체를 다시 그릴 때 [key-file-index.md](02-key-file-index.md)보다 넓은 지도가 필요하면 먼저 연다.
+- `reviewer`: top-level 폴더의 narrative impact를 빠르게 복기할 때 쓴다.
 
 ## 대표 코드 발췌
 

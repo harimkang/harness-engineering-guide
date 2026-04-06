@@ -23,6 +23,9 @@ appendix를 하나만 먼저 연다면 이 파일이 가장 실용적이다. `Di
 
 이 표는 proposal이 요구한 per-entry tag를 reader path와 structural hint로 나눠 정리한 lookup map이다.
 
+- `Reader path tags`는 README의 canonical path vocabulary를 그대로 쓴다.
+- `Structural hints`는 `source-of-truth`, `bridge chapter`, `case-study` 같은 appendix 전용 orientation label이다.
+
 | 경로 | Reader path tags | Structural hints |
 | --- | --- | --- |
 | `src/entrypoints/cli.tsx` | `first-pass`, `source-first` | `source-of-truth`, `bridge chapter` |
