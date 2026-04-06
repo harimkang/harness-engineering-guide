@@ -6,7 +6,7 @@
 
 이 부록은 "루트에 있는 조립 파일과 레지스트리 파일"만 빠르게 보고 싶을 때 우선 참고하는 표다. 디렉터리 전체 배치가 궁금하면 [directory-map.md](./directory-map.md), 핵심 발췌 provenance를 더 촘촘하게 보고 싶다면 [key-file-index.md](./key-file-index.md)가 더 적합하다.
 
-이 표는 경로 목록이 아니라 semantic map으로 읽어야 한다. 각 행에서 먼저 `역할 요약`을, 그다음 `대표 발췌 포인트`를 읽고, 마지막에 파일 라벨을 provenance 메모로 붙이면 source 없이도 의미가 닫힌다. 파일 라벨은 원 upstream 공개 사본의 `src/` 기준 provenance를 따른다.
+이 표는 경로 목록이 아니라 semantic map으로 읽어야 한다. 각 행에서 먼저 `역할 요약`을, 그다음 `대표 발췌 포인트`를 읽고, 마지막에 파일 라벨을 provenance 메모로 붙이면 source 없이도 의미가 닫힌다. 파일 라벨은 문서 전반의 구현 provenance 규약을 따른다.
 
 ## 대표 코드 발췌
 

@@ -120,6 +120,17 @@ You are now acting as the memory extraction subagent. Analyze the most recent
 
 이 prompt가 보여 주듯 memory layer는 transcript의 대체물이 아니다.
 
+`typed memory file`을 reader-facing shorthand로 다시 적으면 아래 네 가지 분류로 보는 편이 가장 이해가 빠르다.
+
+| memory type | 저장하는 것 | future turn에서의 쓰임 | 저장하지 말아야 할 것 |
+| --- | --- | --- | --- |
+| `user` | 사용자의 역할, 책임, 익숙한 도메인, 설명 선호 | 답변 톤과 비유를 사용자 관점에 맞춘다 | 근거 없는 평가, 일회성 기분, 코드에서 바로 알 수 있는 사실 |
+| `feedback` | 어떻게 일해야 하는지에 대한 교정과 검증된 선호 | 같은 수정 지시를 다시 듣지 않도록 작업 방식을 맞춘다 | 단순 활동 로그, 이번 턴 한정의 임시 지시 |
+| `project` | ongoing goal, freeze, incident, decision, deadline처럼 코드 밖 맥락 | 제안의 우선순위와 위험 판단을 프로젝트 사정에 맞춘다 | git history로 재구성 가능한 변경 사실, 이미 코드에 적힌 구조 |
+| `reference` | 외부 시스템에서 어디를 보면 되는지에 대한 pointer | 다음 세션에 외부 context를 다시 찾는 출발점이 된다 | 외부 시스템의 순간 스냅샷 자체, 곧바로 낡는 수치 나열 |
+
+이 표는 memory schema 전체를 대체하려는 것이 아니라, 왜 `user_role.md`, `feedback_testing.md` 같은 파일이 topic별로 분리되는지 한 번에 떠올리게 하는 최소 분류표다. 더 중요한 것은 분류보다도 exclusion rule이다. code pattern, architecture, file path, git history처럼 현재 project state에서 다시 도출할 수 있는 것은 memory가 아니라 다른 source of truth에 속한다.
+
 - transcript는 replay와 recovery를 위한 원본에 가깝다.
 - memory는 다음 세션에도 다시 쓸 만한 사실만 선별한 secondary artifact다.
 - autoDream은 그 secondary artifact를 주기적으로 정돈하는 maintenance pass다.

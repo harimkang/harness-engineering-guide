@@ -6,7 +6,7 @@
 
 appendix를 하나만 먼저 연다면 이 파일이 가장 실용적이다. `Directory Map`이 폴더 관점의 지도라면, 이 부록은 본문에 등장하는 핵심 발췌의 provenance label을 빠르게 다시 묶어 주는 인덱스다. `Root File Map`은 루트 조립 파일 계열만 빠르게 보고 싶을 때 참고하는 보조 표다.
 
-이 부록을 읽을 때는 파일명보다 `역할 요약`과 `대표 발췌 포인트`를 먼저 읽는 편이 좋다. 여기의 경로 라벨은 독자가 source를 열기 위한 링크가 아니라, 본문에서 이미 설명된 구현 단면의 provenance 메모다. 경로는 원 upstream 공개 사본 기준으로 `src/` 경로 표기를 사용한다.
+이 부록을 읽을 때는 파일명보다 `역할 요약`과 `대표 발췌 포인트`를 먼저 읽는 편이 좋다. 여기의 경로 라벨은 독자가 source를 열기 위한 링크가 아니라, 본문에서 이미 설명된 구현 단면의 provenance 메모다. 경로 표기는 문서 전반에서 일관된 구현 provenance 규약을 따른다.
 
 ## 대표 코드 발췌
 
@@ -154,6 +154,18 @@ for await (const event of query({
 - 주의할 점: plain re-export로 보면 역할을 과소평가하기 쉽다
 
 ## Terminal Interaction
+
+이 구간은 "어느 파일이 어떤 터미널 상호작용 문제를 대표하는가"를 빠르게 다시 찾기 위한 lookup map으로 읽는 편이 좋다.
+
+| 보고 싶은 문제 | 먼저 볼 경로 | 본문 연결 |
+| --- | --- | --- |
+| keybinding provider와 입력 컨텍스트 | `src/keybindings/KeybindingProviderSetup.tsx` | `09` |
+| vim-style 입력 모델 | `vim/` | `09` |
+| transcript inspection과 alternate interaction state | `src/screens/REPL.tsx` | `09`, `execution/01` |
+| voice mode enablement gate | `src/voice/voiceModeEnabled.ts` | `09`, appendix |
+| output style discovery와 loader | `src/outputStyles/loadOutputStylesDir.ts` | `09` |
+
+이 표는 terminal UI 전체를 한 장에서 다시 설명하려는 것이 아니다. `prompt input`, `transcript inspection`, `alternate input model`, `voice`, `output style`처럼 reader가 자주 헷갈리는 entry를 어디서 다시 집어야 하는지만 압축해 둔 것이다.
 
 ### `src/keybindings/KeybindingProviderSetup.tsx`
 

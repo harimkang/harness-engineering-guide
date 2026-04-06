@@ -129,6 +129,17 @@ for (const source of getEnabledSettingSources()) {
 
 이 구조는 settings가 "사용자가 마지막으로 저장한 값"이 아니라, 여러 규칙 source를 precedence 아래 합친 merged rule artifact임을 보여 준다.
 
+reader-facing 관점에서 이 층을 빠르게 다시 떠올릴 수 있도록 최소한의 지도를 붙이면 아래와 같다.
+
+| source family | 이 장에서의 역할 | precedence 감각 | 혼동하기 쉬운 점 |
+| --- | --- | --- | --- |
+| plugin base | plugin이 깔아 두는 capability 기본값 | 가장 낮은 바닥값 | 사용자 설정과 같은 성격의 "마지막 저장값"이 아니다 |
+| enabled setting sources | 사용자가 켜 둔 file-based settings source를 merge한 규칙 층 | plugin base 위를 덮는 일반 규칙 층 | source 하나마다 따로 읽기보다 merged artifact로 보는 편이 정확하다 |
+| `policySettings` 계열 | managed/policy 성격의 상위 규칙 층 | editable source보다 더 강한 override 후보 | policy 내부에도 다시 세부 precedence가 있어 단일 파일처럼 읽으면 안 된다 |
+| project/global config | trust, onboarding, 최근 세션 정보 같은 current state | settings precedence 바깥 | settings family가 아니라 같은 global config file 안의 keyed state다 |
+
+따라서 settings를 설명할 때 중요한 것은 "정확히 몇 번째가 무엇을 이긴다"보다도, 먼저 이것이 `plugin base -> merged settings sources -> policy-capable override` 구조라는 점과, `config`는 그 밖의 다른 artifact family라는 점이다.
+
 ## config는 별도 파일이 아니라 global config file 안의 keyed state다
 
 `src/utils/config.ts`는 성격이 다르다. `ProjectConfig`를 보면 trust, onboarding, last session metrics, worktree session, MCP approval residue처럼 "현재 상태"에 가까운 필드가 많다.

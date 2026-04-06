@@ -66,6 +66,17 @@ Anthropic의 [Beyond permission prompts: making Claude Code more secure and auto
 
 이 네 질문으로 보면 `remote/`, `bridge/`, `server/`, `upstreamproxy/`는 같은 기능군이 아니라 다른 adapter family다.
 
+이 차이를 빠르게 다시 참조할 때는 아래 matrix가 유용하다.
+
+| family | adapter 유형 | state owner / lifecycle owner | operator surface | approval contract | recovery에서 먼저 볼 것 |
+| --- | --- | --- | --- | --- | --- |
+| bridge | supervisor | `bridgeMain`이 active session fleet와 work item을 운영 | CLI fast-path의 별도 supervisor surface | fleet/session viewer 계열 semantics가 먼저 온다 | heartbeat, reconnect, token refresh, work requeue |
+| remote session attach | session client | session-scoped `RemoteSessionManager` | local REPL에 붙는 attached client | remote request를 local operator approval 흐름과 연결 | reconnect budget, auth rejection, session-not-found 처리 |
+| direct connect | bootstrapper + attached client | `/sessions` bootstrap 뒤 local REPL이 이어받음 | local REPL | bootstrap에서 받은 contract 위에 remote permission relay가 붙는다 | session config 취득 실패, attach 이후 relay 회복 |
+| upstream proxy | relay | lower-level transport adapter | proxy/relay boundary 자체 | tool approval보다 network egress mediation이 핵심 | tunnel/auth/header relay failure |
+
+이 표의 요점은 "원격 기능이 네 개 있다"가 아니다. 같은 REPL 아래 붙더라도 어떤 경로는 session을 만들고, 어떤 경로는 이미 있는 session을 붙잡고, 어떤 경로는 여러 session을 감독하고, 어떤 경로는 network tunnel만 중계한다는 점을 구분해야 operator control과 safety boundary를 같은 언어로 설명할 수 있다.
+
 ## deployment topology
 
 ```mermaid

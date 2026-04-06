@@ -101,7 +101,7 @@ import { query } from '../query.js';
 
 ## 제품 사실 2: permissions는 `utils/` 잡동사니가 아니라 별도 정책 엔진이다
 
-현재 공개 사본에서 `src/utils/permissions/`는 24개 파일이고, `remote/`는 4개 파일이다. 파일 수만 보면 permissions 쪽이 훨씬 넓고, 실제 내용은 그보다 더 깊다.
+이 분석 범위에서 `src/utils/permissions/`는 24개 파일이고, `remote/`는 4개 파일이다. 파일 수만 보면 permissions 쪽이 훨씬 넓고, 실제 내용은 그보다 더 깊다.
 
 `src/utils/permissions/permissions.ts`는 permission pipeline 일부만 떼어 읽어도 이미 layered decision engine이라는 사실이 드러난다.
 
@@ -221,7 +221,7 @@ const next: State = {
 
 ## 제품 사실 4: mode breadth와 feature gates는 traceability 비용을 키운다
 
-현재 공개 사본에서 `src/main.tsx`, `src/screens/REPL.tsx`, `src/query.ts`, `src/QueryEngine.ts`, `src/interactiveHelpers.tsx` 다섯 파일에만 `feature(...)` 호출이 171개 있다. 여기에 `src/entrypoints/cli.tsx`의 fast-path fan-out까지 겹치면, 실행 경로를 한 번에 머릿속에 유지하기가 매우 어렵다.
+이 분석 범위에서 `src/main.tsx`, `src/screens/REPL.tsx`, `src/query.ts`, `src/QueryEngine.ts`, `src/interactiveHelpers.tsx` 다섯 파일에만 `feature(...)` 호출이 171개 있다. 여기에 `src/entrypoints/cli.tsx`의 fast-path fan-out까지 겹치면, 실행 경로를 한 번에 머릿속에 유지하기가 매우 어렵다.
 
 `src/entrypoints/cli.tsx`는 bridge, daemon, background session 같은 경로를 초기 단계에서 분기한다.
 
