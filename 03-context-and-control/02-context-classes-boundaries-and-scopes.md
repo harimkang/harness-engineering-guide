@@ -19,7 +19,7 @@
 - background task 실행 모델 전반
 - sandbox 정책과 approval 정책의 상세 비교
 
-이 세 주제는 [../interfaces/02-tool-shaping-permissions-and-capability-exposure.md](../04-interfaces-and-operator-surfaces/02-tool-shaping-permissions-and-capability-exposure.md), [../execution/03-task-orchestration-and-long-running-execution.md](../05-execution-continuity-and-integrations/02-task-orchestration-and-long-running-execution.md), [../safety/02-sandboxing-permissions-and-policy-surfaces.md](../06-boundaries-deployment-and-safety/02-sandboxing-permissions-and-policy-surfaces.md)에서 확장한다.
+이 세 주제는 [02-tool-shaping-permissions-and-capability-exposure.md](../04-interfaces-and-operator-surfaces/02-tool-shaping-permissions-and-capability-exposure.md), [02-task-orchestration-and-long-running-execution.md](../05-execution-continuity-and-integrations/02-task-orchestration-and-long-running-execution.md), [02-sandboxing-permissions-and-policy-surfaces.md](../06-boundaries-deployment-and-safety/02-sandboxing-permissions-and-policy-surfaces.md)에서 확장한다.
 
 ## 자료와 독서 기준
 
@@ -42,9 +42,9 @@
 함께 읽으면 좋은 장:
 
 - [01-context-as-an-operational-resource.md](01-context-as-an-operational-resource.md)
-- [../execution/02-state-resumability-and-session-ownership.md](../05-execution-continuity-and-integrations/01-state-resumability-and-session-ownership.md)
-- [../interfaces/01-tool-contracts-and-the-agent-computer-interface.md](../04-interfaces-and-operator-surfaces/01-tool-contracts-and-the-agent-computer-interface.md)
-- [../12-task-model-and-background-execution.md](../05-execution-continuity-and-integrations/06-claude-code-task-model-and-background-execution.md)
+- [01-state-resumability-and-session-ownership.md](../05-execution-continuity-and-integrations/01-state-resumability-and-session-ownership.md)
+- [01-tool-contracts-and-the-agent-computer-interface.md](../04-interfaces-and-operator-surfaces/01-tool-contracts-and-the-agent-computer-interface.md)
+- [06-claude-code-task-model-and-background-execution.md](../05-execution-continuity-and-integrations/06-claude-code-task-model-and-background-execution.md)
 
 Sources / evidence notes:
 이 장의 reader-facing 외부 검증 축은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 `S4`, `S6`, `S22`, `S29`를 따른다.

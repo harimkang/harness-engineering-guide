@@ -45,7 +45,7 @@ Sources / evidence notes:
 
 함께 읽으면 좋은 장:
 
-- [../execution/04-human-oversight-trust-and-approval.md](../05-execution-continuity-and-integrations/03-human-oversight-trust-and-approval.md)
+- [03-human-oversight-trust-and-approval.md](../05-execution-continuity-and-integrations/03-human-oversight-trust-and-approval.md)
 - [04-safety-autonomy-benchmark.md](04-safety-autonomy-benchmark.md)
 - [../08-tool-system-and-permissions.md](../04-interfaces-and-operator-surfaces/07-claude-code-tool-system-and-permissions.md)
 - [07-governance-risk-and-compliance-mapping.md](07-governance-risk-and-compliance-mapping.md)

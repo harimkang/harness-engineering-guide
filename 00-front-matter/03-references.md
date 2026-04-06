@@ -243,6 +243,9 @@ minimum reproducibility bundle로 다시 정리한다.
 - OpenTelemetry GenAI semantic conventions
 - NIST AI RMF GenAI Profile / Playbook
 
+reader-facing corpus의 상대 링크, 번호-제목 일치, legacy label residue는
+`npm run check:docs`로 점검한다.
+
 ## Usage rules
 
 - local code 사실은 외부 자료로 대체하지 않는다.

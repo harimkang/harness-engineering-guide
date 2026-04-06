@@ -1,10 +1,35 @@
 # 04. Claude Code 서비스 계층과 통합
 
+> Why this chapter exists: `services/`를 API adapter 묶음이 아니라 runtime assembly와 operator shell이 기대는 integration architecture로 읽게 만든다.
+> Reader level: advanced / reviewer
+> Last verified: 2026-04-06
+> Freshness class: volatile
+
+## Core claim
+
+Claude Code의 service layer는 단순 외부 I/O 계층이 아니다. adapter, policy gate, long-lived manager, background sync, shell seam이 한데 모인 runtime substrate다.
+
+## What this chapter is not claiming
+
+- `services/`가 하나의 일관된 내부 추상화 위에 놓인다는 주장
+- 원격 transport와 backend 구현 전체를 이 장에서 다룬다는 주장
+- 모든 service dependency가 같은 volatility와 failure mode를 가진다는 주장
+
 ## 장 요약
 
 service layer는 단순 API adapter 묶음이 아니라 runtime assembly와 operator shell이 기대는 integration architecture다. 이 장은 그 문제를 Claude Code 사례에 적용한다. 일반적으로 하네스의 service layer는 다섯 질문으로 읽는 편이 좋다. 외부 I/O를 누가 담당하는가, 기능 가용성을 누가 gate하는가, 초기화 상태와 연결 상태를 누가 오래 유지하는가, background sync와 polling은 어디서 일어나는가, 그리고 어떤 seam에서 shell에 꽂히는가. 이 장은 그 질문을 Claude Code의 로컬 구조에 적용한다.
 
 로컬 코드만 보면 `services/`는 한 성격으로 묶이지 않는다. `api/`와 `mcp/`는 외부 시스템과 직접 연결되는 adapter이면서도, `policyLimits/`와 `remoteManagedSettings/`는 runtime gating을 바꾸고, `analytics/`는 gate와 sink를, `lsp/`는 장기 상태를 가진 manager를 제공한다. 그래서 이 장은 `services/`를 "이질적인 폴더"가 아니라, runtime infra seam이 응축된 층으로 읽는다.
+
+## Mental model / diagram
+
+이 장의 핵심 mental model은 `external adapter / policy gate / long-lived manager / background sync / shell seam` 다섯 구분이다. 아래 `service composition topology` 다이어그램을 그 구분의 중심 도식으로 읽으면 된다.
+
+## Design implications
+
+- service review는 adapter, gate, manager, sync를 한 묶음으로 보지 말고 failure class와 startup priority별로 분리해 읽어야 한다.
+- operator shell이 직접 의존하는 seam은 관측성, retry, degradation 정책이 먼저 문서화돼야 한다.
+- service dependency volatility가 큰 영역은 settings, capability refresh, remote-managed config처럼 cache/refresh semantics까지 함께 기록해야 한다.
 
 ## 왜 integration architecture를 따로 읽어야 하는가
 
@@ -25,7 +50,8 @@ Anthropic Platform Docs의 [Agent SDK overview](https://platform.claude.com/docs
 - Anthropic, [How we built our multi-agent research system](https://www.anthropic.com/engineering/multi-agent-research-system), 2025-06-13
 - Anthropic Platform Docs, [Agent SDK overview](https://platform.claude.com/docs/en/agent-sdk/overview), 접근 시점 2026-04-02
 
-Sources / evidence notes:
+## Sources / evidence notes
+
 이 장의 reader-facing 외부 검증 축은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 Part 5 cluster를 따른다. service substrate와 dependency volatility는 `S2`, `S6`, `S8`, `S9`, `S10`, `S13`, `S15`, `S26`, `S27`, `S28`, `S32`, `S33`을 우선 사용한다.
 
 이 장은 다음을 다룬다.

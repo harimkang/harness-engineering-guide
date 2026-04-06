@@ -69,10 +69,10 @@ if (feature('BRIDGE_MODE') && (args[0] === 'remote-control' || args[0] === 'rc' 
 
 ## 관련 장
 
-- 실행 모드 관점: [03-runtime-modes-and-entrypoints.md](../02-runtime-and-session-start/05-claude-code-runtime-modes-and-entrypoints.md)
-- startup/trust 관점: [04-session-startup-trust-and-initialization.md](../02-runtime-and-session-start/06-claude-code-session-startup-trust-and-initialization.md)
-- extension/coordination 관점: [11-agent-skill-plugin-mcp-and-coordination.md](../05-execution-continuity-and-integrations/05-claude-code-agent-skill-plugin-mcp-and-coordination.md)
-- 구조 리스크 관점: [16-risks-debt-and-observations.md](../06-boundaries-deployment-and-safety/06-claude-code-risks-debt-and-failure-modes.md)
+- 실행 모드 관점: [05-claude-code-runtime-modes-and-entrypoints.md](../02-runtime-and-session-start/05-claude-code-runtime-modes-and-entrypoints.md)
+- startup/trust 관점: [06-claude-code-session-startup-trust-and-initialization.md](../02-runtime-and-session-start/06-claude-code-session-startup-trust-and-initialization.md)
+- extension/coordination 관점: [05-claude-code-agent-skill-plugin-mcp-and-coordination.md](../05-execution-continuity-and-integrations/05-claude-code-agent-skill-plugin-mcp-and-coordination.md)
+- 구조 리스크 관점: [06-claude-code-risks-debt-and-failure-modes.md](../06-boundaries-deployment-and-safety/06-claude-code-risks-debt-and-failure-modes.md)
 
 ## Sources / evidence notes
 

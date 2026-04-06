@@ -56,7 +56,7 @@ Sources / evidence notes:
 - tool contract와 permission 모델 전체
 - background task, remote transport, services 계층 전체
 
-이 비범위는 중요하다. context assembly는 [05-context-assembly-and-query-pipeline.md](05-claude-code-context-assembly-and-query-pipeline.md), tool surface와 permission은 [08-tool-system-and-permissions.md](../04-interfaces-and-operator-surfaces/07-claude-code-tool-system-and-permissions.md)에서 더 자세히 다룬다.
+이 비범위는 중요하다. context assembly는 [05-context-assembly-and-query-pipeline.md](05-claude-code-context-assembly-and-query-pipeline.md), tool surface와 permission은 [07-claude-code-tool-system-and-permissions.md](../04-interfaces-and-operator-surfaces/07-claude-code-tool-system-and-permissions.md)에서 더 자세히 다룬다.
 
 ## 이 장의 네 가지 구분
 

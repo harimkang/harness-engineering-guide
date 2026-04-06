@@ -19,7 +19,7 @@
 - memory 파일의 taxonomy와 auto-memory 작성 규칙의 상세 설계
 - tool surface와 permission 정책의 세부 계약
 
-위 세 주제는 각각 [03-compaction-memory-and-handoff-artifacts.md](03-compaction-memory-and-handoff-artifacts.md), [../interfaces/01-tool-contracts-and-the-agent-computer-interface.md](../04-interfaces-and-operator-surfaces/01-tool-contracts-and-the-agent-computer-interface.md), [../safety/02-sandboxing-permissions-and-policy-surfaces.md](../06-boundaries-deployment-and-safety/02-sandboxing-permissions-and-policy-surfaces.md)에서 더 깊게 다룬다.
+위 세 주제는 각각 [03-compaction-memory-and-handoff-artifacts.md](03-compaction-memory-and-handoff-artifacts.md), [01-tool-contracts-and-the-agent-computer-interface.md](../04-interfaces-and-operator-surfaces/01-tool-contracts-and-the-agent-computer-interface.md), [02-sandboxing-permissions-and-policy-surfaces.md](../06-boundaries-deployment-and-safety/02-sandboxing-permissions-and-policy-surfaces.md)에서 더 깊게 다룬다.
 
 ## 자료와 독서 기준
 

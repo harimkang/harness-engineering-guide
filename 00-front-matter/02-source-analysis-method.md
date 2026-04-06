@@ -333,3 +333,5 @@ diagram은 선택이 아니라 검토 대상이다.
 1. source tier와 claim status를 분리한다.
 2. proposal `S*` ID를 기준으로 substantive change를 다시 검증한다.
 3. fast-moving topic과 observed artifact는 freshness와 reviewability metadata를 남긴다.
+
+reader-facing 정합성 검사는 `npm run check:docs`로 다시 확인할 수 있다. 이 스크립트는 번호-제목 일치, 상대 링크 유효성, legacy label residue를 점검한다.

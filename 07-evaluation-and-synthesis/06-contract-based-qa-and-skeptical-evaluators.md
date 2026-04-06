@@ -180,13 +180,13 @@ contract-based QA와 skeptical evaluator는 long-running coding harness에서 ev
 
 ## 대표 근거 읽기 순서
 
-1. [evaluation/02-tasks-trials-transcripts-and-graders.md](02-tasks-trials-transcripts-and-graders.md)
+1. [02-tasks-trials-transcripts-and-graders.md](02-tasks-trials-transcripts-and-graders.md)
    grading input과 rule vocabulary를 먼저 잡는다.
 2. [02-task-orchestration-and-long-running-execution.md](../05-execution-continuity-and-integrations/02-task-orchestration-and-long-running-execution.md)
    chunking과 handoff artifact를 본다.
-3. [evaluation/04-production-traces-feedback-loops-and-optimization.md](04-production-traces-feedback-loops-and-optimization.md)
+3. [04-production-traces-feedback-loops-and-optimization.md](04-production-traces-feedback-loops-and-optimization.md)
    calibration loop를 본다.
-4. [evaluation/03-benchmarking-coding-harnesses.md](03-benchmarking-long-running-agent-harnesses.md)
+4. [03-benchmarking-long-running-agent-harnesses.md](03-benchmarking-long-running-agent-harnesses.md)
    benchmark axis로 어떻게 기록할지 확인한다.
-5. [evaluation/05-claude-code-benchmark-framework.md](05-harness-benchmark-framework.md)
+5. [05-harness-benchmark-framework.md](05-harness-benchmark-framework.md)
    전체 framework 안에서 어디에 놓이는지 다시 본다.

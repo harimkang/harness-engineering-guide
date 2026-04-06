@@ -44,7 +44,7 @@ Sources / evidence notes:
 
 함께 읽으면 좋은 장:
 
-- [../execution/02-state-resumability-and-session-ownership.md](../05-execution-continuity-and-integrations/01-state-resumability-and-session-ownership.md)
+- [01-state-resumability-and-session-ownership.md](../05-execution-continuity-and-integrations/01-state-resumability-and-session-ownership.md)
 - [04-safety-autonomy-benchmark.md](04-safety-autonomy-benchmark.md)
 - [../14-remote-bridge-server-and-upstreamproxy.md](05-claude-code-remote-bridge-server-and-upstream-proxy.md)
 

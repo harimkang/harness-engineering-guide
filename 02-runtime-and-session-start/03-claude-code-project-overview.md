@@ -69,12 +69,12 @@ Anthropic의 [Building effective agents](https://www.anthropic.com/engineering/b
 
 | 운영 문제 | 이 저장소에서 드러나는 대표 위치 | 이후 자세히 읽을 장 |
 | --- | --- | --- |
-| 실행 경로 분기 | `src/entrypoints/cli.tsx`, `src/main.tsx` | [03-runtime-modes-and-entrypoints.md](05-claude-code-runtime-modes-and-entrypoints.md), [14-remote-bridge-server-and-upstreamproxy.md](../06-boundaries-deployment-and-safety/05-claude-code-remote-bridge-server-and-upstream-proxy.md) |
-| startup과 정책 개입 | `src/main.tsx`, `src/interactiveHelpers.tsx` | [04-session-startup-trust-and-initialization.md](06-claude-code-session-startup-trust-and-initialization.md) |
+| 실행 경로 분기 | `src/entrypoints/cli.tsx`, `src/main.tsx` | [05-claude-code-runtime-modes-and-entrypoints.md](05-claude-code-runtime-modes-and-entrypoints.md), [05-claude-code-remote-bridge-server-and-upstream-proxy.md](../06-boundaries-deployment-and-safety/05-claude-code-remote-bridge-server-and-upstream-proxy.md) |
+| startup과 정책 개입 | `src/main.tsx`, `src/interactiveHelpers.tsx` | [06-claude-code-session-startup-trust-and-initialization.md](06-claude-code-session-startup-trust-and-initialization.md) |
 | query/control loop | `src/context.ts`, `src/query.ts`, `src/QueryEngine.ts` | [05-context-assembly-and-query-pipeline.md](../03-context-and-control/05-claude-code-context-assembly-and-query-pipeline.md), [06-query-engine-and-turn-lifecycle.md](../03-context-and-control/06-claude-code-query-engine-and-turn-lifecycle.md) |
-| 운영자 제어 표면 | `src/screens/REPL.tsx`, `src/commands.ts`, `src/tools.ts` | [07-command-system.md](../04-interfaces-and-operator-surfaces/06-claude-code-command-system.md), [08-tool-system-and-permissions.md](../04-interfaces-and-operator-surfaces/07-claude-code-tool-system-and-permissions.md), [09-state-ui-and-terminal-interaction.md](../04-interfaces-and-operator-surfaces/08-claude-code-state-ui-and-terminal-interaction.md) |
-| task와 장기 실행 | `src/Task.ts`, `src/tasks.ts` | [12-task-model-and-background-execution.md](../05-execution-continuity-and-integrations/06-claude-code-task-model-and-background-execution.md) |
-| 원격/확장 계층 | `services/`, `bridge/`, `remote/`, `server/` | [10-services-and-integrations.md](../05-execution-continuity-and-integrations/04-claude-code-services-and-integrations.md), [11-agent-skill-plugin-mcp-and-coordination.md](../05-execution-continuity-and-integrations/05-claude-code-agent-skill-plugin-mcp-and-coordination.md), [14-remote-bridge-server-and-upstreamproxy.md](../06-boundaries-deployment-and-safety/05-claude-code-remote-bridge-server-and-upstream-proxy.md) |
+| 운영자 제어 표면 | `src/screens/REPL.tsx`, `src/commands.ts`, `src/tools.ts` | [06-claude-code-command-system.md](../04-interfaces-and-operator-surfaces/06-claude-code-command-system.md), [07-claude-code-tool-system-and-permissions.md](../04-interfaces-and-operator-surfaces/07-claude-code-tool-system-and-permissions.md), [08-claude-code-state-ui-and-terminal-interaction.md](../04-interfaces-and-operator-surfaces/08-claude-code-state-ui-and-terminal-interaction.md) |
+| task와 장기 실행 | `src/Task.ts`, `src/tasks.ts` | [06-claude-code-task-model-and-background-execution.md](../05-execution-continuity-and-integrations/06-claude-code-task-model-and-background-execution.md) |
+| 원격/확장 계층 | `services/`, `bridge/`, `remote/`, `server/` | [04-claude-code-services-and-integrations.md](../05-execution-continuity-and-integrations/04-claude-code-services-and-integrations.md), [05-claude-code-agent-skill-plugin-mcp-and-coordination.md](../05-execution-continuity-and-integrations/05-claude-code-agent-skill-plugin-mcp-and-coordination.md), [05-claude-code-remote-bridge-server-and-upstream-proxy.md](../06-boundaries-deployment-and-safety/05-claude-code-remote-bridge-server-and-upstream-proxy.md) |
 
 이 표를 먼저 잡고 읽으면, 뒤에서 만나는 큰 파일들이 "덩치가 큰 이유"를 기능 수가 아니라 운영 문제 수로 이해할 수 있다.
 
@@ -100,9 +100,9 @@ Anthropic의 [Building effective agents](https://www.anthropic.com/engineering/b
 
 이 러닝 예시는 뒤의 장에서 다음처럼 다시 나타난다.
 
-- [02-architecture-map.md](04-claude-code-architecture-map.md): 이 흐름을 여섯 파일 구조로 압축한다.
-- [03-runtime-modes-and-entrypoints.md](05-claude-code-runtime-modes-and-entrypoints.md): 1-2단계를 자세히 본다.
-- [04-session-startup-trust-and-initialization.md](06-claude-code-session-startup-trust-and-initialization.md): 3단계를 자세히 본다.
+- [04-claude-code-architecture-map.md](04-claude-code-architecture-map.md): 이 흐름을 여섯 파일 구조로 압축한다.
+- [05-claude-code-runtime-modes-and-entrypoints.md](05-claude-code-runtime-modes-and-entrypoints.md): 1-2단계를 자세히 본다.
+- [06-claude-code-session-startup-trust-and-initialization.md](06-claude-code-session-startup-trust-and-initialization.md): 3단계를 자세히 본다.
 - [05-context-assembly-and-query-pipeline.md](../03-context-and-control/05-claude-code-context-assembly-and-query-pipeline.md)와 [06-query-engine-and-turn-lifecycle.md](../03-context-and-control/06-claude-code-query-engine-and-turn-lifecycle.md): 4-5단계를 자세히 본다.
 - [07-claude-code-end-to-end-scenarios.md](../07-evaluation-and-synthesis/07-claude-code-end-to-end-scenarios.md): 전체를 다시 시간 순서로 합친다.
 
@@ -387,11 +387,11 @@ import { initBundledSkills } from './skills/bundled/index.js';
 
 이 장에서 구조적 감각을 잡았다면 다음 순서가 자연스럽다.
 
-1. [02-architecture-map.md](04-claude-code-architecture-map.md)
+1. [04-claude-code-architecture-map.md](04-claude-code-architecture-map.md)
    방금 잡은 운영 문제 분류를 전체 구조 지도로 다시 본다.
-2. [03-runtime-modes-and-entrypoints.md](05-claude-code-runtime-modes-and-entrypoints.md)
+2. [05-claude-code-runtime-modes-and-entrypoints.md](05-claude-code-runtime-modes-and-entrypoints.md)
    여러 실행 경로가 실제로 어떻게 갈라지는지 세부적으로 본다.
-3. [04-session-startup-trust-and-initialization.md](06-claude-code-session-startup-trust-and-initialization.md)
+3. [06-claude-code-session-startup-trust-and-initialization.md](06-claude-code-session-startup-trust-and-initialization.md)
    startup과 정책 개입이 실제로 어디에 삽입되는지 본다.
 4. [05-context-assembly-and-query-pipeline.md](../03-context-and-control/05-claude-code-context-assembly-and-query-pipeline.md)
    하네스의 핵심 자원인 context와 query preparation이 실제로 어떻게 조립되는지 본다.

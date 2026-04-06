@@ -51,7 +51,7 @@ Sources / evidence notes:
 - `src/query.ts` 전체 상태 전이의 완전한 추적
 - remote transport와 MCP 하위 구현의 내부 프로토콜
 
-이 비범위는 중요하다. entrypoint 세부는 [03-runtime-modes-and-entrypoints.md](05-claude-code-runtime-modes-and-entrypoints.md), startup/trust는 [04-session-startup-trust-and-initialization.md](06-claude-code-session-startup-trust-and-initialization.md), control plane 상세는 [05-context-assembly-and-query-pipeline.md](../03-context-and-control/05-claude-code-context-assembly-and-query-pipeline.md)와 [06-query-engine-and-turn-lifecycle.md](../03-context-and-control/06-claude-code-query-engine-and-turn-lifecycle.md)에서 따로 다룬다.
+이 비범위는 중요하다. entrypoint 세부는 [05-claude-code-runtime-modes-and-entrypoints.md](05-claude-code-runtime-modes-and-entrypoints.md), startup/trust는 [06-claude-code-session-startup-trust-and-initialization.md](06-claude-code-session-startup-trust-and-initialization.md), control plane 상세는 [05-context-assembly-and-query-pipeline.md](../03-context-and-control/05-claude-code-context-assembly-and-query-pipeline.md)와 [06-claude-code-query-engine-and-turn-lifecycle.md](../03-context-and-control/06-claude-code-query-engine-and-turn-lifecycle.md)에서 따로 다룬다.
 
 ## 분석 용어 여섯 가지
 
@@ -91,7 +91,7 @@ Sources / evidence notes:
 
 ## Claude Code의 여섯 파일 구조도
 
-아래 그림은 전체 CLI 분기도를 모두 그린 것이 아니다. 이 장이 직접 추적하는 `interactive/default family`와 `headless query entry`만을 그린다. `src/entrypoints/cli.tsx`가 분기하는 다른 fast-path family는 [03-runtime-modes-and-entrypoints.md](05-claude-code-runtime-modes-and-entrypoints.md)에서 따로 다룬다.
+아래 그림은 전체 CLI 분기도를 모두 그린 것이 아니다. 이 장이 직접 추적하는 `interactive/default family`와 `headless query entry`만을 그린다. `src/entrypoints/cli.tsx`가 분기하는 다른 fast-path family는 [05-claude-code-runtime-modes-and-entrypoints.md](05-claude-code-runtime-modes-and-entrypoints.md)에서 따로 다룬다.
 
 ```mermaid
 flowchart TD

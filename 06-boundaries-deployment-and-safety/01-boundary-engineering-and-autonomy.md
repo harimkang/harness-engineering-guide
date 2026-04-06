@@ -1,8 +1,33 @@
 # 01. boundary engineering과 autonomy
 
+> Why this chapter exists: autonomy를 더 키울수록 boundary를 덜 두는 것이 아니라 더 정밀하게 설계해야 한다는 점을 고정한다.
+> Reader level: advanced / reviewer
+> Last verified: 2026-04-06
+> Freshness class: medium
+
+## Core claim
+
+autonomy와 safety는 단일 슬라이더가 아니다. trust, permission, sandbox, remote/MCP, deployment boundary를 서로 다른 층으로 설계해야 높은 autonomy와 reviewable control을 함께 만들 수 있다.
+
+## What this chapter is not claiming
+
+- approval prompt 수만 줄이면 autonomy 설계가 끝난다는 주장
+- sandbox 하나로 boundary engineering이 충분하다는 주장
+- governance/compliance가 기술 설계를 대체할 수 있다는 주장
+
 ## 장 요약
 
 자율성을 높인다고 해서 경계를 지울 수는 없다. 실제로는 그 반대다. 더 많은 autonomy를 허용할수록, 무엇을 어느 층에서 열고 닫을지 더 정밀하게 설계해야 한다. Claude Code는 trust dialog, dangerous-rule stripping, call-time permission, sandbox runtime, MCP trust checks, remote permission relay 같은 여러 경계를 겹쳐 autonomy를 조절한다. 이 장은 그 구조를 boundary engineering이라는 이름으로 읽는다.
+
+## Mental model / diagram
+
+이 장의 핵심 mental model은 `trust -> authoring -> exposure -> call-time -> environment -> deployment` 여섯 boundary 층이다. 아래 boundary table을 이 장의 중심 도식으로 읽으면 된다.
+
+## Design implications
+
+- autonomy 설계 문서는 approval mode 하나가 아니라 trust, exposure, sandbox, deployment boundary를 분리해 보여줘야 한다.
+- bypass mode가 있어도 bypass-immune edge를 명시하지 않으면 operator는 실제 safety contract를 오해한다.
+- local, remote, direct-connect 경로는 같은 capability라도 다른 approval owner를 가질 수 있으므로 boundary matrix를 path별로 점검해야 한다.
 
 ## 범위와 비범위
 
@@ -38,12 +63,13 @@
 - Anthropic, [Harness design for long-running application development](https://www.anthropic.com/engineering/harness-design-long-running-apps), 2026-03-24
 - Pan et al., [Natural-Language Agent Harnesses](https://arxiv.org/abs/2603.25723), 2026-03-26, under review
 
-Sources / evidence notes:
+## Sources / evidence notes
+
 이 장의 reader-facing 외부 검증 축은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 Part 6 cluster를 따른다. 핵심 source ID는 `S5`, `S9`, `S15`, `S20`, `S25`, `S30`, `S31`이며, `P1`은 boundary artifact 비교의 보조 프레임으로만 사용한다.
 
 함께 읽으면 좋은 장:
 
-- [../execution/04-human-oversight-trust-and-approval.md](../05-execution-continuity-and-integrations/03-human-oversight-trust-and-approval.md)
+- [03-human-oversight-trust-and-approval.md](../05-execution-continuity-and-integrations/03-human-oversight-trust-and-approval.md)
 - [02-sandboxing-permissions-and-policy-surfaces.md](02-sandboxing-permissions-and-policy-surfaces.md)
 - [03-local-remote-bridge-and-direct-connect.md](03-local-remote-bridge-and-direct-connect.md)
 - [04-safety-autonomy-benchmark.md](04-safety-autonomy-benchmark.md)

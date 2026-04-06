@@ -59,7 +59,7 @@ startKeychainPrefetch();
 | `src/tools.ts` | tool registry와 helper | `08` | `getTools()` | `src/Tool.ts` 인터페이스와 실제 구현을 연결하는 허브다 |
 | `src/tasks.ts` | task registry와 helper | `12` | task creation/registry helper | `src/Task.ts` 타입 정의와 함께 읽어야 한다 |
 | `src/Tool.ts` | tool 공통 타입과 인터페이스 | `08` | `findToolByName()`, type 정의 | permission과 실행은 여기서 완성되지 않는다 |
-| `src/Task.ts` | task 공통 타입과 인터페이스 | `12` | task base type | 실제 lifecycle은 [12-task-model-and-background-execution.md](../05-execution-continuity-and-integrations/06-claude-code-task-model-and-background-execution.md)의 registry/lifecycle 설명으로 보완된다 |
+| `src/Task.ts` | task 공통 타입과 인터페이스 | `12` | task base type | 실제 lifecycle은 [06-claude-code-task-model-and-background-execution.md](../05-execution-continuity-and-integrations/06-claude-code-task-model-and-background-execution.md)의 registry/lifecycle 설명으로 보완된다 |
 
 ### 4. UI와 persistence 보조 파일
 

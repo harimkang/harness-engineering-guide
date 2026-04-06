@@ -52,7 +52,7 @@
 
 - [01-context-as-an-operational-resource.md](01-context-as-an-operational-resource.md)
 - [04-turn-loops-stop-hooks-and-recovery.md](04-turn-loops-stop-hooks-and-recovery.md)
-- [../execution/02-state-resumability-and-session-ownership.md](../05-execution-continuity-and-integrations/01-state-resumability-and-session-ownership.md)
+- [01-state-resumability-and-session-ownership.md](../05-execution-continuity-and-integrations/01-state-resumability-and-session-ownership.md)
 - [03-references.md](../00-front-matter/03-references.md)
 
 Sources / evidence notes:

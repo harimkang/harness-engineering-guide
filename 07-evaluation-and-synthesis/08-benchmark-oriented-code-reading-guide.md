@@ -98,7 +98,7 @@ Anthropic의 2026-03-24 글 같은 evaluator-heavy harness를 읽을 때는 gian
 - generator와 evaluator가 같은 persona인가
 - contract가 build 이전에 정의되는가, 사후 QA로만 남는가
 
-현재 공개 Claude Code 스냅샷에는 generic evaluator module이 first-class로 드러나지 않는다. 따라서 이 경우에는 source file hop보다 reader-facing 문서의 비교 프레임이 더 중요해진다. 먼저 [evaluation/02-tasks-trials-transcripts-and-graders.md](02-tasks-trials-transcripts-and-graders.md), [foundations/05-evaluator-driven-harness-design.md](../01-foundations/05-evaluator-driven-harness-design.md), [evaluation/06-contract-based-qa-and-skeptical-evaluators.md](06-contract-based-qa-and-skeptical-evaluators.md)를 읽고, 그 다음 local artifact가 어디까지 있는지 확인하는 편이 효율적이다.
+현재 공개 Claude Code 스냅샷에는 generic evaluator module이 first-class로 드러나지 않는다. 따라서 이 경우에는 source file hop보다 reader-facing 문서의 비교 프레임이 더 중요해진다. 먼저 [02-tasks-trials-transcripts-and-graders.md](02-tasks-trials-transcripts-and-graders.md), [05-evaluator-driven-harness-design.md](../01-foundations/05-evaluator-driven-harness-design.md), [06-contract-based-qa-and-skeptical-evaluators.md](06-contract-based-qa-and-skeptical-evaluators.md)를 읽고, 그 다음 local artifact가 어디까지 있는지 확인하는 편이 효율적이다.
 
 ## reading-route map
 

@@ -2,6 +2,7 @@
   "name": "claude-code-docs",
   "private": true,
   "scripts": {
+    "check:docs": "bash scripts/check-doc-consistency.sh",
     "lint": "markdownlint-cli2",
     "format": "markdownlint-cli2 --fix"
   },

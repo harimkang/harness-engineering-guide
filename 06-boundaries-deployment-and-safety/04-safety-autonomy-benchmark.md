@@ -47,7 +47,7 @@ Sources / evidence notes:
 - [01-boundary-engineering-and-autonomy.md](01-boundary-engineering-and-autonomy.md)
 - [02-sandboxing-permissions-and-policy-surfaces.md](02-sandboxing-permissions-and-policy-surfaces.md)
 - [03-local-remote-bridge-and-direct-connect.md](03-local-remote-bridge-and-direct-connect.md)
-- [../evaluation/05-claude-code-benchmark-framework.md](../07-evaluation-and-synthesis/05-harness-benchmark-framework.md)
+- [05-harness-benchmark-framework.md](../07-evaluation-and-synthesis/05-harness-benchmark-framework.md)
 
 ## 대표 코드 발췌
 

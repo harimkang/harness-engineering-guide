@@ -238,7 +238,7 @@ export function getBuiltinPluginSkillCommands(): Command[] {
 2. `getBuiltinPlugins()`는 settings와 `defaultEnabled`를 바탕으로 enabled/disabled bundle을 계산한다.
 3. `getBuiltinPluginSkillCommands()`는 enabled plugin의 skill definition만 prompt command로 다시 꺼낸다.
 
-즉, 이 장의 근거 범위 안에서 확정할 수 있는 것은 "plugin은 기능 메타데이터 번들이고, 그중 skill 부분은 실제 command surface로 다시 투영된다"까지다. 반대로 MCP server metadata가 구체적으로 언제 session wiring으로 이어지는지는 [10-services-and-integrations.md](04-claude-code-services-and-integrations.md)의 MCP/service 계층과 함께 읽어야 닫힌다.
+즉, 이 장의 근거 범위 안에서 확정할 수 있는 것은 "plugin은 기능 메타데이터 번들이고, 그중 skill 부분은 실제 command surface로 다시 투영된다"까지다. 반대로 MCP server metadata가 구체적으로 언제 session wiring으로 이어지는지는 [04-claude-code-services-and-integrations.md](04-claude-code-services-and-integrations.md)의 MCP/service 계층과 함께 읽어야 닫힌다.
 
 이 구분을 명시해 두면 plugin 개념이 반쯤만 닫힌 듯한 인상을 줄일 수 있다. 이 장은 plugin 전체 lifecycle을 모두 설명하는 장이 아니라, capability bundle과 delegation semantics 사이에서 plugin이 어디에 위치하는지를 고정하는 장이다.
 

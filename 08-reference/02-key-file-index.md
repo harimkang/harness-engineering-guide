@@ -196,7 +196,7 @@ for await (const event of query({
 - 역할 요약: tool registry와 session tool set 구성
 - 관련 장 번호: `08`
 - 대표 발췌 포인트: `getTools()`
-- 주의할 점: 구현 세부는 이 부록보다 [08-tool-system-and-permissions.md](../04-interfaces-and-operator-surfaces/07-claude-code-tool-system-and-permissions.md)와 [11-agent-skill-plugin-mcp-and-coordination.md](../05-execution-continuity-and-integrations/05-claude-code-agent-skill-plugin-mcp-and-coordination.md)에서 더 잘 닫힌다
+- 주의할 점: 구현 세부는 이 부록보다 [07-claude-code-tool-system-and-permissions.md](../04-interfaces-and-operator-surfaces/07-claude-code-tool-system-and-permissions.md)와 [05-claude-code-agent-skill-plugin-mcp-and-coordination.md](../05-execution-continuity-and-integrations/05-claude-code-agent-skill-plugin-mcp-and-coordination.md)에서 더 잘 닫힌다
 
 ## State And UI
 
@@ -229,7 +229,7 @@ for await (const event of query({
 | --- | --- | --- |
 | keybinding provider와 입력 컨텍스트 | `src/keybindings/KeybindingProviderSetup.tsx` | `09` |
 | vim-style 입력 모델 | `vim/` | `09` |
-| transcript inspection과 alternate interaction state | `src/screens/REPL.tsx` | `09`, `execution/01` |
+| transcript inspection과 alternate interaction state | `src/screens/REPL.tsx` | `09`, `05-execution-continuity-and-integrations/01` |
 | voice mode enablement gate | `src/voice/voiceModeEnabled.ts` | `09`, appendix |
 | output style discovery와 loader | `src/outputStyles/loadOutputStylesDir.ts` | `09` |
 
@@ -344,14 +344,14 @@ for await (const event of query({
 - 역할 요약: task abstraction 공통 타입
 - 관련 장 번호: `12`
 - 대표 발췌 포인트: core type/interface
-- 주의할 점: lifecycle 설명은 [12-task-model-and-background-execution.md](../05-execution-continuity-and-integrations/06-claude-code-task-model-and-background-execution.md)의 registry/lifecycle 절에서 보완된다
+- 주의할 점: lifecycle 설명은 [06-claude-code-task-model-and-background-execution.md](../05-execution-continuity-and-integrations/06-claude-code-task-model-and-background-execution.md)의 registry/lifecycle 절에서 보완된다
 
 ### `src/tasks.ts`
 
 - 역할 요약: task registry와 helper
 - 관련 장 번호: `12`
 - 대표 발췌 포인트: registry/creation helper
-- 주의할 점: local shell, local agent, remote agent의 차이는 [12-task-model-and-background-execution.md](../05-execution-continuity-and-integrations/06-claude-code-task-model-and-background-execution.md)의 비교 표와 시나리오 설명을 함께 읽어야 닫힌다
+- 주의할 점: local shell, local agent, remote agent의 차이는 [06-claude-code-task-model-and-background-execution.md](../05-execution-continuity-and-integrations/06-claude-code-task-model-and-background-execution.md)의 비교 표와 시나리오 설명을 함께 읽어야 닫힌다
 
 ### `src/entrypoints/agentSdkTypes.ts`
 

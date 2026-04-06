@@ -57,7 +57,7 @@ Sources / evidence notes:
 - remote transport 자체의 내부 프로토콜
 - background task model과 task state의 세부 동작
 
-이 비범위는 중요하다. startup/trust 세부는 [04-session-startup-trust-and-initialization.md](06-claude-code-session-startup-trust-and-initialization.md), query와 turn lifecycle은 [05-context-assembly-and-query-pipeline.md](../03-context-and-control/05-claude-code-context-assembly-and-query-pipeline.md)와 [06-query-engine-and-turn-lifecycle.md](../03-context-and-control/06-claude-code-query-engine-and-turn-lifecycle.md)에서 분리해 다룬다.
+이 비범위는 중요하다. startup/trust 세부는 [06-claude-code-session-startup-trust-and-initialization.md](06-claude-code-session-startup-trust-and-initialization.md), query와 turn lifecycle은 [05-context-assembly-and-query-pipeline.md](../03-context-and-control/05-claude-code-context-assembly-and-query-pipeline.md)와 [06-claude-code-query-engine-and-turn-lifecycle.md](../03-context-and-control/06-claude-code-query-engine-and-turn-lifecycle.md)에서 분리해 다룬다.
 
 ## runtime family를 읽는 다섯 가지 용어
 

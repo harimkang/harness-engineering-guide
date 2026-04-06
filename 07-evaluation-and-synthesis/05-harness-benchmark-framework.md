@@ -1,5 +1,20 @@
 # 05. harness benchmark framework
 
+> Why this chapter exists: 책 전체의 비교 질문을 하나의 benchmark rubric으로 접어 두고, 다른 harness에 바로 적용할 수 있게 만든다.
+> Reader level: advanced / reviewer
+> Last verified: 2026-04-06
+> Freshness class: medium
+
+## Core claim
+
+좋은 harness benchmark는 하나의 점수표가 아니라, runtime topology, continuity, observability, reproducibility, economics, evaluation readiness를 함께 보는 비교 프레임이다.
+
+## What this chapter is not claiming
+
+- 절대 점수 하나로 제품을 서열화할 수 있다는 주장
+- private KPI나 infra automation을 대체하는 benchmark runner라는 주장
+- Claude Code가 이 framework의 유일한 정답 사례라는 주장
+
 ## 장 요약
 
 이 장은 앞선 evaluation 장과 원칙 장을 하나의 benchmark framework로 묶는다. 목적은 특정 제품을 찬양하거나 비난하는 것이 아니라, 새로운 long-running agent harness를 비교할 때 어떤 질문을 먼저 던져야 하는지 고정하는 것이다. 이 framework는 단일 점수표가 아니라, 구조를 분해하고 evidence를 수집하며 weakest dimension을 찾게 해 주는 질문지다.
@@ -20,6 +35,16 @@
 
 이 장은 책 전체의 synthesis 장이다. 본문에서 반복된 논의를 한 표로 접어 두고, 다른 하네스를 읽을 때 다시 꺼내 쓰게 만드는 데 목적이 있다. 따라서 아래 axis는 코드에 박힌 공식 taxonomy가 아니라 long-running agent harness를 비교하기 위한 분석 프레임이며, Claude Code는 그 프레임을 검증해 보는 대표 worked example로만 남는다.
 
+## Mental model / diagram
+
+이 장의 핵심 mental model은 `runtime topology -> context/boundary -> continuity/operator control -> observability/reproducibility/economics -> evaluation readiness` 순서로 benchmark를 보는 것이다. 아래 `benchmark axes` 표와 `세 가지 판단 축`을 함께 읽는 편이 가장 정확하다.
+
+## Design implications
+
+- benchmark packet은 single score가 아니라 topology, continuity, observability, economics artifact를 함께 남겨야 한다.
+- harness comparison은 strongest feature보다 weakest operational axis를 먼저 드러내는 rubric이어야 한다.
+- evaluation readiness를 주장하려면 transcript, outcome, grader input, config snapshot 같은 reproducibility bundle을 같이 제시해야 한다.
+
 ## 자료와 독서 기준
 
 주요 reader-facing 근거:
@@ -39,7 +64,8 @@
 - Anthropic, [Harness design for long-running application development](https://www.anthropic.com/engineering/harness-design-long-running-apps), 2026-03-24
 - Lee et al., [Meta-Harness: End-to-End Optimization of Model Harnesses](https://arxiv.org/abs/2603.28052), 2026-03-30
 
-Sources / evidence notes:
+## Sources / evidence notes
+
 이 장의 reader-facing 외부 검증 축은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 Part 7 cluster를 따른다. benchmark framework, reproducibility bundle, trace-backed comparison에는 `S7`, `S21`, `S22`, `S23`, `S28`, `S29`, `S32`, `S33`을 우선 사용하고, `P2`는 optimization framing의 보조 비교 프레임으로만 사용한다.
 
 ## 대표 코드 발췌

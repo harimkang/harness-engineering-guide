@@ -1,5 +1,20 @@
 # 06. Claude Code command 시스템
 
+> Why this chapter exists: operator-facing command surface를 단순 기능 목록이 아니라 세션 steering layer로 읽게 만든다.
+> Reader level: advanced / reviewer
+> Last verified: 2026-04-06
+> Freshness class: volatile
+
+## Core claim
+
+command surface는 tool surface의 별칭이 아니다. Claude Code의 command system은 built-in command, skill, workflow, plugin provenance를 operator-facing steering layer로 조립하고, 다시 remote/bridge/model-adjacent surface로 재선별하는 별도 control surface다.
+
+## What this chapter is not claiming
+
+- 모든 command가 같은 provenance와 trust 모델을 가진다는 주장
+- command와 tool이 완전히 같은 층이라는 주장
+- plugin/MCP 전체를 이 장 하나로 설명할 수 있다는 주장
+
 ## 장 요약
 
 operator-facing command surface는 slash command 목록이 아니라 사람이 세션을 조정하는 steering layer다. 이 장은 그 문제를 Claude Code 사례에 적용한다. 이 계층은 built-in command, feature-gated command, file-based skill, workflow command, plugin command를 한 operator-facing surface로 합치고, 현재 세션의 auth 상태와 실행 맥락에 맞게 다시 잘라 낸다. 그래서 이 장의 핵심 질문은 "무슨 명령이 있나"가 아니라 "어떤 기능이 왜 command로 승격되고, 어떤 provenance와 type을 달고, 어떤 맥락에서만 노출되는가"다.
@@ -13,6 +28,16 @@ Anthropic의 [Building effective agents](https://www.anthropic.com/engineering/b
 Anthropic의 [Writing effective tools for AI agents](https://www.anthropic.com/engineering/writing-tools-for-agents) (2025-09-11)는 namespacing, clear boundaries, token-efficient responses 같은 원칙을 강조한다. 이 원칙은 tool에만 적용되는 것이 아니다. command surface 역시 provenance가 분명해야 하고, 어떤 기능이 어떤 상호작용 형식으로 드러나는지 명확해야 한다.
 
 Anthropic Platform Docs의 [Agent SDK overview](https://platform.claude.com/docs/en/agent-sdk/overview) (접근 2026-04-01)는 tools, agent loop, context management 같은 모델 중심 표면을 설명한다. Claude Code의 command system은 그 모델 중심 표면 위에 추가된 operator-facing layer로 읽을 수 있다. 다시 말해, command system은 tool surface의 사소한 별칭이 아니라, 사람이 세션을 조작하는 별도 인터페이스다.
+
+## Mental model / diagram
+
+이 장의 핵심 mental model은 command가 `aggregation -> typing -> filtering -> downstream selection` 순서로 shape된다는 점이다. 아래 `aggregation and filtering topology` 다이어그램을 이 장의 중심 도식으로 읽으면 된다.
+
+## Design implications
+
+- command review는 기능 목록이 아니라 provenance, type, downstream selector를 함께 본다.
+- remote/bridge mode에서 다른 command subset이 열리므로, surface drift는 availability bug와 safety bug를 동시에 만든다.
+- command, tool, skill surface를 같은 레지스트리처럼 취급하지 말고 operator steering layer와 model-invocable layer를 분리해 기록해야 한다.
 
 ## 이 장의 근거와 범위
 
@@ -28,7 +53,8 @@ Anthropic Platform Docs의 [Agent SDK overview](https://platform.claude.com/docs
 - Anthropic, [Writing effective tools for AI agents](https://www.anthropic.com/engineering/writing-tools-for-agents), 2025-09-11
 - Anthropic Platform Docs, [Agent SDK overview](https://platform.claude.com/docs/en/agent-sdk/overview), 접근 시점 2026-04-01
 
-Sources / evidence notes:
+## Sources / evidence notes
+
 이 장의 reader-facing 외부 검증 축은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 Part 4 cluster를 따른다. command provenance, skill surface, instruction provenance, plugin/MCP adjacency는 `S3`, `S9`, `S10`, `S11`, `S12`, `S14`, `S15`, `S24`를 우선 사용하고, safety-adjacent 설명은 `S25`를 보조적으로 참조한다.
 
 이 장은 다음을 다룬다.
@@ -38,7 +64,7 @@ Sources / evidence notes:
 - file-based skill이 command 객체로 어떻게 승격되는지
 - remote mode와 bridge inbound에서 command surface가 어떻게 다시 필터링되는지
 
-반대로 이 장은 각 command 구현의 세부 로직, tool permission 모델, plugin system 전체를 다루지 않는다. tool surface와 permission은 [08-tool-system-and-permissions.md](07-claude-code-tool-system-and-permissions.md)에서 이어서 다룬다.
+반대로 이 장은 각 command 구현의 세부 로직, tool permission 모델, plugin system 전체를 다루지 않는다. tool surface와 permission은 [07-claude-code-tool-system-and-permissions.md](07-claude-code-tool-system-and-permissions.md)에서 이어서 다룬다.
 
 ## command system을 읽는 다섯 가지 구분
 

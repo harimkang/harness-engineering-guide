@@ -44,7 +44,7 @@ Sources / evidence notes:
 
 - [01-tool-contracts-and-the-agent-computer-interface.md](01-tool-contracts-and-the-agent-computer-interface.md)
 - [02-tool-shaping-permissions-and-capability-exposure.md](02-tool-shaping-permissions-and-capability-exposure.md)
-- [../evaluation/03-benchmarking-coding-harnesses.md](../07-evaluation-and-synthesis/03-benchmarking-long-running-agent-harnesses.md)
+- [03-benchmarking-long-running-agent-harnesses.md](../07-evaluation-and-synthesis/03-benchmarking-long-running-agent-harnesses.md)
 
 ## 평가 차원
 
