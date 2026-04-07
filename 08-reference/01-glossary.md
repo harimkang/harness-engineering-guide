@@ -10,6 +10,8 @@
 
 이 부록은 본문 전반에서 반복해서 등장하는 핵심 용어를 정리한다. 각 항목은 단순 번역보다 "어디서 등장하는지", "비슷한 개념과 무엇이 다른지", "어떤 발췌 provenance가 이 용어를 대표하는지"까지 함께 제공한다. 독자는 이 부록을 단독 사전처럼 읽어도 되지만, 실제로는 [01-how-to-read-this-book.md](../00-front-matter/01-how-to-read-this-book.md), [02-source-analysis-method.md](../00-front-matter/02-source-analysis-method.md), [03-references.md](../00-front-matter/03-references.md)와 함께 보면 가장 유용하다.
 
+Part 8의 두 축 중 이 파일은 `reader reference` 쪽의 기본 entrypoint다. 용어 경계를 먼저 닫고 싶은 독자는 source atlas보다 이 부록을 먼저 여는 편이 낫다.
+
 여기서 가장 중요한 것은 파일명이 아니라 `정의`와 `비슷한 용어와 차이`다. `대표 근거 라벨`은 용어를 다시 source provenance와 연결하기 위한 메모일 뿐, 독자에게 별도 파일 접근을 요구하는 항목이 아니다.
 
 ## Reader-path suggestions
@@ -66,7 +68,7 @@ for await (const event of query({
 ## Context Engineering
 
 - 정의: 어떤 정보를 언제 context에 넣고, 언제 compact하거나 외부 artifact로 남길지를 설계하는 일
-- 등장 장: Part II 전반
+- 등장 장: `03-context-and-control` 전반
 - 비슷한 용어와 차이: prompt engineering보다 넓으며, retrieval, compaction, handoff artifact까지 포함한다
 - 대표 근거 라벨: `src/context.ts`, `src/query.ts`, `src/query/tokenBudget.ts`
 

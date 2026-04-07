@@ -11,6 +11,8 @@
 
 이 부록은 구조 이해에 직접 영향을 주는 주요 feature-gated 또는 conditional path를 정리한다. 목적은 "코드에 보인다고 항상 활성인 것은 아니다"라는 점을 본문 전체에서 일관되게 유지하는 것이다.
 
+Part 8의 두 축 중 이 파일은 `Claude Code source atlas`에서 drift-sensitive feature gate만 따로 추적하는 지도다.
+
 ## 읽는 규칙
 
 1. build-time feature는 아예 dead-code elimination 대상일 수 있다.

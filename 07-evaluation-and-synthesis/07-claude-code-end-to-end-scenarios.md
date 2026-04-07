@@ -1,7 +1,7 @@
 # 07. Claude Code end-to-end scenario와 state-owner handoff
 
 > Why this chapter exists: 앞선 장의 subsystem 설명을 실제 시간축과 ownership handoff 언어로 다시 묶는다.
-> Reader path tags: `builder` / `reviewer`
+> Reader path tags: `first-pass` / `builder` / `reviewer`
 > Last verified: 2026-04-06
 > Freshness class: medium
 > Source tier focus: Tier 2 synthesis framing, Tier 6 observed runtime cuts
@@ -14,6 +14,7 @@ Anthropic의 [Effective harnesses for long-running agents](https://www.anthropic
 
 ## Reader path and handoff focus
 
+- `first-pass` 독자에게 이 장은 Part 2-6의 핵심 seam을 시간축으로 다시 묶는 첫 종합 그림 역할을 한다. 초심자 90분 코스에서는 local interactive turn, remote attach family, resume/continue flow 세 scenario를 먼저 읽으면 충분하다.
 - 이 장은 `first-pass`에서 바로 열기보다 Part 2-6의 주요 seam을 본 뒤에 여는 bridge chapter다.
 - 그래도 첫 종합 그림이 필요하면 local interactive turn, remote attach family, resume/continue flow 세 scenario만 먼저 읽어도 충분하다.
 - reviewer는 각 scenario마다 owner shift, handoff artifact, boundary crossing, evidence pack을 같은 템플릿으로 적어 두는 편이 좋다.

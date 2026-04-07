@@ -1,7 +1,7 @@
 # Part 6 Guide: Boundaries, Deployment, And Safety
 
 > Why this chapter exists: autonomy를 가능하게 하는 boundary placement를 deployment, policy, governance 언어로 다시 묶는다.
-> Reader path tags: `first-pass` / `builder` / `volatile`
+> Reader path tags: `first-pass` / `builder` / `volatile re-check`
 > Last verified: 2026-04-06
 > Freshness class: volatile
 > Source tier focus: Tier 2 boundary framing, Tier 1 product safety docs, Tier 3 standards/governance docs, Tier 6 Claude Code case-study cuts

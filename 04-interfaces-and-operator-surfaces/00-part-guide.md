@@ -1,7 +1,7 @@
 # Part 4 Guide: Interfaces And Operator Surfaces
 
 > Why this chapter exists: capability surface, instruction surface, operator surface를 한 Part 안에서 분리해 읽게 만든다.
-> Reader path tags: `first-pass` / `builder` / `volatile`
+> Reader path tags: `first-pass` / `builder` / `volatile re-check`
 > Last verified: 2026-04-06
 > Freshness class: volatile
 > Source tier focus: Tier 2 tool and workflow framing, Tier 1/3 product and protocol docs, Tier 6 Claude Code case-study cuts

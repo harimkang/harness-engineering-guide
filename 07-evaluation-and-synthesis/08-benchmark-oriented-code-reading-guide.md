@@ -73,7 +73,7 @@ Claude Code 같은 사례에서는 "어느 폴더에 무엇이 있는가"보다 
 
 - 이 장의 reader-facing 외부 검증 축은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 Part 7 cluster를 따른다.
 - benchmark-oriented reading과 evidence triage에는 `S7`, `S21`, `S22`, `S23`, `S28`, `S29`, `S32`를 우선 사용했다.
-- `P2`는 provisional comparison framing으로만 사용하며 canonical `S*` verification을 대체하지 않는다.
+- `P2`는 provisional comparison framing으로만 사용하며 canonical registry `S*` verification을 대체하지 않는다.
 
 ## 코드 독해를 benchmark 작업으로 바꾸는 다섯 가지 렌즈
 

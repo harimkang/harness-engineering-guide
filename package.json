@@ -1,5 +1,5 @@
 {
-  "name": "claude-code-docs",
+  "name": "harness-engineering-guide-docs",
   "private": true,
   "scripts": {
     "check:docs": "bash scripts/check-doc-consistency.sh",

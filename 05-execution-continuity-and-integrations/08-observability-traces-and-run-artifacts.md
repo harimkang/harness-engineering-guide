@@ -70,6 +70,10 @@ flowchart LR
 - `src/services/diagnosticTracking.ts`
 - `src/services/toolUseSummary/toolUseSummaryGenerator.ts`
 
+빠른 artifact matrix 재진입:
+
+- [../08-reference/07-artifact-taxonomy-and-retention-matrix.md](../08-reference/07-artifact-taxonomy-and-retention-matrix.md)
+
 ## transcript는 sequence artifact다
 
 Anthropic의 long-running harness 글은 clean state와 progress artifact를 강조한다. local code를 보면 Claude Code는 transcript chain을 incremental하게 기록하고, compaction과 resume 이후에도 다시 읽을 수 있게 남긴다. transcript는 "무슨 순서로 일이 벌어졌는가"를 가장 충실하게 보여 주는 artifact다.

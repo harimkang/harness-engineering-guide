@@ -10,6 +10,8 @@
 
 이 부록은 원 upstream 공개 사본 source tree의 top-level 디렉터리 35개가 어떤 책임을 가지며, 본문 문서 어디에서 주로 해설되는지 보여준다. 목적은 파일 수가 적은 디렉터리나 조건부 기능 디렉터리가 문서화 과정에서 "조용히 누락"되는 일을 막는 것이다.
 
+Part 8의 두 축 중 이 파일은 `Claude Code source atlas`의 넓은 지도를 맡는다.
+
 top-level 루트 파일은 [root-file-map.md](04-root-file-map.md)에 따로 정리한다.
 
 이 부록은 원 upstream 공개 사본 source tree의 디렉터리 관점 지도다. "어느 폴더가 어떤 문제 영역과 연결되는가"를 보고 싶을 때 먼저 읽는다. 개별 구현 단면의 provenance를 다시 보고 싶다면 [key-file-index.md](02-key-file-index.md), 루트 조립 계열만 보고 싶다면 [root-file-map.md](04-root-file-map.md)가 더 빠르다.

@@ -75,6 +75,10 @@ flowchart TB
 - `src/tools/ToolSearchTool/ToolSearchTool.ts`
 - `src/services/mcp/MCPConnectionManager.tsx`
 
+빠른 review matrix 재진입:
+
+- [../08-reference/06-instruction-precedence-matrix.md](../08-reference/06-instruction-precedence-matrix.md)
+
 ## settings scope는 instruction stack의 바닥을 고정한다
 
 Anthropic의 settings 문서는 Claude Code가 managed, user, project, local scope를 구분하고, managed > command line > local > project > user 순으로 precedence를 적용한다고 설명한다. 같은 문서는 `CLAUDE.md`, subagents, MCP servers, plugins도 scope 시스템과 함께 읽어야 한다고 적고, settings file과 memory file의 역할을 분리한다.

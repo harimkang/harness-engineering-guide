@@ -1,7 +1,7 @@
 # Part 5 Guide: Execution, Continuity, And Integrations
 
 > Why this chapter exists: continuity artifact, external integration seam, observability/economics를 한 운영면으로 다시 묶는다.
-> Reader path tags: `first-pass` / `builder` / `volatile`
+> Reader path tags: `first-pass` / `builder` / `volatile re-check`
 > Last verified: 2026-04-06
 > Freshness class: volatile
 > Source tier focus: Tier 2 continuity framing, Tier 1 tracing/eval docs, Tier 4 comparative runtime docs, Tier 6 Claude Code case-study cuts

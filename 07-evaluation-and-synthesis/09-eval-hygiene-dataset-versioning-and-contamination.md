@@ -60,6 +60,7 @@ flowchart LR
 - [02-tasks-trials-transcripts-and-graders.md](02-tasks-trials-transcripts-and-graders.md)
 - [04-production-traces-feedback-loops-and-optimization.md](04-production-traces-feedback-loops-and-optimization.md)
 - [08-observability-traces-and-run-artifacts.md](../05-execution-continuity-and-integrations/08-observability-traces-and-run-artifacts.md)
+- [../08-reference/07-artifact-taxonomy-and-retention-matrix.md](../08-reference/07-artifact-taxonomy-and-retention-matrix.md)
 
 ## task clarity가 먼저다
 

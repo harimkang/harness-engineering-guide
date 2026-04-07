@@ -41,6 +41,18 @@ done < <(
   } | uniq
 )
 
+required_files=(
+  "02-runtime-and-session-start/01-runtime-families-entrypoints-and-assembly-hubs.md"
+  "02-runtime-and-session-start/02-startup-contract-trust-boundary-and-initialization.md"
+  "08-reference/00-part-guide.md"
+)
+
+for file in "${required_files[@]}"; do
+  if [[ ! -f "$file" ]]; then
+    fail "Required document missing: $file"
+  fi
+done
+
 node - "${reader_files[@]}" <<'NODE'
 const fs = require('fs');
 const path = require('path');
@@ -92,9 +104,22 @@ if [[ "$?" -ne 0 ]]; then
   errors=1
 fi
 
+volatile_tag_files=(
+  "02-runtime-and-session-start/00-part-guide.md"
+  "04-interfaces-and-operator-surfaces/00-part-guide.md"
+  "05-execution-continuity-and-integrations/00-part-guide.md"
+  "06-boundaries-deployment-and-safety/00-part-guide.md"
+)
+
+if rg -n '^> Reader path tags: .*`volatile`' "${volatile_tag_files[@]}" >/dev/null; then
+  fail "Part guide still uses deprecated \`volatile\` reader-path tag"
+fi
+
 legacy_patterns=(
   '00-how-to-read-this-book\.md'
   'appendix/'
+  'proposal'
+  'Part II'
   '`[0-9]{2}`(?:,\s*`[0-9]{2}`)*(?:,\s*appendix)?'
   '\|[^|\n]*\|\s*appendix\s*\|'
   '\[(15-code-reading-guide|17-end-to-end-scenarios)\.md\]'

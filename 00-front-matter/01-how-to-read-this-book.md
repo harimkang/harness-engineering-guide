@@ -1,5 +1,26 @@
 # 01. 이 책을 읽는 법
 
+## 3문장 요약
+
+이 문서는 이 책 전체를 어떻게 읽을지 정하는 서문이다. Claude Code는 대표 사례일 뿐이고, 실제 목표는 장기 실행형 하네스를 비교하고 평가하는 독서 언어를 만드는 데 있다. 처음 읽을 때는 파일 이름보다 운영 질문, 주장 층위, 근거 규칙을 먼저 붙드는 편이 안전하다.
+
+## 5분 멘탈 모델
+
+처음 읽는 독자는 아래 여섯 조각만 먼저 고정하면 된다.
+
+1. session start
+2. context assembly
+3. control loop
+4. tool and operator surface
+5. state, resumability, and boundaries
+6. eval and synthesis
+
+이 책의 각 Part는 이 여섯 조각 중 하나를 자세히 설명하고, Claude Code 사례 장은 그 조각이 실제 제품 runtime에서 어떻게 드러나는지 보여 주는 절단면이다.
+
+## 왜 이 장이 필요한가
+
+Claude Code 같은 큰 하네스 사례를 읽을 때는 코드 설명과 설계 원칙을 동시에 다뤄야 한다. 이 장이 먼저 필요한 이유는 제품 사실, 공개 설계 원칙, 저자 해석, 설계 권고를 같은 층위로 읽지 않게 만들기 위해서다. 즉, 이 장은 파일 해설보다 먼저 독서 규칙을 고정하는 entry chapter다.
+
 > Why this chapter exists: 이 문서세트를 source 해설 메모가 아니라 harness engineering 교재로 읽기 위한 독서 규칙을 고정한다.
 > Reader level: beginner / advanced / reviewer
 > Last verified: 2026-04-06
@@ -20,20 +41,7 @@
 - `builder`: foundations 핵심 장 뒤에 관련 Part guide와 Claude Code 사례 장을 바로 붙여 읽는다.
 - `reviewer`: [03-references.md](03-references.md), [../08-reference/01-glossary.md](../08-reference/01-glossary.md), [../08-reference/02-key-file-index.md](../08-reference/02-key-file-index.md)를 옆에 두고 claim tier와 provenance를 같이 본다.
 - `source-first`: [../07-evaluation-and-synthesis/08-benchmark-oriented-code-reading-guide.md](../07-evaluation-and-synthesis/08-benchmark-oriented-code-reading-guide.md)에서 질문을 고르고, 필요한 appendix와 사례 장으로 들어간다.
-- `volatile re-check`: settings, MCP, tracing, remote, eval tooling처럼 drift 가능성이 큰 주제를 만질 때는 [03-references.md](03-references.md)의 watchlist와 proposal `S*` IDs를 먼저 다시 확인한다.
-
-## 5분 멘탈 모델
-
-처음 읽는 독자는 아래 한 장면부터 고정하면 된다.
-
-1. session start
-2. context assembly
-3. control loop
-4. tool and operator surface
-5. state, resumability, and boundaries
-6. eval and synthesis
-
-이 책의 각 Part는 이 여섯 조각 중 하나를 자세히 설명한다. Claude Code 사례 장은 그 조각이 실제 제품 runtime에서 어떻게 드러나는지 보여 주는 절단면이다.
+- `volatile re-check`: settings, MCP, tracing, remote, eval tooling처럼 drift 가능성이 큰 주제를 만질 때는 [03-references.md](03-references.md)의 watchlist와 관련 `S*` IDs를 먼저 다시 확인한다.
 
 ## 처음 읽는 독자를 위한 아주 짧은 시작점
 
@@ -43,7 +51,7 @@
 2. `관찰`은 코드에서 직접 확인한 사실이고, `해석`은 그 사실을 설계 언어로 올린 문장이다.
 3. giant file은 처음부터 끝까지 읽지 말고, 질문에 맞는 절단면만 읽는다.
 4. 처음에는 [README.md](../README.md), 이 문서, [02-source-analysis-method.md](02-source-analysis-method.md), [03-references.md](03-references.md)를 함께 놓고 보는 편이 안전하다.
-5. substantive chapter update는 proposal에 정리된 공식 출처를 먼저 다시 확인한 뒤 반영해야 한다.
+5. substantive chapter update는 [03-references.md](03-references.md)에 정리된 관련 공식 출처를 먼저 다시 확인한 뒤 반영해야 한다.
 
 나머지 본문은 이 다섯 문장을 더 엄밀하게 풀어 쓴 규칙집이라고 생각하면 된다.
 
@@ -61,9 +69,7 @@
 - volatile topic은 Part guide에서 먼저 경고하고, 장별 세부 확인 내역은 `Sources / evidence notes`에 남긴다.
 - major edit에서는 checked docs list, checked release notes window, observed artifact snapshot identifiers, changed chapters를 evidence-pack 메모로 남긴다.
 
-## 왜 이 장이 필요한가
-
-이 책은 코드 설명과 설계 교재를 동시에 수행한다. 코드는 구체적이고 지역적이며, 설계 원칙은 추상적이고 횡단적이다. Claude Code 같은 큰 하네스 사례를 읽을 때는 두 층을 어떻게 왕복할지 먼저 배워야 한다. 그렇지 않으면 독자는 제품 사실을 곧바로 설계 권고로 오해하거나, 반대로 일반 원칙을 제품 사실처럼 읽게 된다.
+## 자료 범주
 
 이 장을 떠받치는 자료 범주는 세 가지다.
 

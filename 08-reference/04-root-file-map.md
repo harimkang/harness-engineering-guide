@@ -10,6 +10,8 @@
 
 이 부록은 원 upstream 공개 사본 source tree 루트 바로 아래에 놓인 루트 파일 18개를 범주별로 정리한다. top-level 디렉터리만 보면 놓치기 쉬운 조립 파일, 레지스트리 파일, 상태 모델 파일을 한 번에 보는 것이 목적이다.
 
+Part 8의 두 축 중 이 파일은 `Claude Code source atlas`에서 루트 조립면만 따로 떼어 보는 빠른 재진입 표다.
+
 이 부록은 "루트에 있는 조립 파일과 레지스트리 파일"만 빠르게 보고 싶을 때 우선 참고하는 표다. 디렉터리 전체 배치가 궁금하면 [directory-map.md](03-directory-map.md), 핵심 발췌 provenance를 더 촘촘하게 보고 싶다면 [key-file-index.md](02-key-file-index.md)가 더 적합하다.
 
 이 표는 경로 목록이 아니라 semantic map으로 읽어야 한다. 각 행에서 먼저 `역할 요약`을, 그다음 `대표 발췌 포인트`를 읽고, 마지막에 파일 라벨을 provenance 메모로 붙이면 source 없이도 의미가 닫힌다. 파일 라벨은 문서 전반의 구현 provenance 규약을 따른다.
@@ -105,4 +107,4 @@ startKeychainPrefetch();
 ## Sources / evidence notes
 
 - 이 appendix는 Tier 6 observed artifact 기준으로 루트 파일의 load-bearing 역할만 요약한다.
-- 현재 장 shorthand references는 독서용 재진입 포인터이며, 제품 사실의 외부 검증은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 `S*` IDs를 따른다.
+- 현재 장 shorthand references는 독서용 재진입 포인터이며, 제품 사실의 외부 검증은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 canonical registry `S*` IDs를 따른다.

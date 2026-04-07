@@ -8,7 +8,7 @@
 > Freshness class: volatile
 > Reader path tags: `first-pass` / `builder` / `reviewer` / `source-first` / `volatile re-check`
 > Source tier focus: Tier 1-5 외부 registry와 Tier 6 observed artifact entry를 함께 다룬다.
-> Reference scaffolds: proposal `S*` IDs, freshness watchlist, evidence-pack practice, chapter re-entry
+> Reference scaffolds: canonical registry IDs (`S*`, `P*`, `R*`), freshness watchlist, evidence-pack practice, chapter re-entry
 
 ## Core claim
 
@@ -21,13 +21,23 @@
 - provisional source가 공식 문서를 대체할 수 있다는 주장
 - 이 부록만으로 각 장의 사실 검증이 끝난다는 주장
 
+## Canonical registry contract
+
+- 이 파일은 reader-facing corpus의 유일한 canonical source registry다.
+- `S*` ID는 공식 문서, 공식 엔지니어링 글, 사양, 반복적으로 재진입하는
+  canonical 비교 문서에 붙인다.
+- `P*` ID는 provisional research와 under-review framing에 붙인다.
+- `R*` ID는 observed artifact snapshot과 local corpus re-entry 포인터에 붙인다.
+- chapter의 `Sources / evidence notes`는 가능하면 이 파일의 ID를 그대로 다시
+  사용한다.
+
 ## How to use this registry
 
 - substantive chapter edit 전에는 먼저 여기서 관련 source ID와 공식 URL을 찾는다.
 - volatile topic은 chapter edit 시점에 URL을 다시 열어 확인한다.
 - preprint는 반드시 provisional framing으로만 사용한다.
 - local code 사실은 이 부록의 외부 자료로 대체하지 않는다.
-- proposal의 canonical source ID는 `S*` 계열만 사용한다.
+- canonical source ID는 `S*` 계열만 사용한다.
 - supplemental research와 observed artifact는 `P*`, `R*` 같은 별도 계열 ID를
   사용한다.
 
@@ -50,7 +60,7 @@
 | Tier 5 | Provisional research | provisional | 보조 가설과 emerging terminology |
 | Tier 6 | Observed artifact snapshot | supplemental | 공개 사본 관찰 근거 |
 
-chapter의 `Sources / evidence notes`에서는 가능하면 proposal source ID를
+chapter의 `Sources / evidence notes`에서는 가능하면 canonical registry ID를
 그대로 다시 쓴다. 예: `S22`, `S29`, `S30`.
 
 ## Freshness and claim discipline
@@ -201,11 +211,11 @@ official docs 또는 spec으로 되돌아가 확인한다.
 - `P1` [Natural-Language Agent Harnesses](https://arxiv.org/abs/2603.25723)
   - provisional
   - explicit contract, durable artifact, lightweight adapter framing
-  - canonical `S*` source verification을 대신하지 못한다
+  - canonical registry `S*` verification을 대신하지 못한다
 - `P2` [Meta-Harness: End-to-End Optimization of Model Harnesses](https://arxiv.org/abs/2603.28052)
   - provisional
   - harness 자체를 optimization 대상으로 읽는 비교 프레임
-  - canonical `S*` source verification을 대신하지 못한다
+  - canonical registry `S*` verification을 대신하지 못한다
 
 ## Tier 6. Observed code / public artifact snapshot
 
@@ -251,6 +261,6 @@ reader-facing corpus의 상대 링크, 번호-제목 일치, legacy label residu
 - local code 사실은 외부 자료로 대체하지 않는다.
 - 외부 자료는 `원칙:` 또는 비교 프레임으로 사용한다.
 - preprint는 provisional로만 사용한다.
-- proposal source verification이 필요한 chapter edit에는 `S*` source를 하나 이상
+- canonical source verification이 필요한 chapter edit에는 `S*` source를 하나 이상
   다시 확인한다.
 - 새 source가 반복적으로 들어오면 이 부록에 먼저 등록한다.

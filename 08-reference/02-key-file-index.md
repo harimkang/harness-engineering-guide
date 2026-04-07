@@ -10,7 +10,7 @@
 
 이 부록은 "어떤 구현 단면이 어떤 개념을 대표하는가"라는 질문에 답하기 위한 빠른 인덱스다. 각 항목은 역할 요약, 관련 장, 대표 발췌 포인트, 주의할 점을 함께 적는다.
 
-appendix를 하나만 먼저 연다면 이 파일이 가장 실용적이다. `Directory Map`이 폴더 관점의 지도라면, 이 부록은 본문에 등장하는 핵심 발췌의 provenance label을 빠르게 다시 묶어 주는 인덱스다. `Root File Map`은 루트 조립 파일 계열만 빠르게 보고 싶을 때 참고하는 보조 표다.
+Part 8의 두 축 중 이 파일은 `Claude Code source atlas`의 핵심 entrypoint다. source atlas를 하나만 먼저 연다면 이 파일이 가장 실용적이다. `Directory Map`이 폴더 관점의 지도라면, 이 부록은 본문에 등장하는 핵심 발췌의 provenance label을 빠르게 다시 묶어 주는 인덱스다. `Root File Map`은 루트 조립 파일 계열만 빠르게 보고 싶을 때 참고하는 보조 표다.
 
 이 부록을 읽을 때는 파일명보다 `역할 요약`과 `대표 발췌 포인트`를 먼저 읽는 편이 좋다. 여기의 경로 라벨은 독자가 source를 열기 위한 링크가 아니라, 본문에서 이미 설명된 구현 단면의 provenance 메모다. 경로 표기는 문서 전반에서 일관된 구현 provenance 규약을 따른다.
 
@@ -459,5 +459,5 @@ for await (const event of query({
 
 ## Sources / evidence notes
 
-- 이 appendix는 Tier 6 observed artifact lookup map이다. chapter-level external claim은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 `S*` ID로 따로 확인한다.
+- 이 appendix는 Tier 6 observed artifact lookup map이다. chapter-level external claim은 [../00-front-matter/03-references.md](../00-front-matter/03-references.md)의 canonical registry `S*` ID로 따로 확인한다.
 - 경로나 역할 요약이 drift하면 [../07-evaluation-and-synthesis/08-benchmark-oriented-code-reading-guide.md](../07-evaluation-and-synthesis/08-benchmark-oriented-code-reading-guide.md)와 함께 갱신하는 편이 좋다.

@@ -59,6 +59,7 @@ flowchart LR
 - [02-sandboxing-permissions-and-policy-surfaces.md](02-sandboxing-permissions-and-policy-surfaces.md)
 - [04-safety-autonomy-benchmark.md](04-safety-autonomy-benchmark.md)
 - [09-eval-hygiene-dataset-versioning-and-contamination.md](../07-evaluation-and-synthesis/09-eval-hygiene-dataset-versioning-and-contamination.md)
+- [../08-reference/07-artifact-taxonomy-and-retention-matrix.md](../08-reference/07-artifact-taxonomy-and-retention-matrix.md)
 
 ## governance는 기술 내용을 다시 묻는 방식이다
 

@@ -6,7 +6,7 @@
 > Reader level: beginner / advanced / reviewer
 > Last verified: 2026-04-06
 > Freshness class: medium
-> Verified proposal sources: `S1`, `S6`, `S8`, `S22`, `S30`
+> Verified canonical registry sources: `S1`, `S6`, `S8`, `S22`, `S30`
 
 ## Core claim
 
